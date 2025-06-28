@@ -1,4 +1,3 @@
-
 import { Briefcase } from "lucide-react";
 
 export const Experience = () => {
@@ -197,7 +196,7 @@ export const Experience = () => {
     },
     {
       title: "Information Security Specialist",
-      company: "Retail Customer (Global Furniture Manufacturer)",
+      company: "IKEA (Global Furniture Manufacturer)",
       period: "2012 - 2013",
       industry: "Retail & Logistics",
       highlights: [
@@ -223,7 +222,7 @@ export const Experience = () => {
       title: "Area Responsible, System Responsible, Project Manager",
       company: "Swedish Military Intelligence and Security Service",
       period: "2010 - 2012",
-      industry: "Government/Intelligence",
+      industry: "Military Intelligence and security service",
       highlights: [
         "Delegated responsibility for all connected systems in military intelligence and security services",
         "Managed multiple aspects: design, development, maintenance, budgeting, lifecycle management, requirement gathering",

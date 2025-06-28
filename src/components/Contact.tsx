@@ -23,10 +23,10 @@ export const Contact = () => {
               </div>
               <h3 className="text-xl font-semibold text-white mb-2">Email</h3>
               <a 
-                href="mailto:fh@digitalcompanion.io" 
+                href="mailto:fh@pki.ad" 
                 className="text-blue-400 hover:text-cyan-400 transition-colors duration-200 text-lg"
               >
-                fh@digitalcompanion.io
+                fh@pki.ad
               </a>
             </div>
 
@@ -60,7 +60,7 @@ export const Contact = () => {
 
           <div className="mt-12 text-center">
             <a
-              href="mailto:fh@digitalcompanion.io?subject=Partnership%20Inquiry&body=Hello%20Fredrik,%0A%0AI%20would%20like%20to%20discuss..."
+              href="mailto:fh@pki.ad?subject=Partnership%20Inquiry&body=Hello%20Fredrik,%0A%0AI%20would%20like%20to%20discuss..."
               className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-medium rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl hover:shadow-blue-500/25 text-lg"
             >
               <Mail className="mr-3" size={20} />
@@ -75,7 +75,7 @@ export const Contact = () => {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
               <p className="text-slate-400 text-sm">
-                © 2024 Fredrik Hansen. Professional portfolio showcasing 26+ years of cybersecurity expertise.
+                © 2025 Fredrik Hansen. Professional portfolio showcasing 26+ years of cybersecurity expertise.
               </p>
             </div>
             <div className="flex space-x-6">
