@@ -2,6 +2,7 @@
 import { Hero } from "../components/Hero";
 import { About } from "../components/About";
 import { Experience } from "../components/Experience";
+import { CybersecurityDomains } from "../components/CybersecurityDomains";
 import { TechnicalCompetencies } from "../components/TechnicalCompetencies";
 import { VolunteerWork } from "../components/VolunteerWork";
 import { Contact } from "../components/Contact";
@@ -18,6 +19,7 @@ const Index = () => {
       <div className="pdf-page-break">
         <Experience />
       </div>
+      <CybersecurityDomains />
       <TechnicalCompetencies />
       <VolunteerWork />
       <Contact />
