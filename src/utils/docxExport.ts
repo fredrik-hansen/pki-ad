@@ -1,5 +1,5 @@
 
-import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType } from 'docx';
+import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, PageBreak } from 'docx';
 
 const extractTextFromElement = (element: Element | null): string => {
   if (!element) return '';
@@ -72,18 +72,27 @@ const extractDataFromPage = () => {
   const availability = extractTextFromElement(document.querySelector('[data-availability]'));
   const specialization = extractTextFromElement(document.querySelector('[data-specialization]'));
   
-  // Extract experience data from read-only components if available
+  // Extract professional experience from the Experience section
   const experienceSection = document.querySelector('#experience');
   let experiences: any[] = [];
   if (experienceSection) {
-    const expItems = experienceSection.querySelectorAll('[data-experience-item]');
-    experiences = Array.from(expItems).map(item => ({
-      title: extractTextFromElement(item.querySelector('[data-job-title]')),
-      company: extractTextFromElement(item.querySelector('[data-company]')),
-      period: extractTextFromElement(item.querySelector('[data-period]')),
-      description: extractTextFromElement(item.querySelector('[data-description]')),
-      achievements: Array.from(item.querySelectorAll('[data-achievement]')).map(el => extractTextFromElement(el))
-    }));
+    // Find all experience items within the experience section
+    const expCards = experienceSection.querySelectorAll('.group.relative');
+    experiences = Array.from(expCards).map(card => {
+      const titleElement = card.querySelector('h3');
+      const companyElement = card.querySelector('.text-blue-400.font-medium');
+      const periodElement = card.querySelector('.text-slate-400.text-sm');
+      const industryElement = card.querySelector('.text-slate-500.text-xs');
+      const highlightElements = card.querySelectorAll('.flex.items-start.space-x-2 p');
+      
+      return {
+        title: extractTextFromElement(titleElement),
+        company: extractTextFromElement(companyElement),
+        period: extractTextFromElement(periodElement),
+        industry: extractTextFromElement(industryElement),
+        highlights: Array.from(highlightElements).map(el => extractTextFromElement(el))
+      };
+    });
   }
   
   // Extract certifications if available
@@ -200,65 +209,6 @@ export const generateDOCX = () => {
           ),
           new Paragraph({ text: "" }),
 
-          // Professional Experience (if available)
-          ...(data.experiences.length > 0 ? [
-            new Paragraph({
-              heading: HeadingLevel.HEADING_1,
-              children: [
-                new TextRun({
-                  text: "PROFESSIONAL EXPERIENCE",
-                  bold: true,
-                  size: 24,
-                  font: "Calibri"
-                })
-              ]
-            }),
-            ...data.experiences.flatMap((exp: any) => [
-              new Paragraph({
-                children: [
-                  new TextRun({
-                    text: `${exp.title} - ${exp.company}`,
-                    bold: true,
-                    size: 22,
-                    font: "Calibri"
-                  })
-                ]
-              }),
-              new Paragraph({
-                children: [
-                  new TextRun({
-                    text: exp.period,
-                    italics: true,
-                    size: 20,
-                    font: "Calibri"
-                  })
-                ]
-              }),
-              new Paragraph({
-                children: [
-                  new TextRun({
-                    text: exp.description,
-                    size: 20,
-                    font: "Calibri"
-                  })
-                ]
-              }),
-              ...exp.achievements.map((achievement: string) =>
-                new Paragraph({
-                  children: [
-                    new TextRun({
-                      text: `• ${achievement}`,
-                      size: 20,
-                      font: "Calibri"
-                    })
-                  ]
-                })
-              ),
-              new Paragraph({ text: "" })
-            ]),
-            new Paragraph({ text: "" })
-          ] : []),
-
           // Current Role
           new Paragraph({
             heading: HeadingLevel.HEADING_1,
@@ -281,6 +231,58 @@ export const generateDOCX = () => {
             ]
           }),
           new Paragraph({ text: "" }),
+
+          // Page break after Current Role
+          new Paragraph({
+            children: [new PageBreak()]
+          }),
+
+          // Professional Experience
+          new Paragraph({
+            heading: HeadingLevel.HEADING_1,
+            children: [
+              new TextRun({
+                text: "PROFESSIONAL EXPERIENCE",
+                bold: true,
+                size: 24,
+                font: "Calibri"
+              })
+            ]
+          }),
+          ...data.experiences.flatMap((exp: any) => [
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `${exp.title} - ${exp.company}`,
+                  bold: true,
+                  size: 22,
+                  font: "Calibri"
+                })
+              ]
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `${exp.period} | ${exp.industry}`,
+                  italics: true,
+                  size: 20,
+                  font: "Calibri"
+                })
+              ]
+            }),
+            ...exp.highlights.map((highlight: string) =>
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: `• ${highlight}`,
+                    size: 20,
+                    font: "Calibri"
+                  })
+                ]
+              })
+            ),
+            new Paragraph({ text: "" })
+          ]),
 
           // Technical Competencies
           new Paragraph({
