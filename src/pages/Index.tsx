@@ -9,11 +9,14 @@ import { VolunteerWork } from "../components/VolunteerWork";
 import { Contact } from "../components/Contact";
 import { Navigation } from "../components/Navigation";
 import { PDFExportButton } from "../components/PDFExportButton";
+import { DOCXExportButton } from "../components/DOCXExportButton";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-slate-950 text-white">
       <Navigation />
+      <PDFExportButton />
+      <DOCXExportButton />
        
       <Hero />
       <About />
