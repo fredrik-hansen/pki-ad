@@ -1,4 +1,3 @@
-
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, PageBreak } from 'docx';
 
 const extractTextFromElement = (element: Element | null): string => {
@@ -131,6 +130,19 @@ const extractDataFromPage = () => {
 export const generateDOCX = () => {
   const data = extractDataFromPage();
   
+  // Create language paragraphs
+  const languageParagraphs = data.languages.map((lang: any) =>
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: `• ${lang.name}: ${lang.level}`,
+          size: 20,
+          font: "Calibri"
+        })
+      ]
+    })
+  );
+
   // Create the document
   const doc = new Document({
     sections: [
@@ -236,7 +248,6 @@ export const generateDOCX = () => {
           new Paragraph({
             children: [new PageBreak()]
           }),
-
 
           // Technical Competencies
           new Paragraph({
@@ -437,16 +448,9 @@ export const generateDOCX = () => {
               })
             ]
           }),
-          ...data.languages.map((lang: any) =>
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: `• ${lang.name}: ${lang.level}`,
-                  size: 20,
-                  font: "Calibri"
-                })
-              ]
-            }),
+          ...languageParagraphs,
+          new Paragraph({ text: "" }),
+
           // Professional Experience
           new Paragraph({
             heading: HeadingLevel.HEADING_1,
@@ -492,9 +496,7 @@ export const generateDOCX = () => {
               })
             ),
             new Paragraph({ text: "" })
-          ]),
-                                
-          )
+          ])
         ]
       }
     ]
