@@ -237,52 +237,6 @@ export const generateDOCX = () => {
             children: [new PageBreak()]
           }),
 
-          // Professional Experience
-          new Paragraph({
-            heading: HeadingLevel.HEADING_1,
-            children: [
-              new TextRun({
-                text: "PROFESSIONAL EXPERIENCE",
-                bold: true,
-                size: 24,
-                font: "Calibri"
-              })
-            ]
-          }),
-          ...data.experiences.flatMap((exp: any) => [
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: `${exp.title} - ${exp.company}`,
-                  bold: true,
-                  size: 22,
-                  font: "Calibri"
-                })
-              ]
-            }),
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: `${exp.period} | ${exp.industry}`,
-                  italics: true,
-                  size: 20,
-                  font: "Calibri"
-                })
-              ]
-            }),
-            ...exp.highlights.map((highlight: string) =>
-              new Paragraph({
-                children: [
-                  new TextRun({
-                    text: `• ${highlight}`,
-                    size: 20,
-                    font: "Calibri"
-                  })
-                ]
-              })
-            ),
-            new Paragraph({ text: "" })
-          ]),
 
           // Technical Competencies
           new Paragraph({
@@ -492,7 +446,54 @@ export const generateDOCX = () => {
                   font: "Calibri"
                 })
               ]
-            })
+            }),
+          // Professional Experience
+          new Paragraph({
+            heading: HeadingLevel.HEADING_1,
+            children: [
+              new TextRun({
+                text: "PROFESSIONAL EXPERIENCE",
+                bold: true,
+                size: 24,
+                font: "Calibri"
+              })
+            ]
+          }),
+          ...data.experiences.flatMap((exp: any) => [
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `${exp.title} - ${exp.company}`,
+                  bold: true,
+                  size: 22,
+                  font: "Calibri"
+                })
+              ]
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `${exp.period} | ${exp.industry}`,
+                  italics: true,
+                  size: 20,
+                  font: "Calibri"
+                })
+              ]
+            }),
+            ...exp.highlights.map((highlight: string) =>
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: `• ${highlight}`,
+                    size: 20,
+                    font: "Calibri"
+                  })
+                ]
+              })
+            ),
+            new Paragraph({ text: "" })
+          ]),
+                                
           )
         ]
       }
