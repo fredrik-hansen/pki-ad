@@ -1,129 +1,127 @@
 
-import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, BorderStyle } from 'docx';
+import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType } from 'docx';
 
-interface ExperienceItem {
-  title: string;
-  company: string;
-  period: string;
-  description: string;
-  achievements: string[];
-}
+const extractTextFromElement = (element: Element | null): string => {
+  if (!element) return '';
+  return element.textContent?.trim() || '';
+};
 
-interface CertificationItem {
-  title: string;
-  issuer: string;
-  date: string;
-  level?: string;
-  category: string;
-}
-
-interface VolunteerItem {
-  title: string;
-  organization: string;
-  period: string;
-  description: string;
-  impact: string;
-}
+const extractDataFromPage = () => {
+  // Extract personal information
+  const heroSection = document.querySelector('[data-section="hero"]');
+  const name = extractTextFromElement(document.querySelector('[data-name]'));
+  const title = extractTextFromElement(document.querySelector('[data-title]'));
+  const summary = extractTextFromElement(document.querySelector('[data-summary]'));
+  
+  // Extract contact information
+  const email = document.querySelector('[data-email]')?.getAttribute('data-email') || '';
+  const location = document.querySelector('[data-location]')?.getAttribute('data-location') || '';
+  
+  // Extract highlights from About section
+  const highlightElements = document.querySelectorAll('[data-highlight]');
+  const highlights = Array.from(highlightElements).map(el => 
+    el.getAttribute('data-highlight') || extractTextFromElement(el)
+  );
+  
+  // Extract industries
+  const industryElements = document.querySelectorAll('[data-industry]');
+  const industries = Array.from(industryElements).map(el => 
+    el.getAttribute('data-industry') || extractTextFromElement(el)
+  );
+  
+  // Extract languages
+  const languageElements = document.querySelectorAll('[data-language]');
+  const languages = Array.from(languageElements).map(el => ({
+    name: el.getAttribute('data-language') || '',
+    level: el.getAttribute('data-level') || ''
+  }));
+  
+  // Extract technical competencies
+  const competencyElements = document.querySelectorAll('[data-category]');
+  const competencies = Array.from(competencyElements).map(categoryEl => {
+    const category = categoryEl.getAttribute('data-category') || '';
+    const skillElements = categoryEl.querySelectorAll('[data-skill]');
+    const skills = Array.from(skillElements).map(skillEl => 
+      skillEl.getAttribute('data-skill') || extractTextFromElement(skillEl)
+    );
+    return { category, skills };
+  });
+  
+  // Extract volunteer work
+  const volunteerElements = document.querySelectorAll('[data-volunteer-role]');
+  const volunteerWork = Array.from(volunteerElements).map(el => ({
+    title: el.getAttribute('data-title') || '',
+    organization: el.getAttribute('data-organization') || '',
+    period: el.getAttribute('data-period') || '',
+    description: el.getAttribute('data-description') || '',
+    impact: el.getAttribute('data-impact') || ''
+  }));
+  
+  // Extract speaking engagements
+  const speakingElements = document.querySelectorAll('[data-speaking-engagement]');
+  const speakingEngagements = Array.from(speakingElements).map(el => ({
+    event: el.getAttribute('data-event') || '',
+    location: el.getAttribute('data-location') || '',
+    topic: el.getAttribute('data-topic') || '',
+    audience: el.getAttribute('data-audience') || '',
+    description: el.getAttribute('data-description') || ''
+  }));
+  
+  // Extract current role information
+  const currentRole = extractTextFromElement(document.querySelector('[data-current-role]'));
+  const availability = extractTextFromElement(document.querySelector('[data-availability]'));
+  const specialization = extractTextFromElement(document.querySelector('[data-specialization]'));
+  
+  // Extract experience data from read-only components if available
+  const experienceSection = document.querySelector('#experience');
+  let experiences: any[] = [];
+  if (experienceSection) {
+    const expItems = experienceSection.querySelectorAll('[data-experience-item]');
+    experiences = Array.from(expItems).map(item => ({
+      title: extractTextFromElement(item.querySelector('[data-job-title]')),
+      company: extractTextFromElement(item.querySelector('[data-company]')),
+      period: extractTextFromElement(item.querySelector('[data-period]')),
+      description: extractTextFromElement(item.querySelector('[data-description]')),
+      achievements: Array.from(item.querySelectorAll('[data-achievement]')).map(el => extractTextFromElement(el))
+    }));
+  }
+  
+  // Extract certifications if available
+  const certificationSection = document.querySelector('#certifications');
+  let certifications: any[] = [];
+  if (certificationSection) {
+    const certItems = certificationSection.querySelectorAll('[data-certification]');
+    certifications = Array.from(certItems).map(item => ({
+      title: extractTextFromElement(item.querySelector('[data-cert-title]')),
+      issuer: extractTextFromElement(item.querySelector('[data-cert-issuer]')),
+      date: extractTextFromElement(item.querySelector('[data-cert-date]')),
+      category: extractTextFromElement(item.querySelector('[data-cert-category]'))
+    }));
+  }
+  
+  return {
+    name,
+    title,
+    summary,
+    email,
+    location,
+    highlights,
+    industries,
+    languages,
+    competencies,
+    volunteerWork,
+    speakingEngagements,
+    currentRole,
+    availability,
+    specialization,
+    experiences,
+    certifications
+  };
+};
 
 export const generateDOCX = () => {
-  // Extract personal information
-  const name = "Fredrik Hansen";
-  const title = "Senior IT & Information Security Expert";
-  const email = "fh@pki.ad";
-  const location = "Europe (CET)";
+  const data = extractDataFromPage();
   
-  // Extract about section highlights
-  const highlights = [
-    "26+ years of expertise in IT and Information Security",
-    "6-year track record in machine learning engineering", 
-    "Working roles: CSO, Lead Security Engineer, Security Architect",
-    "Comprehensive operational experience across cybersecurity domains",
-    "Pragmatic, solution-oriented approach with hands-on technical skills",
-    "Board-level discussions and technical team collaboration"
-  ];
-
-  // Extract experience data (this would ideally come from a data source)
-  const experiences: ExperienceItem[] = [
-    {
-      title: "CEO",
-      company: "Digital Companion",
-      period: "2023 - Present",
-      description: "Leading cybersecurity consulting and AI security initiatives",
-      achievements: [
-        "Strategic cybersecurity consulting for enterprise clients",
-        "AI security risk assessment and mitigation strategies",
-        "Board-level cybersecurity advisory services"
-      ]
-    }
-    // Add more experiences as needed
-  ];
-
-  // Extract certifications
-  const certifications: CertificationItem[] = [
-    {
-      title: "Cluster Munitions",
-      issuer: "United Nations Office for Disarmament Affairs",
-      date: "October 2023",
-      level: "Introductory",
-      category: "Weapons Systems"
-    },
-    {
-      title: "Lethal Autonomous Weapon Systems", 
-      issuer: "United Nations Office for Disarmament Affairs",
-      date: "October 2023",
-      level: "Introductory", 
-      category: "Weapons Systems"
-    },
-    {
-      title: "Nuclear Security",
-      issuer: "United Nations Office for Disarmament Affairs",
-      date: "October 2023",
-      level: "Introductory",
-      category: "Nuclear Security"
-    },
-    {
-      title: "Introduction to Disarmament",
-      issuer: "United Nations Office for Disarmament Affairs", 
-      date: "October 2023",
-      level: "Introductory",
-      category: "International Relations"
-    }
-  ];
-
-  // Extract volunteer work
-  const volunteerWork: VolunteerItem[] = [
-    {
-      title: "Chairman, PK 636",
-      organization: "Swedish Institute for Standards",
-      period: "2021 - 2023", 
-      description: "Led the creation of a Swedish adaptation of the NIST Cybersecurity Framework",
-      impact: "National cybersecurity framework development"
-    },
-    {
-      title: "Contributing Researcher",
-      organization: "UN Internet Governance Forum - Policy Network on AI",
-      period: "2023",
-      description: "Spearheaded collaborative ideation focusing on leveraging AI technology",
-      impact: "Global AI governance policy development"
-    }
-  ];
-
-  // Extract technical competencies
-  const competencies = [
-    {
-      category: "Security Frameworks & Standards",
-      skills: ["ISO 27001/27002/27005/27019", "NIST Cybersecurity Framework", "CIS Controls", "PCI DSS", "SOC 2", "GDPR", "DORA", "SBOM"]
-    },
-    {
-      category: "AI & Machine Learning Security", 
-      skills: ["Data Model Security", "Adversarial Attacks", "Data Poisoning & Quality", "Data Privacy", "Model Repurposing", "AI Risk Assessment"]
-    },
-    {
-      category: "Security Engineering & Architecture",
-      skills: ["SAST/DAST", "Security SDLC", "Container Security", "CSPM", "Shift Left Security", "Cloud Security", "SCADA Security"]
-    }
-  ];
-
   // Create the document
   const doc = new Document({
     sections: [
@@ -135,7 +133,7 @@ export const generateDOCX = () => {
             alignment: AlignmentType.CENTER,
             children: [
               new TextRun({
-                text: name,
+                text: data.name,
                 bold: true,
                 size: 32,
                 font: "Calibri"
@@ -146,7 +144,7 @@ export const generateDOCX = () => {
             alignment: AlignmentType.CENTER,
             children: [
               new TextRun({
-                text: title,
+                text: data.title,
                 size: 24,
                 font: "Calibri",
                 color: "2563EB"
@@ -157,7 +155,7 @@ export const generateDOCX = () => {
             alignment: AlignmentType.CENTER,
             children: [
               new TextRun({
-                text: `${email} | ${location}`,
+                text: `${data.email} | ${data.location}`,
                 size: 20,
                 font: "Calibri"
               })
@@ -177,12 +175,24 @@ export const generateDOCX = () => {
               })
             ]
           }),
-          ...highlights.map(highlight => 
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: data.summary,
+                size: 22,
+                font: "Calibri"
+              })
+            ]
+          }),
+          new Paragraph({ text: "" }),
+          
+          // Key Highlights
+          ...data.highlights.map(highlight => 
             new Paragraph({
               children: [
                 new TextRun({
                   text: `• ${highlight}`,
-                  size: 22,
+                  size: 20,
                   font: "Calibri"
                 })
               ]
@@ -190,61 +200,87 @@ export const generateDOCX = () => {
           ),
           new Paragraph({ text: "" }),
 
-          // Professional Experience
+          // Professional Experience (if available)
+          ...(data.experiences.length > 0 ? [
+            new Paragraph({
+              heading: HeadingLevel.HEADING_1,
+              children: [
+                new TextRun({
+                  text: "PROFESSIONAL EXPERIENCE",
+                  bold: true,
+                  size: 24,
+                  font: "Calibri"
+                })
+              ]
+            }),
+            ...data.experiences.flatMap((exp: any) => [
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: `${exp.title} - ${exp.company}`,
+                    bold: true,
+                    size: 22,
+                    font: "Calibri"
+                  })
+                ]
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: exp.period,
+                    italics: true,
+                    size: 20,
+                    font: "Calibri"
+                  })
+                ]
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: exp.description,
+                    size: 20,
+                    font: "Calibri"
+                  })
+                ]
+              }),
+              ...exp.achievements.map((achievement: string) =>
+                new Paragraph({
+                  children: [
+                    new TextRun({
+                      text: `• ${achievement}`,
+                      size: 20,
+                      font: "Calibri"
+                    })
+                  ]
+                })
+              ),
+              new Paragraph({ text: "" })
+            ]),
+            new Paragraph({ text: "" })
+          ] : []),
+
+          // Current Role
           new Paragraph({
             heading: HeadingLevel.HEADING_1,
             children: [
               new TextRun({
-                text: "PROFESSIONAL EXPERIENCE",
+                text: "CURRENT ROLE",
                 bold: true,
                 size: 24,
                 font: "Calibri"
               })
             ]
           }),
-          ...experiences.flatMap(exp => [
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: `${exp.title} - ${exp.company}`,
-                  bold: true,
-                  size: 22,
-                  font: "Calibri"
-                })
-              ]
-            }),
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: exp.period,
-                  italics: true,
-                  size: 20,
-                  font: "Calibri"
-                })
-              ]
-            }),
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: exp.description,
-                  size: 22,
-                  font: "Calibri"
-                })
-              ]
-            }),
-            ...exp.achievements.map(achievement =>
-              new Paragraph({
-                children: [
-                  new TextRun({
-                    text: `• ${achievement}`,
-                    size: 20,
-                    font: "Calibri"
-                  })
-                ]
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: `${data.currentRole} • ${data.availability} • ${data.specialization}`,
+                size: 20,
+                font: "Calibri"
               })
-            ),
-            new Paragraph({ text: "" })
-          ]),
+            ]
+          }),
+          new Paragraph({ text: "" }),
 
           // Technical Competencies
           new Paragraph({
@@ -258,7 +294,7 @@ export const generateDOCX = () => {
               })
             ]
           }),
-          ...competencies.flatMap(comp => [
+          ...data.competencies.flatMap((comp: any) => [
             new Paragraph({
               children: [
                 new TextRun({
@@ -281,32 +317,34 @@ export const generateDOCX = () => {
             new Paragraph({ text: "" })
           ]),
 
-          // Certifications
-          new Paragraph({
-            heading: HeadingLevel.HEADING_1,
-            children: [
-              new TextRun({
-                text: "CERTIFICATIONS",
-                bold: true,
-                size: 24,
-                font: "Calibri"
-              })
-            ]
-          }),
-          ...certifications.map(cert =>
+          // Certifications (if available)
+          ...(data.certifications.length > 0 ? [
             new Paragraph({
+              heading: HeadingLevel.HEADING_1,
               children: [
                 new TextRun({
-                  text: `• ${cert.title} - ${cert.issuer} (${cert.date})`,
-                  size: 20,
+                  text: "CERTIFICATIONS",
+                  bold: true,
+                  size: 24,
                   font: "Calibri"
                 })
               ]
-            })
-          ),
-          new Paragraph({ text: "" }),
+            }),
+            ...data.certifications.map((cert: any) =>
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: `• ${cert.title} - ${cert.issuer} (${cert.date})`,
+                    size: 20,
+                    font: "Calibri"
+                  })
+                ]
+              })
+            ),
+            new Paragraph({ text: "" })
+          ] : []),
 
-          // Volunteer Work
+          // Volunteer Work & Leadership
           new Paragraph({
             heading: HeadingLevel.HEADING_1,
             children: [
@@ -318,7 +356,7 @@ export const generateDOCX = () => {
               })
             ]
           }),
-          ...volunteerWork.flatMap(vol => [
+          ...data.volunteerWork.flatMap((vol: any) => [
             new Paragraph({
               children: [
                 new TextRun({
@@ -349,7 +387,111 @@ export const generateDOCX = () => {
               ]
             }),
             new Paragraph({ text: "" })
-          ])
+          ]),
+
+          // Speaking Engagements
+          new Paragraph({
+            heading: HeadingLevel.HEADING_1,
+            children: [
+              new TextRun({
+                text: "SPEAKING ENGAGEMENTS",
+                bold: true,
+                size: 24,
+                font: "Calibri"
+              })
+            ]
+          }),
+          ...data.speakingEngagements.flatMap((engagement: any) => [
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `${engagement.event} - ${engagement.location}`,
+                  bold: true,
+                  size: 22,
+                  font: "Calibri"
+                })
+              ]
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: engagement.topic,
+                  italics: true,
+                  size: 20,
+                  font: "Calibri"
+                })
+              ]
+            }),
+            ...(engagement.audience ? [
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: engagement.audience,
+                    size: 18,
+                    font: "Calibri",
+                    color: "666666"
+                  })
+                ]
+              })
+            ] : []),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: engagement.description,
+                  size: 20,
+                  font: "Calibri"
+                })
+              ]
+            }),
+            new Paragraph({ text: "" })
+          ]),
+
+          // Industry Experience
+          new Paragraph({
+            heading: HeadingLevel.HEADING_1,
+            children: [
+              new TextRun({
+                text: "INDUSTRY EXPERIENCE",
+                bold: true,
+                size: 24,
+                font: "Calibri"
+              })
+            ]
+          }),
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: data.industries.join(" • "),
+                size: 20,
+                font: "Calibri"
+              })
+            ]
+          }),
+          new Paragraph({ text: "" }),
+
+          // Languages
+          new Paragraph({
+            heading: HeadingLevel.HEADING_1,
+            children: [
+              new TextRun({
+                text: "LANGUAGES",
+                bold: true,
+                size: 24,
+                font: "Calibri"
+              })
+            ]
+          }),
+          ...data.languages.map((lang: any) =>
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `• ${lang.name}: ${lang.level}`,
+                  size: 20,
+                  font: "Calibri"
+                })
+              ]
+            })
+          )
         ]
       }
     ]
@@ -360,7 +502,7 @@ export const generateDOCX = () => {
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `Resume_${name.replace(/\s+/g, '_')}.docx`;
+    link.download = `Resume_${data.name.replace(/\s+/g, '_')}.docx`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

@@ -3,7 +3,7 @@ import { Mail } from "lucide-react";
 
 export const Contact = () => {
   return (
-    <section id="contact" className="py-20 bg-slate-900/50">
+    <section id="contact" className="py-20 bg-slate-900/50" data-section="contact">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
@@ -17,7 +17,7 @@ export const Contact = () => {
 
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            <div className="text-center">
+            <div className="text-center" data-email="fh@pki.ad">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600/20 rounded-full mb-4">
                 <Mail className="text-blue-400" size={32} />
               </div>
@@ -30,7 +30,7 @@ export const Contact = () => {
               </a>
             </div>
 
-            <div className="text-center">
+            <div className="text-center" data-location="Europe (CET)">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-cyan-600/20 rounded-full mb-4">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-cyan-400"></div>
               </div>
@@ -40,18 +40,18 @@ export const Contact = () => {
           </div>
 
           <div className="text-center">
-            <div className="inline-flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8 p-8 bg-slate-800/50 rounded-lg border border-slate-700/50">
-              <div className="text-center">
+            <div className="inline-flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8 p-8 bg-slate-800/50 rounded-lg border border-slate-700/50" data-current-info>
+              <div className="text-center" data-current-role="CEO, Digital Companion">
                 <p className="text-slate-400 text-sm mb-1">Current Role</p>
                 <p className="text-white font-medium">CEO, Digital Companion</p>
               </div>
               <div className="w-px h-12 bg-slate-600 hidden md:block"></div>
-              <div className="text-center">
+              <div className="text-center" data-availability="Open for Consulting">
                 <p className="text-slate-400 text-sm mb-1">Availability</p>
                 <p className="text-green-400 font-medium">Open for Consulting</p>
               </div>
               <div className="w-px h-12 bg-slate-600 hidden md:block"></div>
-              <div className="text-center">
+              <div className="text-center" data-specialization="Cybersecurity & AI Security">
                 <p className="text-slate-400 text-sm mb-1">Specialization</p>
                 <p className="text-white font-medium">Cybersecurity & AI Security</p>
               </div>

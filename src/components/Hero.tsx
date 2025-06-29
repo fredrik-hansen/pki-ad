@@ -7,22 +7,22 @@ export const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-blue-950/20 to-slate-950"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)]"></div>
       
-      <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
+      <div className="relative z-10 text-center max-w-4xl mx-auto px-4" data-section="hero">
         <div className="mb-8 animate-fade-in">
           <div className="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-2xl shadow-blue-500/20">
             <User size={64} className="text-white" />
           </div>
         </div>
         
-        <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-blue-200 to-cyan-300 bg-clip-text text-transparent animate-fade-in">
+        <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-blue-200 to-cyan-300 bg-clip-text text-transparent animate-fade-in" data-name="Fredrik Hansen">
           Fredrik Hansen
         </h1>
         
-        <p className="text-xl md:text-2xl text-blue-400 mb-4 animate-fade-in">
+        <p className="text-xl md:text-2xl text-blue-400 mb-4 animate-fade-in" data-title="Senior IT & Information Security Expert">
           Senior IT & Information Security Expert
         </p>
         
-        <p className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-in">
+        <p className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-in" data-summary="26+ years of cybersecurity expertise • Security architecture & engineering • AI security specialist • Board-level strategic advisor">
           26+ years of cybersecurity expertise • Security architecture & engineering • 
           AI security specialist • Board-level strategic advisor
         </p>

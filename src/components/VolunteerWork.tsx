@@ -54,7 +54,7 @@ export const VolunteerWork = () => {
   ];
 
   return (
-    <section id="volunteer" className="py-20 bg-slate-950">
+    <section id="volunteer" className="py-20 bg-slate-950" data-section="volunteer">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
@@ -73,9 +73,9 @@ export const VolunteerWork = () => {
               Volunteer & Research Roles
             </h3>
             
-            <div className="space-y-6">
+            <div className="space-y-6" data-volunteer-roles>
               {volunteerRoles.map((role, index) => (
-                <div key={index} className="p-6 bg-slate-900/50 rounded-lg border border-slate-800 hover:border-blue-500/50 transition-all duration-300">
+                <div key={index} className="p-6 bg-slate-900/50 rounded-lg border border-slate-800 hover:border-blue-500/50 transition-all duration-300" data-volunteer-role data-title={role.title} data-organization={role.organization} data-period={role.period} data-description={role.description} data-impact={role.impact}>
                   <div className="mb-4">
                     <h4 className="text-lg font-semibold text-white mb-1">{role.title}</h4>
                     <p className="text-blue-400 font-medium text-sm">{role.organization}</p>
@@ -99,9 +99,9 @@ export const VolunteerWork = () => {
               Speaking Engagements
             </h3>
             
-            <div className="space-y-6">
+            <div className="space-y-6" data-speaking-engagements>
               {speakingEngagements.map((engagement, index) => (
-                <div key={index} className="p-6 bg-slate-900/50 rounded-lg border border-slate-800 hover:border-cyan-500/50 transition-all duration-300">
+                <div key={index} className="p-6 bg-slate-900/50 rounded-lg border border-slate-800 hover:border-cyan-500/50 transition-all duration-300" data-speaking-engagement data-event={engagement.event} data-location={engagement.location} data-topic={engagement.topic} data-audience={engagement.audience} data-description={engagement.description}>
                   <div className="mb-4">
                     <h4 className="text-lg font-semibold text-white mb-1">{engagement.event}</h4>
                     <p className="text-cyan-400 font-medium text-sm">{engagement.location}</p>
