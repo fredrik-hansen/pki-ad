@@ -1,0 +1,966 @@
+stages:
+  - install
+  - lint
+  - security
+  - test
+  - coverage
+  - build
+  - scan
+  - sonarqube
+  - performance
+  - api_testing
+  - accessibility
+  - visual_regression
+  - documentation
+  - compliance
+  - chaos_engineering
+  - monitoring
+  - backup_testing
+  - multi_environment
+  - deploy
+  - release
+  - dependency_updates
+
+variables:
+  DOCKER_BACKEND_IMAGE: "$CI_REGISTRY_IMAGE/backend"
+  DOCKER_FRONTEND_IMAGE: "$CI_REGISTRY_IMAGE/frontend"
+  DOCKER_BUILDKIT: 1
+  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+  GIT_DEPTH: "0"
+
+cache:
+  paths:
+    - backend/.venv/
+    - backend/.mypy_cache/
+    - backend/.pytest_cache/
+    - frontend/node_modules/
+    - frontend/coverage/
+    - backend/htmlcov/
+
+##############################
+# 1. Install Dependencies    #
+##############################
+install_backend:
+  image: python:3.11
+  allow_failure: true
+  stage: install
+  script:
+    - pip install --upgrade pip
+    - cd backend
+    - pip install -r requirements.txt
+  artifacts:
+    paths:
+      - backend/.venv/
+    expire_in: 1h
+
+install_frontend:
+  image: node:23-alpine
+  allow_failure: true
+  stage: install
+  script:
+    - if [ -d frontend ]; then cd frontend; fi
+    - npm i
+    - npm ci
+  artifacts:
+    paths:
+      - frontend/node_modules/
+    expire_in: 1h
+
+##############################
+# 2. Linting                 #
+##############################
+lint_backend:
+  image: python:3.11
+  stage: lint
+  before_script:
+    - pip install --upgrade pip
+    - cd backend
+    - pip install -r requirements.txt
+  script:
+    - pip install flake8
+    - flake8 . --exit-zero --format=html --htmldir=flake8-report || true
+  allow_failure: true
+  artifacts:
+    paths:
+      - backend/flake8-report/
+    expire_in: 30m
+
+lint_frontend:
+  image: node:23-alpine
+  stage: lint
+  before_script:
+    - if [ -d frontend ]; then cd frontend; fi
+    - npm i
+    - npm ci
+  script:
+    - npx eslint . --ext .ts,.tsx --output-file eslint-report.txt || true
+  allow_failure: true
+  artifacts:
+    paths:
+      - frontend/eslint-report.txt
+    expire_in: 30m
+
+##############################
+# 3. Security                #
+##############################
+security_backend:
+  image: python:3.11
+  stage: security
+  before_script:
+    - pip install --upgrade pip
+    - cd backend
+    - pip install -r requirements.txt
+    - pip install bandit
+  script:
+    - bandit -r . -f html -o bandit-report.html || true
+  allow_failure: true
+  artifacts:
+    paths:
+      - backend/bandit-report.html
+    expire_in: 30m
+
+security_frontend:
+  image: node:23-alpine
+  stage: security
+  before_script:
+    - if [ -d frontend ]; then cd frontend; fi
+    - npm i
+    - npm ci
+  script:
+    - npx audit-ci --moderate --report-type=summary || npm audit --audit-level=moderate || true
+  allow_failure: true
+
+##############################
+# 4. Automated Tests         #
+##############################
+test_backend:
+  image: python:3.11
+  allow_failure: true
+  stage: test
+  before_script:
+    - pip install --upgrade pip
+    - cd backend
+    - pip install -r requirements.txt
+    - pip install pytest pytest-cov
+  script:
+    - pytest --cov=. --cov-report html --cov-report xml
+  artifacts:
+    paths:
+      - backend/htmlcov/
+      - backend/coverage.xml
+    reports:
+      junit: backend/junit.xml
+    expire_in: 1h
+
+test_frontend:
+  image: node:23-alpine
+  allow_failure: true
+  stage: test
+  before_script:
+    - if [ -d frontend ]; then cd frontend; fi
+    - npm i
+    
+    - npm ci
+  script:
+    - npx vitest run --coverage || npx jest --coverage
+  artifacts:
+    paths:
+      - frontend/coverage/
+    expire_in: 1h
+
+##############################
+# 5. Coverage                #
+##############################
+coverage_backend:
+  image: python:3.11
+  allow_failure: true
+  stage: coverage
+  script:
+    - cd backend
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+    - pip install pytest pytest-cov
+    - pytest --cov=. --cov-report html --cov-report xml
+  artifacts:
+    paths:
+      - backend/htmlcov/
+      - backend/coverage.xml
+    expire_in: 1h
+  dependencies: [test_backend]
+  needs: [test_backend]
+
+coverage_frontend:
+  image: node:23-alpine
+  allow_failure: true
+  stage: coverage
+  script:
+    - if [ -d frontend ]; then cd frontend; fi
+    - npm i
+    - npm ci
+    - npx vitest run --coverage || npx jest --coverage
+  artifacts:
+    paths:
+      - frontend/coverage/
+    expire_in: 1h
+  dependencies: [test_frontend]
+  needs: [test_frontend]
+
+##############################
+# 6. E2E Testing (Playwright)#
+##############################
+e2e_frontend:
+  image: mcr.microsoft.com/playwright:v1.44.0-jammy
+  allow_failure: true
+  stage: test
+  variables:
+    HOME: /root
+  before_script:
+    - if [ -d frontend ]; then cd frontend; fi
+    - npm i
+    - npm ci
+  script:
+    - npx playwright install --with-deps
+    - npx playwright test || echo "E2E test failures"
+  artifacts:
+    when: always
+    paths:
+      - frontend/playwright-report
+    expire_in: 1h
+  allow_failure: true
+
+##############################
+# 7. Build Images            #
+##############################
+build_sonarqube_scanner:
+  image: docker:latest
+  allow_failure: true
+  stage: build
+  services:
+    - docker:dind
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker build -f Dockerfile.sonarqube-scanner -t $CI_REGISTRY_IMAGE/sonarqube-scanner:$CI_COMMIT_SHA .
+    - docker push $CI_REGISTRY_IMAGE/sonarqube-scanner:$CI_COMMIT_SHA
+  only:
+    - branches
+    - merge_requests
+  artifacts:
+    expire_in: 1h
+
+build_backend:
+  image: docker:latest
+  allow_failure: true
+  stage: build
+  services:
+    - docker:dind
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker build -t $DOCKER_BACKEND_IMAGE:$CI_COMMIT_SHA ./backend
+    - docker push $DOCKER_BACKEND_IMAGE:$CI_COMMIT_SHA
+  only:
+    - branches
+    - merge_requests
+  artifacts:
+    expire_in: 1h
+
+build_frontend:
+  image: docker:latest
+  allow_failure: true
+  stage: build
+  services:
+    - docker:dind
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker build -t $DOCKER_FRONTEND_IMAGE:$CI_COMMIT_SHA .
+    - docker push $DOCKER_FRONTEND_IMAGE:$CI_COMMIT_SHA
+  only:
+    - branches
+    - merge_requests
+  artifacts:
+    expire_in: 1h
+
+##############################
+# 8. Container Scanning      #
+##############################
+scan_backend_image:
+  image: aquasec/trivy:latest
+  allow_failure: true
+  stage: scan
+  script:
+    - trivy image --exit-code 0 --format table --output trivy-backend-report.txt $DOCKER_BACKEND_IMAGE:$CI_COMMIT_SHA
+    - trivy image --exit-code 1 --severity HIGH,CRITICAL $DOCKER_BACKEND_IMAGE:$CI_COMMIT_SHA || true
+  dependencies:
+    - build_backend
+  artifacts:
+    paths:
+      - trivy-backend-report.txt
+    expire_in: 1h
+
+scan_frontend_image:
+  image: aquasec/trivy:latest
+  allow_failure: true
+  stage: scan
+  script:
+    - trivy image --exit-code 0 --format table --output trivy-frontend-report.txt $DOCKER_FRONTEND_IMAGE:$CI_COMMIT_SHA
+    - trivy image --exit-code 1 --severity HIGH,CRITICAL $DOCKER_FRONTEND_IMAGE:$CI_COMMIT_SHA || true
+  dependencies:
+    - build_frontend
+  artifacts:
+    paths:
+      - trivy-frontend-report.txt
+    expire_in: 1h
+
+##############################
+# 9. SonarQube Analysis      #
+##############################
+sonarqube_backend:
+  image: $CI_REGISTRY_IMAGE/sonarqube-scanner:$CI_COMMIT_SHA
+  stage: sonarqube
+  services:
+    - name: sonarqube:community
+      alias: sonarqube
+  variables:
+    SONAR_HOST_URL: "http://sonarqube:9000"
+    SONAR_LOGIN: "admin"
+    SONAR_PASSWORD: "admin"
+  before_script:
+    - cd backend
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+    - pip install pytest pytest-cov
+    - pytest --cov=. --cov-report xml --cov-report html --junitxml=junit.xml
+  script:
+    - |
+      # Wait for SonarQube to be ready
+      until curl -s "$SONAR_HOST_URL/api/system/status" | grep -q '"status":"UP"'; do
+        echo "Waiting for SonarQube to be ready..."
+        sleep 10
+      done
+    - |
+      # Create sonar-project.properties
+      cat > sonar-project.properties << EOF
+      sonar.projectKey=${CI_PROJECT_PATH_SLUG}-backend
+      sonar.projectName=${CI_PROJECT_NAME} Backend
+      sonar.projectVersion=${CI_COMMIT_SHA}
+      sonar.sources=.
+      sonar.python.version=3.11
+      sonar.python.coverage.reportPaths=coverage.xml
+      sonar.python.xunit.reportPath=junit.xml
+      sonar.host.url=${SONAR_HOST_URL}
+      sonar.login=${SONAR_LOGIN}
+      sonar.password=${SONAR_PASSWORD}
+      sonar.scm.provider=git
+      sonar.scm.revision=${CI_COMMIT_SHA}
+      EOF
+    - sonar-scanner
+  dependencies:
+    - test_backend
+    - coverage_backend
+    - build_sonarqube_scanner
+  artifacts:
+    paths:
+      - backend/.scannerwork/
+      - backend/coverage.xml
+      - backend/junit.xml
+    expire_in: 1h
+  allow_failure: true
+
+sonarqube_frontend:
+  image: node:23-alpine
+  stage: sonarqube
+  services:
+    - name: sonarqube:community
+      alias: sonarqube
+  variables:
+    SONAR_HOST_URL: "http://sonarqube:9000"
+    SONAR_LOGIN: "admin"
+    SONAR_PASSWORD: "admin"
+  before_script:
+    - if [ -d frontend ]; then cd frontend; fi
+    - npm i
+    - npm ci
+    - npm install -g sonarqube-scanner
+    - npx vitest run --coverage || npx jest --coverage
+  script:
+    - |
+      # Wait for SonarQube to be ready
+      until curl -s "$SONAR_HOST_URL/api/system/status" | grep -q '"status":"UP"'; do
+        echo "Waiting for SonarQube to be ready..."
+        sleep 10
+      done
+    - |
+      # Create sonar-project.properties
+      cat > sonar-project.properties << EOF
+      sonar.projectKey=${CI_PROJECT_PATH_SLUG}-frontend
+      sonar.projectName=${CI_PROJECT_NAME} Frontend
+      sonar.projectVersion=${CI_COMMIT_SHA}
+      sonar.sources=src
+      sonar.tests=src
+      sonar.javascript.lcov.reportPaths=coverage/lcov.info
+      sonar.testExecutionReportPaths=coverage/test-report.xml
+      sonar.host.url=${SONAR_HOST_URL}
+      sonar.login=${SONAR_LOGIN}
+      sonar.password=${SONAR_PASSWORD}
+      sonar.scm.provider=git
+      sonar.scm.revision=${CI_COMMIT_SHA}
+      EOF
+    - sonar-scanner
+  dependencies:
+    - test_frontend
+    - coverage_frontend
+  artifacts:
+    paths:
+      - frontend/.scannerwork/
+      - frontend/coverage/
+    expire_in: 1h
+  allow_failure: true
+
+##############################
+# 10. Performance Testing    #
+##############################
+performance_backend:
+  image: k6io/k6:latest
+  stage: performance
+  variables:
+    K6_BROWSER_ENABLED: "true"
+  script:
+    - |
+      cat > load-test.js << EOF
+      import http from 'k6/http';
+      import { check, sleep } from 'k6';
+      
+      export const options = {
+        stages: [
+          { duration: '30s', target: 10 },
+          { duration: '1m', target: 10 },
+          { duration: '30s', target: 0 },
+        ],
+        thresholds: {
+          http_req_duration: ['p(95)<500'],
+          http_req_failed: ['rate<0.1'],
+        },
+      };
+      
+      export default function () {
+        const response = http.get('http://your-backend-url/health');
+        check(response, {
+          'status is 200': (r) => r.status === 200,
+          'response time < 500ms': (r) => r.timings.duration < 500,
+        });
+        sleep(1);
+      }
+      EOF
+    - k6 run load-test.js
+  dependencies:
+    - build_backend
+  artifacts:
+    paths:
+      - k6-results.json
+    expire_in: 1h
+  allow_failure: true
+  only:
+    - main
+    - merge_requests
+
+performance_frontend:
+  image: node:23-alpine
+  stage: performance
+  before_script:
+    - if [ -d frontend ]; then cd frontend; fi
+    - npm i
+    - npm ci
+    - npm install -g lighthouse
+  script:
+    - |
+      # Build the frontend for testing
+      npm run build
+    - |
+      # Run Lighthouse performance audit
+      lighthouse http://localhost:3000 --output=json --output-path=./lighthouse-report.json --chrome-flags="--headless --no-sandbox" || true
+    - |
+      # Run bundle analyzer
+      npm install -g webpack-bundle-analyzer
+      npx webpack-bundle-analyzer build/static/js/*.js --report --mode static || true
+  dependencies:
+    - build_frontend
+  artifacts:
+    paths:
+      - frontend/lighthouse-report.json
+      - frontend/bundle-analysis.html
+    expire_in: 1h
+  allow_failure: true
+  only:
+    - main
+    - merge_requests
+
+##############################
+# 11. API Testing            #
+##############################
+api_testing:
+  image: postman/newman:alpine
+  stage: api_testing
+  script:
+    - |
+      # Export Postman collection to JSON format
+      # You can store your Postman collection in the repo or use a URL
+      if [ -f "postman/collection.json" ]; then
+        newman run postman/collection.json \
+          --reporters cli,json \
+          --reporter-json-export newman-report.json \
+          --environment postman/environment.json || true
+      fi
+  artifacts:
+    paths:
+      - newman-report.json
+    expire_in: 1h
+  allow_failure: true
+  dependencies:
+    - build_backend
+
+##############################
+# 12. Database Migration Testing #
+##############################
+db_migration_test:
+  image: postgres:15-alpine
+  stage: test
+  services:
+    - name: postgres:15-alpine
+      alias: postgres
+  variables:
+    POSTGRES_DB: test_db
+    POSTGRES_USER: test_user
+    POSTGRES_PASSWORD: test_password
+  script:
+    - |
+      # Wait for database to be ready
+      until pg_isready -h postgres -U test_user -d test_db; do
+        echo "Waiting for database..."
+        sleep 2
+      done
+    - |
+      # Run database migrations
+      cd backend
+      pip install -r requirements.txt
+      python manage.py migrate --run-syncdb || true
+      python manage.py test --keepdb || true
+  artifacts:
+    paths:
+      - backend/db-test-results/
+    expire_in: 1h
+  allow_failure: true
+
+##############################
+# 13. Accessibility Testing  #
+##############################
+accessibility_test:
+  image: node:23-alpine
+  stage: accessibility
+  before_script:
+    - if [ -d frontend ]; then cd frontend; fi
+    - npm i
+    - npm ci
+    - npm install -g axe-core puppeteer
+  script:
+    - |
+      # Run accessibility tests
+      node << EOF
+      const puppeteer = require('puppeteer');
+      const axe = require('axe-core');
+      
+      (async () => {
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+        await page.goto('http://localhost:3000');
+        
+        const results = await page.evaluate(axe.run);
+        console.log(JSON.stringify(results, null, 2));
+        
+        await browser.close();
+      })();
+      EOF
+  dependencies:
+    - build_frontend
+  artifacts:
+    paths:
+      - frontend/accessibility-report.json
+    expire_in: 1h
+  allow_failure: true
+
+##############################
+# 14. Visual Regression Testing #
+##############################
+visual_regression:
+  image: node:23-alpine
+  stage: visual_regression
+  before_script:
+    - if [ -d frontend ]; then cd frontend; fi
+    - npm i
+    - npm ci
+    - npm install -g backstopjs
+  script:
+    - |
+      # Initialize BackstopJS
+      npx backstop init
+    - |
+      # Run visual regression tests
+      npx backstop test --config=backstop.json || true
+  dependencies:
+    - build_frontend
+  artifacts:
+    paths:
+      - frontend/backstop_data/
+    expire_in: 1h
+  allow_failure: true
+
+##############################
+# 15. Documentation Generation #
+##############################
+generate_docs:
+  image: node:23-alpine
+  stage: documentation
+  before_script:
+    - npm install -g jsdoc typedoc
+  script:
+    - |
+      # Generate API documentation
+      if [ -d backend ]; then
+        cd backend
+        pip install sphinx sphinx-rtd-theme
+        sphinx-quickstart -q -p "Backend API" -a "Your Team" -v 1.0 -r 1.0 -l en -n docs
+        make html
+      fi
+    - |
+      # Generate frontend documentation
+      if [ -d frontend ]; then
+        cd frontend
+        npx typedoc --out docs src/
+        npx jsdoc -c jsdoc.json src/
+      fi
+  artifacts:
+    paths:
+      - backend/docs/_build/html/
+      - frontend/docs/
+    expire_in: 1h
+  allow_failure: true
+
+##############################
+# 16. Compliance & Governance #
+##############################
+compliance_check:
+  image: openpolicyagent/opa:latest
+  stage: compliance
+  script:
+    - |
+      # Run OPA compliance checks
+      opa eval --data policies/ --input data/ "data.compliance.violations" || true
+  artifacts:
+    paths:
+      - compliance-report.json
+    expire_in: 30m
+  allow_failure: true
+
+##############################
+# 17. Chaos Engineering      #
+##############################
+chaos_testing:
+  image: chaos-mesh/chaos-mesh:latest
+  stage: chaos_engineering
+  script:
+    - |
+      # Run chaos engineering tests
+      # This requires Chaos Mesh to be installed in your cluster
+      kubectl apply -f chaos-experiments/ || true
+  dependencies:
+    - build_backend
+    - build_frontend
+  artifacts:
+    paths:
+      - chaos-results/
+    expire_in: 1h
+  allow_failure: true
+  only:
+    - main
+
+##############################
+# 18. Monitoring & Observability #
+##############################
+monitoring_setup:
+  image: prom/prometheus:latest
+  stage: monitoring
+  script:
+    - |
+      # Setup monitoring configuration
+      echo "Setting up monitoring..."
+  dependencies:
+    - build_backend
+    - build_frontend
+  artifacts:
+    paths:
+      - monitoring-config/
+    expire_in: 1h
+  allow_failure: true
+  only:
+    - main
+
+##############################
+# 19. Backup & Recovery Testing #
+##############################
+backup_test:
+  image: postgres:15-alpine
+  stage: backup_testing
+  script:
+    - |
+      # Test backup and recovery procedures
+      pg_dump -h postgres -U test_user test_db > backup.sql
+      pg_restore -h postgres -U test_user -d test_db backup.sql || true
+  dependencies:
+    - db_migration_test
+  artifacts:
+    paths:
+      - backup.sql
+    expire_in: 1h
+  allow_failure: true
+
+##############################
+# 20. Multi-Environment Testing #
+##############################
+staging_deploy:
+  image: docker:latest
+  stage: multi_environment
+  services:
+    - docker:dind
+  script:
+    - |
+      # Deploy to staging environment
+      echo "Deploying to staging..."
+      # Add your staging deployment logic here
+  environment:
+    name: staging
+    url: https://staging.yourapp.com
+  dependencies:
+    - build_backend
+    - build_frontend
+  only:
+    - main
+  when: manual
+  allow_failure: true
+
+staging_test:
+  image: mcr.microsoft.com/playwright:v1.44.0-jammy
+  stage: multi_environment
+  script:
+    - |
+      # Run tests against staging environment
+      npx playwright test --config=playwright.staging.config.js
+  dependencies:
+    - staging_deploy
+  environment:
+    name: staging
+  only:
+    - main
+  allow_failure: true
+
+##############################
+# 21. Enhanced Security Scanning #
+##############################
+secret_scanning:
+  image: trufflesecurity/trufflehog:latest
+  stage: security
+  script:
+    - trufflehog --json . > secrets-report.json
+  artifacts:
+    paths:
+      - secrets-report.json
+    expire_in: 30m
+  allow_failure: true
+
+dependency_check:
+  image: owasp/dependency-check:latest
+  stage: security
+  script:
+    - dependency-check --scan . --format JSON --out reports/
+  artifacts:
+    paths:
+      - reports/
+    expire_in: 30m
+  allow_failure: true
+
+##############################
+# 22. Infrastructure as Code Testing #
+##############################
+terraform_validate:
+  image: hashicorp/terraform:latest
+  stage: test
+  script:
+    - terraform init
+    - terraform validate
+    - terraform plan
+  artifacts:
+    paths:
+      - terraform-plan.out
+    expire_in: 1h
+  allow_failure: true
+
+##############################
+# 23. Cost Optimization      #
+##############################
+cost_analysis:
+  image: node:23-alpine
+  stage: build
+  script:
+    - npm install -g @snyk/cost-of-libraries
+    - npx cost-of-libraries
+  artifacts:
+    paths:
+      - cost-report.json
+    expire_in: 1h
+  allow_failure: true
+
+##############################
+# 24. (Optional) Deploy/CD    #
+##############################
+# To enable continuous deployment, uncomment and adapt one of the jobs below:
+# deploy_backend:
+#   stage: deploy
+#   script:
+#     - echo "Deploy backend container/image here or call your infra scripts"
+#   when: manual
+#   only:
+#     - main
+#
+# deploy_frontend:
+#   stage: deploy
+#   script:
+#     - echo "Deploy frontend container/image here or call your infra scripts"
+#   when: manual
+#   only:
+#     - main
+
+##############################
+# 11. Automated Release      #
+##############################
+
+release_frontend:
+  image: node:23-alpine
+  allow_failure: true
+  stage: release
+  script:
+    - if [ -d frontend ]; then cd frontend; fi
+    - npx semantic-release
+  only:
+    - main
+  variables:
+    GITLAB_TOKEN: $CI_JOB_TOKEN
+  dependencies:
+    - install_frontend
+
+release_backend:
+  image: node:20-alpine
+  allow_failure: true
+  stage: release
+  script:
+    - if [ -d backend ]; then cd backend; fi
+    - npx semantic-release
+  only:
+    - main
+  variables:
+    GITLAB_TOKEN: $CI_JOB_TOKEN
+  dependencies:
+    - install_backend
+
+# Note:
+# - Requires CI/CD variable `GITLAB_TOKEN` or `GH_TOKEN` with permissions to push to repo/tags.
+# - Configure `semantic-release` in frontend/package.json and backend/package.json or standalone config files for customization.
+
+##############################
+# 12. Dependency Updates     #
+##############################
+
+dependency_updates:
+  image: renovate/renovate:slim
+  allow_failure: true
+  stage: dependency_updates
+  variables:
+    RENOVATE_TOKEN: "$GITLAB_TOKEN"
+  script:
+    # This assumes the Renovate bot is configured as a user/bot with access to the repo.
+    # For public repos, Renovate can run in "worker" mode via CI just using project access.
+    - npx renovate
+#  only:
+    - schedules
+    - main
+  allow_failure: true
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: always
+
+# Renovate will look for configuration in renovate.json or package files.
+# Visit https://docs.renovatebot.com/self-hosted-configuration/ for more details.
+
+##############################
+# 13. License Compliance     #
+##############################
+license_compliance_backend:
+  image: 
+    name: aquasec/trivy:latest
+    entrypoint: [""]
+  stage: security
+  script:
+    - trivy fs --scanners license --license-full --format table --output trivy-backend-licenses.txt ./logic || true
+  allow_failure: true
+  artifacts:
+    paths:
+      - trivy-backend-licenses.txt
+    expire_in: 30m
+
+license_compliance_frontend:
+  image: 
+    name: aquasec/trivy:latest
+    entrypoint: [""]
+  stage: security
+  script:
+    - trivy fs --scanners license --license-full --format table --output trivy-frontend-licenses.txt ./frontend || true
+  allow_failure: true
+  artifacts:
+    paths:
+      - trivy-frontend-licenses.txt
+    expire_in: 30m
+
+##############################
+# 14. Dockerfile Lint        #
+##############################
+lint_dockerfiles:
+  stage: lint
+  image: hadolint/hadolint:latest-alpine
+  script:
+    - find . -name 'Dockerfile*' -exec hadolint --no-fail -f gitlab_codeclimate {} + > docker-lint.json
+  artifacts:
+    name: "$CI_JOB_NAME artifacts from $CI_PROJECT_NAME on $CI_COMMIT_REF_SLUG"
+    when: always
+    reports:
+      codequality:
+        - docker-lint.json
+  interruptible: true
+
+##############################
+# 11. SECRETS MANAGMENT      #
+##############################
+# Best practice: manage secrets using GitLab CI/CD's 'CI/CD Variables'
+# In GitLab UI, add project/group/environment variables and use them in jobs as $VAR
+# Never commit secrets/tokens directly in code
+# Docs: https://docs.gitlab.com/ee/ci/variables/
+
+##############################
+# --- Optional: Preview ---
+##############################
+# preview_frontend:
+#   image: node:20-alpine
+#   stage: deploy
+#   script:
+#     - echo "Preview deployment logic here, e.g. deploy to Netlify/Surge/etc"
+#   only:
+#     - merge_requests
+
+##############################
+# 12. Automated Release      #
+##############################
