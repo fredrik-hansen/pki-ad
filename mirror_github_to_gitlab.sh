@@ -4,9 +4,9 @@
 set -e
 
 # Configurable values
-GITHUB_REPO="https://github.com/fredrik-hansen/cognitive-conversation-deck.git"
-GITLAB_REPO="http://gitlab.int.pki.ad/cognita/cognitive-conversation-deck.git"
-MIRROR_DIR="./.repo-mirror-cognitive-conversation-deck"
+GITHUB_REPO="https://github.com/fredrik-hansen/pki-ad.git"
+GITLAB_REPO="http://gitlab.int.pki.ad/cognita/pki-ad.git"
+MIRROR_DIR="./.repo-mirror"
 
 # Optional: uncomment and edit if you need authentication for GitLab
 # GITLAB_USER="your-username"
@@ -14,7 +14,7 @@ MIRROR_DIR="./.repo-mirror-cognitive-conversation-deck"
 # GITLAB_REPO="https://${GITLAB_USER}:${GITLAB_PAT}@gitlab.int.pki.ad/cognita/cognitive-conversation-deck.git"
 
 echo "Starting one-way mirror: $GITHUB_REPO --> $GITLAB_REPO"
-rm -rf .repo-mirror-cognitive-conversation-deck/
+rm -rf .repo-mirror/
 if [ ! -d "$MIRROR_DIR" ]; then
   echo "Cloning GitHub repo as a bare mirror..."
   git clone --mirror "$GITHUB_REPO" "$MIRROR_DIR"
@@ -36,5 +36,5 @@ git push --mirror gitlab
 
 echo "Mirror sync complete!"
 
-rm -rf .repo-mirror-cognitive-conversation-deck/
+rm -rf .repo-mirror/
 echo "Cleaned up mirror directory."
