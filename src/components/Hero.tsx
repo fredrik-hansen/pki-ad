@@ -23,7 +23,7 @@ export const Hero = () => {
         </p>
         
         <p className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-in" data-summary="27+ years of cybersecurity expertise • Security architecture & engineering • AI security specialist • Board-level strategic advisor">
-          27+ years of cybersecurity expertise • Security architecture & engineering • 
+          • Security architecture & engineering • 
           AI security specialist • Board-level strategic advisor
         </p>
         
