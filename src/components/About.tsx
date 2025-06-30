@@ -16,8 +16,8 @@ export const About = () => {
 
   const languages = [
     { name: "Swedish", level: "Native" },
-    { name: "Danish", level: "Fluent" },
-    { name: "Norwegian", level: "Fluent" },
+    { name: "Danish", level: "Conversational" },
+    { name: "Norwegian", level: "Conversational" },
     { name: "English", level: "Fluent" },
     { name: "Spanish", level: "Beginner" },
     { name: "Catalan", level: "Beginner" },
