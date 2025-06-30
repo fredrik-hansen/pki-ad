@@ -266,14 +266,15 @@ const extractDataFromPage = () => {
 export const generateDOCX = () => {
   const data = extractDataFromPage();
   
-  // Create Summary content (top left)
-  const summaryContent = [
+  // Create left column content (Summary, Industry Experience, Certifications, Languages)
+  const leftColumnContent = [
+    // SUMMARY
     new Paragraph({
       children: [
         new TextRun({
           text: "SUMMARY",
           bold: true,
-          size: 24,
+          size: 22,
           font: "Calibri"
         })
       ]
@@ -282,7 +283,7 @@ export const generateDOCX = () => {
       children: [
         new TextRun({
           text: "___________________________",
-          size: 20,
+          size: 18,
           font: "Calibri"
         })
       ]
@@ -292,149 +293,19 @@ export const generateDOCX = () => {
       children: [
         new TextRun({
           text: data.summary,
-          size: 18,
+          size: 16,
           font: "Calibri"
         })
       ]
     }),
     new Paragraph({ text: "" }),
     
-    // Key highlights
-    ...data.highlights.slice(0, 5).map(highlight => 
+    // Key highlights (compact)
+    ...data.highlights.slice(0, 3).map(highlight => 
       new Paragraph({
         children: [
           new TextRun({
             text: `• ${highlight}`,
-            size: 16,
-            font: "Calibri"
-          })
-        ]
-      })
-    )
-  ];
-
-  // Create compact Industry Experience content (top right)
-  const industryContent = [
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: "INDUSTRY EXPERIENCE",
-          bold: true,
-          size: 24,
-          font: "Calibri"
-        })
-      ]
-    }),
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: "___________________________",
-          size: 20,
-          font: "Calibri"
-        })
-      ]
-    }),
-    new Paragraph({ text: "" }),
-    
-    // Compact industry list without blue text or new lines
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: data.industries.join(" • "),
-          size: 16,
-          font: "Calibri"
-        })
-      ]
-    })
-  ];
-
-  // Create comprehensive Cybersecurity Domain Expertise content (bottom left)
-  const domainExpertiseContent = [
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: "CYBERSECURITY DOMAIN EXPERTISE",
-          bold: true,
-          size: 24,
-          font: "Calibri"
-        })
-      ]
-    }),
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: "___________________________",
-          size: 20,
-          font: "Calibri"
-        })
-      ]
-    }),
-    new Paragraph({ text: "" }),
-    
-    // Include ALL cybersecurity domains with integrated technical competencies
-    ...data.cybersecurityDomains.flatMap((domain: any) => [
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: `${domain.category} (${domain.level})`,
-            bold: true,
-            size: 16,
-            font: "Calibri"
-          })
-        ]
-      }),
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: domain.domains.join(" • "),
-            size: 14,
-            font: "Calibri"
-          })
-        ]
-      }),
-      new Paragraph({ text: "" })
-    ])
-  ];
-
-  // Create comprehensive Certifications & Recognition content (bottom right)
-  const certificationsContent = [
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: "CERTIFICATIONS & RECOGNITION",
-          bold: true,
-          size: 24,
-          font: "Calibri"
-        })
-      ]
-    }),
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: "___________________________",
-          size: 20,
-          font: "Calibri"
-        })
-      ]
-    }),
-    new Paragraph({ text: "" }),
-    
-    // UN Certificates
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: "UN Disarmament Affairs Certificates:",
-          bold: true,
-          size: 16,
-          font: "Calibri"
-        })
-      ]
-    }),
-    ...data.certifications.map((cert: any) => 
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: `• ${cert.title} - ${cert.issuer} (${cert.date})`,
             size: 14,
             font: "Calibri"
           })
@@ -443,98 +314,13 @@ export const generateDOCX = () => {
     ),
     new Paragraph({ text: "" }),
     
-    // International Recognition
+    // INDUSTRY EXPERIENCE
     new Paragraph({
       children: [
         new TextRun({
-          text: "International Recognition:",
+          text: "INDUSTRY EXPERIENCE",
           bold: true,
-          size: 16,
-          font: "Calibri"
-        })
-      ]
-    }),
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: `• ${data.recognition.title}`,
-          size: 14,
-          font: "Calibri"
-        })
-      ]
-    }),
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: `  ${data.recognition.issuer}`,
-          size: 12,
-          font: "Calibri",
-          color: "666666"
-        })
-      ]
-    }),
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: `  ${data.recognition.date}`,
-          size: 12,
-          font: "Calibri",
-          color: "666666"
-        })
-      ]
-    }),
-    new Paragraph({ text: "" }),
-    
-    // Current role and availability
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: "Current Role:",
-          bold: true,
-          size: 16,
-          font: "Calibri"
-        })
-      ]
-    }),
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: data.currentRole || "CEO, Digital Companion",
-          size: 16,
-          font: "Calibri"
-        })
-      ]
-    }),
-    new Paragraph({ text: "" }),
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: "Availability:",
-          bold: true,
-          size: 16,
-          font: "Calibri"
-        })
-      ]
-    }),
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: data.availability || "Open for Consulting",
-          size: 16,
-          font: "Calibri"
-        })
-      ]
-    })
-  ];
-
-  // Create Languages content (center)
-  const languagesContent = [
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: "LANGUAGES",
-          bold: true,
-          size: 24,
+          size: 22,
           font: "Calibri"
         })
       ]
@@ -543,7 +329,119 @@ export const generateDOCX = () => {
       children: [
         new TextRun({
           text: "___________________________",
-          size: 20,
+          size: 18,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({ text: "" }),
+    
+    // Compact industry list
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: data.industries.join(" • "),
+          size: 14,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({ text: "" }),
+    
+    // CERTIFICATIONS & RECOGNITION (without Current Role and Availability)
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "CERTIFICATIONS & RECOGNITION",
+          bold: true,
+          size: 22,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "___________________________",
+          size: 18,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({ text: "" }),
+    
+    // UN Certificates (compact)
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "UN Disarmament Affairs:",
+          bold: true,
+          size: 14,
+          font: "Calibri"
+        })
+      ]
+    }),
+    ...data.certifications.slice(0, 2).map((cert: any) => 
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: `• ${cert.title} (${cert.date})`,
+            size: 12,
+            font: "Calibri"
+          })
+        ]
+      })
+    ),
+    new Paragraph({ text: "" }),
+    
+    // International Recognition (compact)
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "International Recognition:",
+          bold: true,
+          size: 14,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: `• ${data.recognition.title}`,
+          size: 12,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: `  ${data.recognition.issuer} (${data.recognition.date})`,
+          size: 10,
+          font: "Calibri",
+          color: "666666"
+        })
+      ]
+    }),
+    new Paragraph({ text: "" }),
+    
+    // LANGUAGES
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "LANGUAGES",
+          bold: true,
+          size: 22,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "___________________________",
+          size: 18,
           font: "Calibri"
         })
       ]
@@ -556,18 +454,66 @@ export const generateDOCX = () => {
           new TextRun({
             text: lang.name,
             bold: true,
-            size: 18,
+            size: 16,
             font: "Calibri"
           }),
           new TextRun({
             text: ` - ${lang.level}`,
-            size: 16,
+            size: 14,
             font: "Calibri",
             color: "666666"
           })
         ]
       })
     )
+  ];
+
+  // Create right column content (Cybersecurity Domain Expertise)
+  const rightColumnContent = [
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "CYBERSECURITY DOMAIN EXPERTISE",
+          bold: true,
+          size: 22,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "___________________________",
+          size: 18,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({ text: "" }),
+    
+    // Include ALL cybersecurity domains (more compact format)
+    ...data.cybersecurityDomains.flatMap((domain: any) => [
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: `${domain.category} (${domain.level})`,
+            bold: true,
+            size: 14,
+            font: "Calibri"
+          })
+        ]
+      }),
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: domain.domains.slice(0, 8).join(" • "),
+            size: 12,
+            font: "Calibri"
+          })
+        ]
+      }),
+      new Paragraph({ text: "" })
+    ])
   ];
 
   // Create compact experience content for single column
@@ -635,7 +581,7 @@ export const generateDOCX = () => {
     ])
   ];
 
-  // Create the document with 2x2 grid layout
+  // Create the document with dynamic 2-column layout
   const doc = new Document({
     sections: [
       {
@@ -678,81 +624,7 @@ export const generateDOCX = () => {
           new Paragraph({ text: "" }),
           new Paragraph({ text: "" }),
 
-          // 2x2 Grid layout using table
-          new Table({
-            width: {
-              size: 100,
-              type: WidthType.PERCENTAGE,
-            },
-            rows: [
-              // Top row: Summary (left) and Industry Experience (right)
-              new TableRow({
-                children: [
-                  new TableCell({
-                    width: {
-                      size: 50,
-                      type: WidthType.PERCENTAGE,
-                    },
-                    children: summaryContent,
-                    margins: {
-                      top: 100,
-                      bottom: 100,
-                      left: 100,
-                      right: 200,
-                    },
-                  }),
-                  new TableCell({
-                    width: {
-                      size: 50,
-                      type: WidthType.PERCENTAGE,
-                    },
-                    children: industryContent,
-                    margins: {
-                      top: 100,
-                      bottom: 100,
-                      left: 200,
-                      right: 100,
-                    },
-                  }),
-                ],
-              }),
-              // Bottom row: Cybersecurity Domain Expertise (left) and Certifications & Recognition (right)
-              new TableRow({
-                children: [
-                  new TableCell({
-                    width: {
-                      size: 50,
-                      type: WidthType.PERCENTAGE,
-                    },
-                    children: domainExpertiseContent,
-                    margins: {
-                      top: 100,
-                      bottom: 100,
-                      left: 100,
-                      right: 200,
-                    },
-                  }),
-                  new TableCell({
-                    width: {
-                      size: 50,
-                      type: WidthType.PERCENTAGE,
-                    },
-                    children: certificationsContent,
-                    margins: {
-                      top: 100,
-                      bottom: 100,
-                      left: 200,
-                      right: 100,
-                    },
-                  }),
-                ],
-              }),
-            ],
-          }),
-
-          // Languages section in single column (centered)
-          new Paragraph({ text: "" }),
-          new Paragraph({ text: "" }),
+          // Dynamic 2-column layout using table
           new Table({
             width: {
               size: 100,
@@ -761,32 +633,33 @@ export const generateDOCX = () => {
             rows: [
               new TableRow({
                 children: [
-                  new TableCell({
-                    width: {
-                      size: 25,
-                      type: WidthType.PERCENTAGE,
-                    },
-                    children: [new Paragraph({ text: "" })],
-                  }),
+                  // Left column: Summary, Industry Experience, Certifications, Languages
                   new TableCell({
                     width: {
                       size: 50,
                       type: WidthType.PERCENTAGE,
                     },
-                    children: languagesContent,
+                    children: leftColumnContent,
                     margins: {
                       top: 100,
                       bottom: 100,
                       left: 100,
-                      right: 100,
+                      right: 200,
                     },
                   }),
+                  // Right column: Cybersecurity Domain Expertise
                   new TableCell({
                     width: {
-                      size: 25,
+                      size: 50,
                       type: WidthType.PERCENTAGE,
                     },
-                    children: [new Paragraph({ text: "" })],
+                    children: rightColumnContent,
+                    margins: {
+                      top: 100,
+                      bottom: 100,
+                      left: 200,
+                      right: 100,
+                    },
                   }),
                 ],
               }),
