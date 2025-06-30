@@ -5,6 +5,24 @@ import { Award, Shield, Users, Globe } from 'lucide-react';
 export const Certifications = () => {
   const certificates = [
     {
+      title: "ITIL Foundation",
+      issuer: "Change Management Framework",
+      type: "ITIL Foundation Course",
+      level: "Level-Introductory",
+      date: "October 2010,
+      image: "/lovable-uploads/1e973b5f-757d-4ee5-8ace-8aa30b8f51ce.png",
+      icon: Shield,
+      category: "IT Service Management"
+    },    {
+      title: "PEJL",
+      issuer: "PEJL AB",
+      type: "Completed specialized leadership and project management certification",
+      level: " ",
+      date: "October 2010",
+      image: "/lovable-uploads/1e973b5f-757d-4ee5-8ace-8aa30b8f51ce.png",
+      icon: Shield,
+      category: "Project Management"
+    },    {
       title: "Cluster Munitions",
       issuer: "United Nations Office for Disarmament Affairs",
       type: "Online Short Course",
