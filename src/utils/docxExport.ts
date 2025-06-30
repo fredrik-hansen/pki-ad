@@ -1,4 +1,5 @@
-import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, PageBreak } from 'docx';
+
+import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, PageBreak, Table, TableRow, TableCell, WidthType } from 'docx';
 
 const extractTextFromElement = (element: Element | null): string => {
   if (!element) return '';
@@ -115,7 +116,6 @@ const extractDataFromPage = () => {
     location,
     highlights,
     industries,
-    languages,
     competencies,
     volunteerWork,
     speakingEngagements,
@@ -123,27 +123,215 @@ const extractDataFromPage = () => {
     availability,
     specialization,
     experiences,
-    certifications
+    certifications,
+    languages
   };
 };
 
 export const generateDOCX = () => {
   const data = extractDataFromPage();
   
-  // Create language paragraphs
-  const languageParagraphs = data.languages.map((lang: any) =>
+  // Create left column content (Experience)
+  const leftColumnContent = [
+    // Experience Section
     new Paragraph({
       children: [
         new TextRun({
-          text: `• ${lang.name}: ${lang.level}`,
+          text: "EXPERIENCE",
+          bold: true,
+          size: 24,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "___________________________",
           size: 20,
           font: "Calibri"
         })
       ]
-    })
-  );
+    }),
+    new Paragraph({ text: "" }),
+    
+    // Professional Experience entries
+    ...data.experiences.flatMap((exp: any) => [
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: exp.title,
+            bold: true,
+            size: 20,
+            font: "Calibri"
+          })
+        ]
+      }),
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: exp.company,
+            size: 18,
+            font: "Calibri",
+            color: "2563EB"
+          })
+        ]
+      }),
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: `${exp.period} | ${exp.industry}`,
+            size: 16,
+            font: "Calibri",
+            color: "666666"
+          })
+        ]
+      }),
+      ...exp.highlights.map((highlight: string) =>
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: `• ${highlight}`,
+              size: 18,
+              font: "Calibri"
+            })
+          ]
+        })
+      ),
+      new Paragraph({ text: "" })
+    ])
+  ];
 
-  // Create the document
+  // Create right column content (Summary, Certifications, Languages)
+  const rightColumnContent = [
+    // Summary Section
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "SUMMARY",
+          bold: true,
+          size: 24,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "___________________________",
+          size: 20,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({ text: "" }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: data.summary,
+          size: 18,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({ text: "" }),
+    
+    // Key highlights
+    ...data.highlights.slice(0, 5).map(highlight => 
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: `• ${highlight}`,
+            size: 16,
+            font: "Calibri"
+          })
+        ]
+      })
+    ),
+    new Paragraph({ text: "" }),
+    new Paragraph({ text: "" }),
+
+    // Certifications Section
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "CERTIFICATIONS",
+          bold: true,
+          size: 24,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "___________________________",
+          size: 20,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({ text: "" }),
+    
+    // Technical Competencies as certifications
+    ...data.competencies.slice(0, 6).map((comp: any) =>
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: comp.category,
+            size: 18,
+            font: "Calibri",
+            color: "2563EB"
+          })
+        ]
+      })
+    ),
+    new Paragraph({ text: "" }),
+    new Paragraph({ text: "" }),
+
+    // Languages Section
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "LANGUAGES",
+          bold: true,
+          size: 24,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "___________________________",
+          size: 20,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({ text: "" }),
+    
+    ...data.languages.map((lang: any) =>
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: lang.name,
+            bold: true,
+            size: 18,
+            font: "Calibri"
+          }),
+          new TextRun({
+            text: ` - ${lang.level}`,
+            size: 16,
+            font: "Calibri",
+            color: "666666"
+          })
+        ]
+      })
+    )
+  ];
+
+  // Create the document with two-column layout using table
   const doc = new Document({
     sections: [
       {
@@ -151,18 +339,18 @@ export const generateDOCX = () => {
         children: [
           // Header with name and title
           new Paragraph({
-            alignment: AlignmentType.CENTER,
+            alignment: AlignmentType.LEFT,
             children: [
               new TextRun({
-                text: data.name,
+                text: data.name.toUpperCase(),
                 bold: true,
-                size: 32,
+                size: 36,
                 font: "Calibri"
               })
             ]
           }),
           new Paragraph({
-            alignment: AlignmentType.CENTER,
+            alignment: AlignmentType.LEFT,
             children: [
               new TextRun({
                 text: data.title,
@@ -173,143 +361,63 @@ export const generateDOCX = () => {
             ]
           }),
           new Paragraph({
-            alignment: AlignmentType.CENTER,
+            alignment: AlignmentType.LEFT,
             children: [
               new TextRun({
-                text: `${data.email} | ${data.location}`,
-                size: 20,
-                font: "Calibri"
-              })
-            ]
-          }),
-          new Paragraph({ text: "" }), // Empty line
-
-          // Professional Summary
-          new Paragraph({
-            heading: HeadingLevel.HEADING_1,
-            children: [
-              new TextRun({
-                text: "PROFESSIONAL SUMMARY",
-                bold: true,
-                size: 24,
-                font: "Calibri"
-              })
-            ]
-          }),
-          new Paragraph({
-            children: [
-              new TextRun({
-                text: data.summary,
-                size: 22,
-                font: "Calibri"
+                text: `${data.email}`,
+                size: 18,
+                font: "Calibri",
+                color: "2563EB"
               })
             ]
           }),
           new Paragraph({ text: "" }),
-          
-          // Key Highlights
-          ...data.highlights.map(highlight => 
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: `• ${highlight}`,
-                  size: 20,
-                  font: "Calibri"
-                })
-              ]
-            })
-          ),
           new Paragraph({ text: "" }),
 
-          // Current Role
-          new Paragraph({
-            heading: HeadingLevel.HEADING_1,
-            children: [
-              new TextRun({
-                text: "CURRENT ROLE",
-                bold: true,
-                size: 24,
-                font: "Calibri"
-              })
-            ]
+          // Two-column layout using table
+          new Table({
+            width: {
+              size: 100,
+              type: WidthType.PERCENTAGE,
+            },
+            rows: [
+              new TableRow({
+                children: [
+                  new TableCell({
+                    width: {
+                      size: 60,
+                      type: WidthType.PERCENTAGE,
+                    },
+                    children: leftColumnContent,
+                    margins: {
+                      top: 100,
+                      bottom: 100,
+                      left: 100,
+                      right: 200,
+                    },
+                  }),
+                  new TableCell({
+                    width: {
+                      size: 40,
+                      type: WidthType.PERCENTAGE,
+                    },
+                    children: rightColumnContent,
+                    margins: {
+                      top: 100,
+                      bottom: 100,
+                      left: 200,
+                      right: 100,
+                    },
+                  }),
+                ],
+              }),
+            ],
           }),
-          new Paragraph({
-            children: [
-              new TextRun({
-                text: `${data.currentRole} • ${data.availability} • ${data.specialization}`,
-                size: 20,
-                font: "Calibri"
-              })
-            ]
-          }),
-          new Paragraph({ text: "" }),
 
-          // Page break after Current Role
+          // Additional sections on separate pages
           new Paragraph({
             children: [new PageBreak()]
           }),
-
-          // Technical Competencies
-          new Paragraph({
-            heading: HeadingLevel.HEADING_1,
-            children: [
-              new TextRun({
-                text: "TECHNICAL COMPETENCIES",
-                bold: true,
-                size: 24,
-                font: "Calibri"
-              })
-            ]
-          }),
-          ...data.competencies.flatMap((comp: any) => [
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: comp.category,
-                  bold: true,
-                  size: 22,
-                  font: "Calibri"
-                })
-              ]
-            }),
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: comp.skills.join(" • "),
-                  size: 20,
-                  font: "Calibri"
-                })
-              ]
-            }),
-            new Paragraph({ text: "" })
-          ]),
-
-          // Certifications (if available)
-          ...(data.certifications.length > 0 ? [
-            new Paragraph({
-              heading: HeadingLevel.HEADING_1,
-              children: [
-                new TextRun({
-                  text: "CERTIFICATIONS",
-                  bold: true,
-                  size: 24,
-                  font: "Calibri"
-                })
-              ]
-            }),
-            ...data.certifications.map((cert: any) =>
-              new Paragraph({
-                children: [
-                  new TextRun({
-                    text: `• ${cert.title} - ${cert.issuer} (${cert.date})`,
-                    size: 20,
-                    font: "Calibri"
-                  })
-                ]
-              })
-            ),
-            new Paragraph({ text: "" })
-          ] : []),
 
           // Volunteer Work & Leadership
           new Paragraph({
@@ -433,70 +541,7 @@ export const generateDOCX = () => {
                 font: "Calibri"
               })
             ]
-          }),
-          new Paragraph({ text: "" }),
-
-          // Languages
-          new Paragraph({
-            heading: HeadingLevel.HEADING_1,
-            children: [
-              new TextRun({
-                text: "LANGUAGES",
-                bold: true,
-                size: 24,
-                font: "Calibri"
-              })
-            ]
-          }),
-          ...languageParagraphs,
-          new Paragraph({ text: "" }),
-
-          // Professional Experience
-          new Paragraph({
-            heading: HeadingLevel.HEADING_1,
-            children: [
-              new TextRun({
-                text: "PROFESSIONAL EXPERIENCE",
-                bold: true,
-                size: 24,
-                font: "Calibri"
-              })
-            ]
-          }),
-          ...data.experiences.flatMap((exp: any) => [
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: `${exp.title} - ${exp.company}`,
-                  bold: true,
-                  size: 22,
-                  font: "Calibri"
-                })
-              ]
-            }),
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: `${exp.period} | ${exp.industry}`,
-                  italics: true,
-                  size: 20,
-                  font: "Calibri"
-                })
-              ]
-            }),
-            ...exp.highlights.map((highlight: string) =>
-              new Paragraph({
-                children: [
-                  new TextRun({
-                    text: `• ${highlight}`,
-                    size: 20,
-                    font: "Calibri"
-                  })
-                ]
-              })
-            ),
-            new Paragraph({ text: "" })
-          ])
+          })
         ]
       }
     ]
