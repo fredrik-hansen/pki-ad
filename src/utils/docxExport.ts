@@ -23,7 +23,7 @@ const extractDataFromPage = () => {
     el.getAttribute('data-highlight') || extractTextFromElement(el)
   );
   
-  // Extract industries
+  // Extract industries - make more compact
   const industryElements = document.querySelectorAll('[data-industry]');
   const industries = Array.from(industryElements).map(el => 
     el.getAttribute('data-industry') || extractTextFromElement(el)
@@ -36,7 +36,7 @@ const extractDataFromPage = () => {
     level: el.getAttribute('data-level') || ''
   }));
   
-  // Extract technical competencies
+  // Extract technical competencies - include ALL information
   const competencyElements = document.querySelectorAll('[data-category]');
   const competencies = Array.from(competencyElements).map(categoryEl => {
     const category = categoryEl.getAttribute('data-category') || '';
@@ -46,6 +46,164 @@ const extractDataFromPage = () => {
     );
     return { category, skills };
   });
+  
+  // Extract ALL cybersecurity domains information
+  const allCybersecurityDomains = [
+    {
+      category: "Security Architecture & Engineering",
+      level: "expert",
+      domains: [
+        "Security Architecture", "Security Engineering", "Cryptography", 
+        "Key and Secret Management", "PKI", "Network Design", 
+        "Secure System Build", "Container Security"
+      ]
+    },
+    {
+      category: "Governance, Risk & Compliance",
+      level: "expert", 
+      domains: [
+        "Risk Assessment", "Enterprise Risk Management", "ISO 27001/27002/27005/27019",
+        "NIST Cybersecurity Framework", "PCI DSS", "GDPR", "DORA",
+        "Compliance & Enforcement", "Policy Development", "Audit Management"
+      ]
+    },
+    {
+      category: "Application Security",
+      level: "expert",
+      domains: [
+        "SAST", "DAST", "Source Code Scan", "API Security", 
+        "S-SDLC", "Vulnerability Scan", "Penetration Test",
+        "Security QA", "Shift Left Security"
+      ]
+    },
+    {
+      category: "Security Operations",
+      level: "expert",
+      domains: [
+        "SIEM", "SOC", "Incident Response", "Detection", 
+        "Threat Hunting", "Security Operation Centers", "Forensics",
+        "Breach Notification", "Investigation", "Containment"
+      ]
+    },
+    {
+      category: "Identity & Access Management",
+      level: "expert",
+      domains: [
+        "Identity Management", "Access Control", "Privileged Access Management",
+        "MFA & SSO", "Identity & Access Management", "Federated Identity"
+      ]
+    },
+    {
+      category: "Cloud & Infrastructure Security",
+      level: "expert",
+      domains: [
+        "Cloud Security", "CSPM", "Infrastructure Security", 
+        "Network Security", "Endpoint Security", "Data Protection",
+        "Certificate Management", "Patch Management"
+      ]
+    },
+    {
+      category: "Frameworks & Standards",
+      level: "expert",
+      domains: [
+        "CIS Top 20 Controls", "OWASP Top 10", "MITRE ATT&CK Framework",
+        "Security Frameworks", "Industry Standards", "Baseline Configuration"
+      ]
+    },
+    {
+      category: "Threat Intelligence & Assessment",
+      level: "advanced",
+      domains: [
+        "Threat Intelligence", "Risk Monitoring Services", "Cyber Intelligence",
+        "Threat Assessment", "Intelligence Analysis", "Risk Appetite"
+      ]
+    },
+    {
+      category: "Training & Education",
+      level: "advanced",
+      domains: [
+        "Security Training", "User Education", "Awareness Programs",
+        "Cybersecurity Education", "Training Development", "Skill Building"
+      ]
+    },
+    {
+      category: "Internet Security Standards",
+      level: "expert",
+      domains: [
+        "DNSSEC", "RPKI", "Internet Governance", "BGP Security",
+        "Multi-stakeholder Coordination", "Policy Development"
+      ]
+    },
+    {
+      category: "AI & Machine Learning Security",
+      level: "advanced",
+      domains: [
+        "AI Security", "Data Model Security", "Adversarial Attacks",
+        "Data Privacy", "Model Security", "AI Risk Assessment"
+      ]
+    },
+    {
+      category: "Physical & IoT Security",
+      level: "intermediate",
+      domains: [
+        "Physical Security", "IoT Security", "SCADA Security",
+        "Industrial Control Systems", "Critical Infrastructure"
+      ]
+    }
+  ];
+
+  // Extract ALL technical competencies information
+  const allTechnicalCompetencies = [
+    {
+      category: "Security Frameworks & Standards",
+      skills: [
+        "ISO 27001/27002/27005/27019", "NIST Cybersecurity Framework", "CIS Controls",
+        "PCI DSS", "SOC 2", "GDPR", "DORA", "SBOM"
+      ]
+    },
+    {
+      category: "AI & Machine Learning Security",
+      skills: [
+        "Data Model Security", "Adversarial Attacks", "Data Poisoning & Quality",
+        "Data Privacy", "Model Repurposing", "AI Risk Assessment"
+      ]
+    },
+    {
+      category: "Security Engineering & Architecture",
+      skills: [
+        "SAST/DAST", "Security SDLC", "Container Security", "CSPM",
+        "Shift Left Security", "Cloud Security", "SCADA Security"
+      ]
+    },
+    {
+      category: "Governance, Risk & Compliance",
+      skills: [
+        "Risk Management", "Compliance Programs", "Security Governance",
+        "Incident Response", "Business Continuity", "Audit Management"
+      ]
+    },
+    {
+      category: "Technical Operations",
+      skills: [
+        "Penetration Testing", "Vulnerability Assessment", "Security Monitoring",
+        "SIEM/SOC", "PKI", "Network Security", "Forensics"
+      ]
+    },
+    {
+      category: "Infrastructure & Cloud",
+      skills: [
+        "AWS/Azure/GCP", "Kubernetes Security", "Infrastructure as Code",
+        "Zero Trust", "Identity & Access Management", "Network Segmentation"
+      ]
+    },
+    {
+      category: "Internet Security Standards",
+      skills: [
+        "DNSSEC", "RPKI", "BGP Security", "Internet Governance",
+        "Cybersecurity Policy", "Multi-stakeholder Coordination"
+      ]
+    }
+  ];
   
   // Extract volunteer work
   const volunteerElements = document.querySelectorAll('[data-volunteer-role]');
@@ -76,7 +234,6 @@ const extractDataFromPage = () => {
   const experienceSection = document.querySelector('#experience');
   let experiences: any[] = [];
   if (experienceSection) {
-    // Find all experience items within the experience section
     const expCards = experienceSection.querySelectorAll('.group.relative');
     experiences = Array.from(expCards).map(card => {
       const titleElement = card.querySelector('h3');
@@ -116,7 +273,8 @@ const extractDataFromPage = () => {
     location,
     highlights,
     industries,
-    competencies,
+    competencies: allTechnicalCompetencies,
+    cybersecurityDomains: allCybersecurityDomains,
     volunteerWork,
     speakingEngagements,
     currentRole,
@@ -178,7 +336,7 @@ export const generateDOCX = () => {
     )
   ];
 
-  // Create Industry Experience content (top right)
+  // Create compact Industry Experience content (top right)
   const industryContent = [
     new Paragraph({
       children: [
@@ -201,21 +359,19 @@ export const generateDOCX = () => {
     }),
     new Paragraph({ text: "" }),
     
-    ...data.industries.map(industry =>
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: `• ${industry}`,
-            size: 18,
-            font: "Calibri",
-            color: "2563EB"
-          })
-        ]
-      })
-    )
+    // Compact industry list without blue text or new lines
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: data.industries.join(" • "),
+          size: 16,
+          font: "Calibri"
+        })
+      ]
+    })
   ];
 
-  // Create Cybersecurity Domain Expertise content (middle left)
+  // Create comprehensive Cybersecurity Domain Expertise content (middle left)
   const domainExpertiseContent = [
     new Paragraph({
       children: [
@@ -238,21 +394,32 @@ export const generateDOCX = () => {
     }),
     new Paragraph({ text: "" }),
     
-    // Show first few domain categories
-    ...data.competencies.slice(0, 4).map((comp: any) =>
+    // Include ALL cybersecurity domains
+    ...data.cybersecurityDomains.flatMap((domain: any) => [
       new Paragraph({
         children: [
           new TextRun({
-            text: `• ${comp.category}`,
+            text: `${domain.category} (${domain.level})`,
+            bold: true,
             size: 16,
             font: "Calibri"
           })
         ]
-      })
-    )
+      }),
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: domain.domains.join(" • "),
+            size: 14,
+            font: "Calibri"
+          })
+        ]
+      }),
+      new Paragraph({ text: "" })
+    ])
   ];
 
-  // Create Technical Competencies content (middle right)
+  // Create comprehensive Technical Competencies content (middle right)
   const technicalCompetenciesContent = [
     new Paragraph({
       children: [
@@ -275,18 +442,29 @@ export const generateDOCX = () => {
     }),
     new Paragraph({ text: "" }),
     
-    // Show remaining competency categories
-    ...data.competencies.slice(4).map((comp: any) =>
+    // Include ALL technical competencies
+    ...data.competencies.flatMap((comp: any) => [
       new Paragraph({
         children: [
           new TextRun({
-            text: `• ${comp.category}`,
+            text: comp.category,
+            bold: true,
             size: 16,
             font: "Calibri"
           })
         ]
-      })
-    )
+      }),
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: comp.skills.join(" • "),
+            size: 14,
+            font: "Calibri"
+          })
+        ]
+      }),
+      new Paragraph({ text: "" })
+    ])
   ];
 
   // Create Languages content (bottom left)
@@ -371,8 +549,7 @@ export const generateDOCX = () => {
         new TextRun({
           text: data.currentRole || "CEO, Digital Companion",
           size: 16,
-          font: "Calibri",
-          color: "2563EB"
+          font: "Calibri"
         })
       ]
     }),
@@ -392,8 +569,7 @@ export const generateDOCX = () => {
         new TextRun({
           text: data.availability || "Open for Consulting",
           size: 16,
-          font: "Calibri",
-          color: "2563EB"
+          font: "Calibri"
         })
       ]
     })
@@ -438,8 +614,7 @@ export const generateDOCX = () => {
           new TextRun({
             text: ` | ${exp.company}`,
             size: 18,
-            font: "Calibri",
-            color: "2563EB"
+            font: "Calibri"
           }),
           new TextRun({
             text: ` | ${exp.period}`,
