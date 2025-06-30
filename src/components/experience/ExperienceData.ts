@@ -1,4 +1,3 @@
-
 export const experiences = [
   {
     title: "Information Security Professional, CEO",
@@ -350,28 +349,5 @@ export const achievements = [
     title: "PEJL Course",
     description: "Completed specialized leadership and project management certification",
     dataAchievement: "pejl-course"
-  }
-];
-
-export const speakingEngagements = [
-  {
-    event: "RedHat Conference",
-    description: "Technical presentation on enterprise security architecture and open-source security solutions",
-    dataSpeaking: "redhat-speaker"
-  },
-  {
-    event: "SIG Security",
-    description: "Expert speaker on advanced cybersecurity frameworks and threat intelligence",
-    dataSpeaking: "sig-security-speaker"
-  },
-  {
-    event: "DSV, Department of Computer and System Sciences, Stockholm University",
-    description: "Academic presentation on cybersecurity research methodologies and AI security",
-    dataSpeaking: "dsv-stockholm-university-speaker"
-  },
-  {
-    event: "Nordic IT",
-    description: "Keynote speaker on Nordic cybersecurity collaboration and regional security standards",
-    dataSpeaking: "nordic-it-speaker"
   }
 ];

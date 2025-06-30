@@ -1,7 +1,6 @@
 
 import { ProfessionalRoles } from "./experience/ProfessionalRoles";
 import { Achievements } from "./experience/Achievements";
-import { SpeakingEngagements } from "./experience/SpeakingEngagements";
 import { CareerTimeline } from "./experience/CareerTimeline";
 
 export const Experience = () => {
@@ -20,7 +19,6 @@ export const Experience = () => {
 
         <ProfessionalRoles />
         <Achievements />
-        <SpeakingEngagements />
         <CareerTimeline />
 
         <div className="mt-12 text-center">

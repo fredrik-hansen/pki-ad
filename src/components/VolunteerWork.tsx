@@ -50,6 +50,30 @@ export const VolunteerWork = () => {
       topic: "Secure Smart Cities Development",
       audience: "3,700+ attendees from 32 nations",
       description: "Advocated for citizen-centric secure smart cities and served as startup pitch jury member."
+    },
+    {
+      event: "RedHat Conference",
+      location: "Technical Conference",
+      topic: "Enterprise Security Architecture",
+      description: "Technical presentation on enterprise security architecture and open-source security solutions."
+    },
+    {
+      event: "SIG Security",
+      location: "Security Conference",
+      topic: "Advanced Cybersecurity Frameworks",
+      description: "Expert speaker on advanced cybersecurity frameworks and threat intelligence."
+    },
+    {
+      event: "DSV, Department of Computer and System Sciences, Stockholm University",
+      location: "Stockholm, Sweden",
+      topic: "Cybersecurity Research & AI Security",
+      description: "Academic presentation on cybersecurity research methodologies and AI security."
+    },
+    {
+      event: "Nordic IT",
+      location: "Nordic Region",
+      topic: "Nordic Cybersecurity Collaboration",
+      description: "Keynote speaker on Nordic cybersecurity collaboration and regional security standards."
     }
   ];
 
