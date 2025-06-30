@@ -22,8 +22,8 @@ export const Hero = () => {
           Senior IT & Information Security Expert
         </p>
         
-        <p className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-in" data-summary="26+ years of cybersecurity expertise • Security architecture & engineering • AI security specialist • Board-level strategic advisor">
-          26+ years of cybersecurity expertise • Security architecture & engineering • 
+        <p className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-in" data-summary="27+ years of cybersecurity expertise • Security architecture & engineering • AI security specialist • Board-level strategic advisor">
+          27+ years of cybersecurity expertise • Security architecture & engineering • 
           AI security specialist • Board-level strategic advisor
         </p>
         

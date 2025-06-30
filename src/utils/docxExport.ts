@@ -36,6 +36,27 @@ const extractDataFromPage = () => {
     level: el.getAttribute('data-level') || ''
   }));
   
+  // Extract professional roles
+  const roleElements = document.querySelectorAll('[data-role]');
+  const professionalRoles = Array.from(roleElements).map(el => ({
+    role: extractTextFromElement(el.querySelector('h4')),
+    description: extractTextFromElement(el.querySelector('p'))
+  }));
+  
+  // Extract achievements
+  const achievementElements = document.querySelectorAll('[data-achievement]');
+  const achievements = Array.from(achievementElements).map(el => ({
+    title: extractTextFromElement(el.querySelector('h4')),
+    description: extractTextFromElement(el.querySelector('p'))
+  }));
+  
+  // Extract speaking engagements from the new section
+  const speakingElements = document.querySelectorAll('[data-speaking]');
+  const speakingEngagements = Array.from(speakingElements).map(el => ({
+    event: extractTextFromElement(el.querySelector('h4')),
+    description: extractTextFromElement(el.querySelector('p'))
+  }));
+  
   // Extract ALL cybersecurity domains information with integrated technical competencies
   const allCybersecurityDomains = [
     {
@@ -205,16 +226,6 @@ const extractDataFromPage = () => {
     impact: el.getAttribute('data-impact') || ''
   }));
   
-  // Extract speaking engagements
-  const speakingElements = document.querySelectorAll('[data-speaking-engagement]');
-  const speakingEngagements = Array.from(speakingElements).map(el => ({
-    event: el.getAttribute('data-event') || '',
-    location: el.getAttribute('data-location') || '',
-    topic: el.getAttribute('data-topic') || '',
-    audience: el.getAttribute('data-audience') || '',
-    description: el.getAttribute('data-description') || ''
-  }));
-  
   // Extract current role information
   const currentRole = extractTextFromElement(document.querySelector('[data-current-role]'));
   const availability = extractTextFromElement(document.querySelector('[data-availability]'));
@@ -255,6 +266,8 @@ const extractDataFromPage = () => {
     recognition,
     volunteerWork,
     speakingEngagements,
+    professionalRoles,
+    achievements,
     currentRole,
     availability,
     specialization,
@@ -348,7 +361,7 @@ export const generateDOCX = () => {
     }),
     new Paragraph({ text: "" }),
     
-    // CERTIFICATIONS & RECOGNITION (without Current Role and Availability)
+    // CERTIFICATIONS & RECOGNITION
     new Paragraph({
       children: [
         new TextRun({
@@ -674,6 +687,76 @@ export const generateDOCX = () => {
             children: [new PageBreak()]
           }),
 
+          // Professional Roles
+          new Paragraph({
+            heading: HeadingLevel.HEADING_1,
+            children: [
+              new TextRun({
+                text: "KEY PROFESSIONAL ROLES",
+                bold: true,
+                size: 24,
+                font: "Calibri"
+              })
+            ]
+          }),
+          ...data.professionalRoles.flatMap((role: any) => [
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: role.role,
+                  bold: true,
+                  size: 22,
+                  font: "Calibri"
+                })
+              ]
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: role.description,
+                  size: 20,
+                  font: "Calibri"
+                })
+              ]
+            }),
+            new Paragraph({ text: "" })
+          ]),
+
+          // Achievements
+          new Paragraph({
+            heading: HeadingLevel.HEADING_1,
+            children: [
+              new TextRun({
+                text: "KEY ACHIEVEMENTS",
+                bold: true,
+                size: 24,
+                font: "Calibri"
+              })
+            ]
+          }),
+          ...data.achievements.flatMap((achievement: any) => [
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: achievement.title,
+                  bold: true,
+                  size: 22,
+                  font: "Calibri"
+                })
+              ]
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: achievement.description,
+                  size: 20,
+                  font: "Calibri"
+                })
+              ]
+            }),
+            new Paragraph({ text: "" })
+          ]),
+
           // Volunteer Work & Leadership
           new Paragraph({
             heading: HeadingLevel.HEADING_1,
@@ -735,35 +818,13 @@ export const generateDOCX = () => {
             new Paragraph({
               children: [
                 new TextRun({
-                  text: `${engagement.event} - ${engagement.location}`,
+                  text: engagement.event,
                   bold: true,
                   size: 22,
                   font: "Calibri"
                 })
               ]
             }),
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: engagement.topic,
-                  italics: true,
-                  size: 20,
-                  font: "Calibri"
-                })
-              ]
-            }),
-            ...(engagement.audience ? [
-              new Paragraph({
-                children: [
-                  new TextRun({
-                    text: engagement.audience,
-                    size: 18,
-                    font: "Calibri",
-                    color: "666666"
-                  })
-                ]
-              })
-            ] : []),
             new Paragraph({
               children: [
                 new TextRun({

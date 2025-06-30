@@ -1,4 +1,5 @@
-import { Briefcase } from "lucide-react";
+
+import { Briefcase, Award, Mic } from "lucide-react";
 
 export const Experience = () => {
   const experiences = [
@@ -32,7 +33,7 @@ export const Experience = () => {
       period: "2023 - 2023",
       industry: "Global Multistakeholder Platform (UN)",
       highlights: [
-        "Spearheaded collaborative ideation at United Nations Internet Governance Forum focusing on cutting-edge AI technology",
+        "Led collaborative ideation at United Nations Internet Governance Forum focusing on cutting-edge AI technology",
         "Responded to UN Secretary-General's mandate to formulate strategic recommendations",
         "Facilitated Internet Governance Forum Policy Network as pivotal platform for synthesizing stakeholder insights",
         "Served as key contributor to global AI governance policy development"
@@ -56,9 +57,9 @@ export const Experience = () => {
       period: "2021 - 2023",
       industry: "National Multistakeholder Platform",
       highlights: [
-        "Spearheaded creation of Swedish adaptation of NIST Cyber Security Framework at SIS",
+        "Directed creation of Swedish adaptation of NIST Cyber Security Framework at SIS",
         "Enhanced cyber resilience across organizations with diverse security expertise",
-        "Led national cybersecurity framework development initiative",
+        "Championed national cybersecurity framework development initiative",
         "Established Swedish national cybersecurity standards and guidelines"
       ]
     },
@@ -70,7 +71,7 @@ export const Experience = () => {
       highlights: [
         "Enhanced organizational security capabilities for diverse client portfolio",
         "Advised clients on regulatory compliance including DORA and GDPR requirements",
-        "Led operational rollout of ISMS in compliance with ISO 27001 standards",
+        "Orchestrated operational rollout of ISMS in compliance with ISO 27001 standards",
         "Fortified organizational resilience through strategic enhancement of security protocols and frameworks"
       ]
     },
@@ -80,7 +81,7 @@ export const Experience = () => {
       period: "2021 - 2021",
       industry: "Global Multistakeholder Platform (UN)",
       highlights: [
-        "Spearheaded pivotal cybersecurity research initiative examining cyber norms efficacy against internet security incidents",
+        "Initiated pivotal cybersecurity research initiative examining cyber norms efficacy against internet security incidents",
         "Investigated underlying factors influencing cyber norm adoption to enhance threat mitigation strategies",
         "Authored comprehensive 77-page qualitative research report on norm effectiveness in cybersecurity",
         "Presented key findings at prestigious UN IGF 2021 workshop in Katowice"
@@ -116,7 +117,7 @@ export const Experience = () => {
       period: "2017 - 2019",
       industry: "Energy Sector",
       highlights: [
-        "Led security for Nordic power SCADA systems across 4 countries (Finland, Norway, Sweden, Denmark)",
+        "Supervised security for Nordic power SCADA systems across 4 countries (Finland, Norway, Sweden, Denmark)",
         "Implemented ISO 27001, 27002, 27005, and 27019 standards for Nordic Regional Security Coordinator",
         "Conducted comprehensive penetration testing, vulnerability assessments, and risk management for IT/SCADA systems",
         "Championed pragmatic, results-oriented approach to strengthen business unit security posture"
@@ -128,10 +129,10 @@ export const Experience = () => {
       period: "2016 - 2017",
       industry: "Financial Services",
       highlights: [
-        "Led security-focused program and project management for organizational-wide security activities",
+        "Coordinated security-focused program and project management for organizational-wide security activities",
         "Increased resilience against hostile actors by expanding and improving security capabilities",
         "Managed enterprise-wide security transformation initiatives",
-        "Coordinated cross-functional teams to deliver security improvements on time and within budget"
+        "Orchestrated cross-functional teams to deliver security improvements on time and within budget"
       ]
     },
     {
@@ -227,7 +228,7 @@ export const Experience = () => {
         "Delegated responsibility for all connected systems in military intelligence and security services",
         "Managed multiple aspects: design, development, maintenance, budgeting, lifecycle management, requirement gathering",
         "Involved in EU cooperations with representatives from other secret police and intelligence services",
-        "Led critical national security infrastructure systems and projects"
+        "Supervised critical national security infrastructure systems and projects"
       ]
     },
     {
@@ -250,7 +251,7 @@ export const Experience = () => {
       highlights: [
         "Managed operations for multiple customers with system sizes from few servers to several thousand",
         "Implemented new systems, daily operations, proactive management including security hardening and threat analysis",
-        "Led infrastructure migration projects moving customer systems to Qbranch data centers",
+        "Coordinated infrastructure migration projects moving customer systems to Qbranch data centers",
         "Conducted patch management, trend analysis, and incident handling"
       ]
     },
@@ -304,6 +305,83 @@ export const Experience = () => {
     }
   ];
 
+  // Professional Roles Experience
+  const professionalRoles = [
+    {
+      role: "Project Manager",
+      description: "Extensive experience managing complex security and IT transformation projects across multiple industries",
+      dataRole: "project-manager"
+    },
+    {
+      role: "Chief Security Officer",
+      description: "Executive leadership in implementing comprehensive security frameworks and organizational risk management",
+      dataRole: "chief-security-officer"
+    },
+    {
+      role: "Security Architect",
+      description: "Designing and implementing enterprise security architectures and strategic security frameworks",
+      dataRole: "security-architect"
+    },
+    {
+      role: "System Manager",
+      description: "Managing complex IT systems and infrastructure operations for organizations of various scales",
+      dataRole: "system-manager"
+    },
+    {
+      role: "Project Security Support",
+      description: "Providing specialized security expertise and guidance for organizational projects and initiatives",
+      dataRole: "project-security-support"
+    },
+    {
+      role: "Cybersecurity Researcher",
+      description: "Conducting advanced research in cybersecurity, AI security, and internet governance frameworks",
+      dataRole: "cybersecurity-researcher"
+    },
+    {
+      role: "Artificial Intelligence Engineer",
+      description: "Developing AI-driven security solutions and automated compliance systems",
+      dataRole: "artificial-intelligence-engineer"
+    }
+  ];
+
+  // Achievements
+  const achievements = [
+    {
+      title: "ITIL Foundation Course",
+      description: "Certified in IT Infrastructure Library best practices for IT service management",
+      dataAchievement: "itil-foundation"
+    },
+    {
+      title: "PEJL Course",
+      description: "Completed specialized leadership and project management certification",
+      dataAchievement: "pejl-course"
+    }
+  ];
+
+  // Speaking Engagements
+  const speakingEngagements = [
+    {
+      event: "RedHat Conference",
+      description: "Technical presentation on enterprise security architecture and open-source security solutions",
+      dataSpeaking: "redhat-speaker"
+    },
+    {
+      event: "SIG Security",
+      description: "Expert speaker on advanced cybersecurity frameworks and threat intelligence",
+      dataSpeaking: "sig-security-speaker"
+    },
+    {
+      event: "DSV, Department of Computer and System Sciences, Stockholm University",
+      description: "Academic presentation on cybersecurity research methodologies and AI security",
+      dataSpeaking: "dsv-stockholm-university-speaker"
+    },
+    {
+      event: "Nordic IT",
+      description: "Keynote speaker on Nordic cybersecurity collaboration and regional security standards",
+      dataSpeaking: "nordic-it-speaker"
+    }
+  ];
+
   return (
     <section id="experience" className="py-20 bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -312,12 +390,67 @@ export const Experience = () => {
             Professional Experience
           </h2>
           <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-            A comprehensive 26+ year track record spanning multiple industries and security domains, 
+            A comprehensive 27+ year track record spanning multiple industries and security domains, 
             from startup CSO to enterprise security leadership and international advisory roles.
           </p>
         </div>
 
+        {/* Professional Roles */}
+        <div className="mb-16">
+          <h3 className="text-2xl font-bold mb-8 text-center bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            Key Professional Roles
+          </h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {professionalRoles.map((role, index) => (
+              <div key={index} className="p-6 bg-slate-900/50 rounded-lg border border-slate-800 hover:border-blue-500/50 transition-all duration-300" data-role={role.dataRole}>
+                <h4 className="text-lg font-semibold text-blue-400 mb-3">{role.role}</h4>
+                <p className="text-slate-300 text-sm">{role.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Achievements */}
+        <div className="mb-16">
+          <h3 className="text-2xl font-bold mb-8 text-center bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            Key Achievements
+          </h3>
+          <div className="grid md:grid-cols-2 gap-6">
+            {achievements.map((achievement, index) => (
+              <div key={index} className="p-6 bg-slate-900/50 rounded-lg border border-slate-800 hover:border-blue-500/50 transition-all duration-300" data-achievement={achievement.dataAchievement}>
+                <div className="flex items-center space-x-3 mb-3">
+                  <Award size={20} className="text-blue-400" />
+                  <h4 className="text-lg font-semibold text-blue-400">{achievement.title}</h4>
+                </div>
+                <p className="text-slate-300 text-sm">{achievement.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Speaking Engagements */}
+        <div className="mb-16">
+          <h3 className="text-2xl font-bold mb-8 text-center bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            Speaking Engagements
+          </h3>
+          <div className="grid md:grid-cols-2 gap-6">
+            {speakingEngagements.map((engagement, index) => (
+              <div key={index} className="p-6 bg-slate-900/50 rounded-lg border border-slate-800 hover:border-blue-500/50 transition-all duration-300" data-speaking={engagement.dataSpeaking}>
+                <div className="flex items-center space-x-3 mb-3">
+                  <Mic size={20} className="text-blue-400" />
+                  <h4 className="text-lg font-semibold text-blue-400">{engagement.event}</h4>
+                </div>
+                <p className="text-slate-300 text-sm">{engagement.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Experience Timeline */}
         <div className="space-y-8">
+          <h3 className="text-2xl font-bold mb-8 text-center bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            Career Timeline
+          </h3>
           {experiences.map((exp, index) => (
             <div key={index} className="group relative">
               <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 to-cyan-500 rounded-full opacity-50 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -354,7 +487,7 @@ export const Experience = () => {
 
         <div className="mt-12 text-center">
           <p className="text-slate-400 text-sm">
-            This comprehensive timeline represents 26+ years of progressive cybersecurity leadership across 
+            This comprehensive timeline represents 27+ years of progressive cybersecurity leadership across 
             diverse industries including finance, government, energy, technology, and international organizations.
           </p>
         </div>
