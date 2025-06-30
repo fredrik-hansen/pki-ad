@@ -18,7 +18,7 @@ export const Experience = () => {
         </div>
 
         <ProfessionalRoles />
- //       <Achievements />
+        <Achievements />
         <CareerTimeline />
 
         <div className="mt-12 text-center">
