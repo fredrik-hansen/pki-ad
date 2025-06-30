@@ -140,7 +140,7 @@ export const CybersecurityDomains = () => {
             Cybersecurity Domain Expertise
           </h2>
           <p className="text-xl text-slate-300 max-w-3xl mx-auto mb-8">
-            Comprehensive mapping of 26+ years of cybersecurity experience across critical security domains, 
+            Comprehensive mapping of cybersecurity experience across critical security domains, 
             from foundational security practices to cutting-edge AI security and Internet governance.
           </p>
           
