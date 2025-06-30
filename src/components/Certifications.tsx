@@ -91,7 +91,7 @@ export const Certifications = () => {
         <div className="mb-16">
           <div className="flex items-center mb-8">
             <Award className="w-6 h-6 text-blue-400 mr-3" />
-            <h3 className="text-2xl font-semibold text-white">UN Disarmament Affairs Certificates</h3>
+            <h3 className="text-2xl font-semibold text-white">Courses and Certificates</h3>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
