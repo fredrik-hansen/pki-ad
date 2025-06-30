@@ -1,8 +1,8 @@
 
 export const About = () => {
   const highlights = [
-    "26+ years of expertise in IT and Information Security",
-    "6-year track record in machine learning engineering",
+    "27+ years of expertise in IT and Information Security",
+    "7-year track record in machine learning engineering",
     "Working roles: CSO, Lead Security Engineer, Security Architect",
     "Comprehensive operational experience across cybersecurity domains",
     "Pragmatic, solution-oriented approach with hands-on technical skills",
