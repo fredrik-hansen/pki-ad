@@ -1,4 +1,3 @@
-
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, PageBreak, Table, TableRow, TableCell, WidthType } from 'docx';
 
 const extractTextFromElement = (element: Element | null): string => {
@@ -131,77 +130,6 @@ const extractDataFromPage = () => {
 export const generateDOCX = () => {
   const data = extractDataFromPage();
   
-  // Create left column content (Experience)
-  const leftColumnContent = [
-    // Experience Section
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: "EXPERIENCE",
-          bold: true,
-          size: 24,
-          font: "Calibri"
-        })
-      ]
-    }),
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: "___________________________",
-          size: 20,
-          font: "Calibri"
-        })
-      ]
-    }),
-    new Paragraph({ text: "" }),
-    
-    // Professional Experience entries
-    ...data.experiences.flatMap((exp: any) => [
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: exp.title,
-            bold: true,
-            size: 20,
-            font: "Calibri"
-          })
-        ]
-      }),
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: exp.company,
-            size: 18,
-            font: "Calibri",
-            color: "2563EB"
-          })
-        ]
-      }),
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: `${exp.period} | ${exp.industry}`,
-            size: 16,
-            font: "Calibri",
-            color: "666666"
-          })
-        ]
-      }),
-      ...exp.highlights.map((highlight: string) =>
-        new Paragraph({
-          children: [
-            new TextRun({
-              text: `• ${highlight}`,
-              size: 18,
-              font: "Calibri"
-            })
-          ]
-        })
-      ),
-      new Paragraph({ text: "" })
-    ])
-  ];
-
   // Create right column content (Summary, Certifications, Languages)
   const rightColumnContent = [
     // Summary Section
@@ -331,7 +259,150 @@ export const generateDOCX = () => {
     )
   ];
 
-  // Create the document with two-column layout using table
+  // Create left column content (placeholder for balance)
+  const leftColumnContent = [
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "CURRENT ROLE",
+          bold: true,
+          size: 24,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "___________________________",
+          size: 20,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({ text: "" }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: data.currentRole || "Senior IT & Information Security Expert",
+          size: 18,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({ text: "" }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: data.availability || "Available for consulting and advisory roles",
+          size: 16,
+          font: "Calibri",
+          color: "666666"
+        })
+      ]
+    }),
+    new Paragraph({ text: "" }),
+    new Paragraph({ text: "" }),
+
+    // Specialization
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "SPECIALIZATION",
+          bold: true,
+          size: 24,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "___________________________",
+          size: 20,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({ text: "" }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: data.specialization || "AI Security & Cybersecurity Architecture",
+          size: 18,
+          font: "Calibri"
+        })
+      ]
+    }),
+  ];
+
+  // Create compact experience content for single column
+  const compactExperienceContent = [
+    new Paragraph({
+      children: [new PageBreak()]
+    }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "PROFESSIONAL EXPERIENCE",
+          bold: true,
+          size: 28,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "_____________________________________________",
+          size: 24,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({ text: "" }),
+    
+    // Compact experience entries
+    ...data.experiences.flatMap((exp: any) => [
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: exp.title,
+            bold: true,
+            size: 20,
+            font: "Calibri"
+          }),
+          new TextRun({
+            text: ` | ${exp.company}`,
+            size: 18,
+            font: "Calibri",
+            color: "2563EB"
+          }),
+          new TextRun({
+            text: ` | ${exp.period}`,
+            size: 16,
+            font: "Calibri",
+            color: "666666"
+          })
+        ]
+      }),
+      // Only show top 3 highlights for compact format
+      ...exp.highlights.slice(0, 3).map((highlight: string) =>
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: `• ${highlight}`,
+              size: 16,
+              font: "Calibri"
+            })
+          ]
+        })
+      ),
+      new Paragraph({ text: "" })
+    ])
+  ];
+
+  // Create the document with restructured layout
   const doc = new Document({
     sections: [
       {
@@ -385,7 +456,7 @@ export const generateDOCX = () => {
                 children: [
                   new TableCell({
                     width: {
-                      size: 60,
+                      size: 40,
                       type: WidthType.PERCENTAGE,
                     },
                     children: leftColumnContent,
@@ -398,7 +469,7 @@ export const generateDOCX = () => {
                   }),
                   new TableCell({
                     width: {
-                      size: 40,
+                      size: 60,
                       type: WidthType.PERCENTAGE,
                     },
                     children: rightColumnContent,
@@ -413,6 +484,9 @@ export const generateDOCX = () => {
               }),
             ],
           }),
+
+          // Experience section in single column (compact format)
+          ...compactExperienceContent,
 
           // Additional sections on separate pages
           new Paragraph({
