@@ -1,6 +1,6 @@
 
 import { ProfessionalRoles } from "./experience/ProfessionalRoles";
-//import { Achievements } from "./experience/Achievements";
+import { Achievements } from "./experience/Achievements";
 import { CareerTimeline } from "./experience/CareerTimeline";
 
 export const Experience = () => {
