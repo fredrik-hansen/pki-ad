@@ -10,7 +10,7 @@ export const About = () => {
   ];
 
   const industries = [
-    "Financial Services", "Banking", "Military", "Law Enforcement", 
+    "Financial Services", "Banking", "Military Intelligence and Security Service", "Law Enforcement", 
     "Retail", "Energy", "Government", "Technology"
   ];
 

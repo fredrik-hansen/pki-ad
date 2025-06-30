@@ -12,7 +12,7 @@ export const Experience = () => {
             Professional Experience
           </h2>
           <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-            A comprehensive 27+ year track record spanning multiple industries and security domains, 
+            A comprehensive track record spanning multiple industries and security domains, 
             from startup CSO to enterprise security leadership and international advisory roles.
           </p>
         </div>
@@ -23,7 +23,7 @@ export const Experience = () => {
 
         <div className="mt-12 text-center">
           <p className="text-slate-400 text-sm">
-            This comprehensive timeline represents 27+ years of progressive cybersecurity leadership across 
+            This comprehensive timeline represents years of progressive cybersecurity leadership across 
             diverse industries including finance, government, energy, technology, and international organizations.
           </p>
         </div>
