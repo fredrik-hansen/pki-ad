@@ -36,18 +36,7 @@ const extractDataFromPage = () => {
     level: el.getAttribute('data-level') || ''
   }));
   
-  // Extract technical competencies - include ALL information
-  const competencyElements = document.querySelectorAll('[data-category]');
-  const competencies = Array.from(competencyElements).map(categoryEl => {
-    const category = categoryEl.getAttribute('data-category') || '';
-    const skillElements = categoryEl.querySelectorAll('[data-skill]');
-    const skills = Array.from(skillElements).map(skillEl => 
-      skillEl.getAttribute('data-skill') || extractTextFromElement(skillEl)
-    );
-    return { category, skills };
-  });
-  
-  // Extract ALL cybersecurity domains information
+  // Extract ALL cybersecurity domains information with integrated technical competencies
   const allCybersecurityDomains = [
     {
       category: "Security Architecture & Engineering",
@@ -55,7 +44,8 @@ const extractDataFromPage = () => {
       domains: [
         "Security Architecture", "Security Engineering", "Cryptography", 
         "Key and Secret Management", "PKI", "Network Design", 
-        "Secure System Build", "Container Security"
+        "Secure System Build", "Container Security", "SAST/DAST",
+        "Security SDLC", "CSPM", "Shift Left Security", "Infrastructure as Code"
       ]
     },
     {
@@ -63,8 +53,10 @@ const extractDataFromPage = () => {
       level: "expert", 
       domains: [
         "Risk Assessment", "Enterprise Risk Management", "ISO 27001/27002/27005/27019",
-        "NIST Cybersecurity Framework", "PCI DSS", "GDPR", "DORA",
-        "Compliance & Enforcement", "Policy Development", "Audit Management"
+        "NIST Cybersecurity Framework", "PCI DSS", "GDPR", "DORA", "SOC 2",
+        "Compliance & Enforcement", "Policy Development", "Audit Management",
+        "Risk Management", "Compliance Programs", "Security Governance",
+        "Incident Response", "Business Continuity", "CIS Controls", "SBOM"
       ]
     },
     {
@@ -73,7 +65,7 @@ const extractDataFromPage = () => {
       domains: [
         "SAST", "DAST", "Source Code Scan", "API Security", 
         "S-SDLC", "Vulnerability Scan", "Penetration Test",
-        "Security QA", "Shift Left Security"
+        "Security QA", "Shift Left Security", "Vulnerability Assessment"
       ]
     },
     {
@@ -82,7 +74,8 @@ const extractDataFromPage = () => {
       domains: [
         "SIEM", "SOC", "Incident Response", "Detection", 
         "Threat Hunting", "Security Operation Centers", "Forensics",
-        "Breach Notification", "Investigation", "Containment"
+        "Breach Notification", "Investigation", "Containment",
+        "Security Monitoring", "Penetration Testing"
       ]
     },
     {
@@ -90,7 +83,8 @@ const extractDataFromPage = () => {
       level: "expert",
       domains: [
         "Identity Management", "Access Control", "Privileged Access Management",
-        "MFA & SSO", "Identity & Access Management", "Federated Identity"
+        "MFA & SSO", "Identity & Access Management", "Federated Identity",
+        "Zero Trust"
       ]
     },
     {
@@ -99,7 +93,8 @@ const extractDataFromPage = () => {
       domains: [
         "Cloud Security", "CSPM", "Infrastructure Security", 
         "Network Security", "Endpoint Security", "Data Protection",
-        "Certificate Management", "Patch Management"
+        "Certificate Management", "Patch Management", "AWS/Azure/GCP",
+        "Kubernetes Security", "Network Segmentation"
       ]
     },
     {
@@ -107,7 +102,8 @@ const extractDataFromPage = () => {
       level: "expert",
       domains: [
         "CIS Top 20 Controls", "OWASP Top 10", "MITRE ATT&CK Framework",
-        "Security Frameworks", "Industry Standards", "Baseline Configuration"
+        "Security Frameworks", "Industry Standards", "Baseline Configuration",
+        "ISO 27001/27002/27005/27019", "NIST Cybersecurity Framework"
       ]
     },
     {
@@ -131,7 +127,8 @@ const extractDataFromPage = () => {
       level: "expert",
       domains: [
         "DNSSEC", "RPKI", "Internet Governance", "BGP Security",
-        "Multi-stakeholder Coordination", "Policy Development"
+        "Multi-stakeholder Coordination", "Policy Development",
+        "Cybersecurity Policy"
       ]
     },
     {
@@ -139,7 +136,8 @@ const extractDataFromPage = () => {
       level: "advanced",
       domains: [
         "AI Security", "Data Model Security", "Adversarial Attacks",
-        "Data Privacy", "Model Security", "AI Risk Assessment"
+        "Data Privacy", "Model Security", "AI Risk Assessment",
+        "Data Poisoning & Quality", "Model Repurposing"
       ]
     },
     {
@@ -151,59 +149,51 @@ const extractDataFromPage = () => {
       ]
     }
   ];
-
-  // Extract ALL technical competencies information
-  const allTechnicalCompetencies = [
+  
+  // Extract ALL certifications and recognition data
+  const allCertifications = [
     {
-      category: "Security Frameworks & Standards",
-      skills: [
-        "ISO 27001/27002/27005/27019", "NIST Cybersecurity Framework", "CIS Controls",
-        "PCI DSS", "SOC 2", "GDPR", "DORA", "SBOM"
-      ]
+      title: "Cluster Munitions",
+      issuer: "United Nations Office for Disarmament Affairs",
+      type: "Online Short Course",
+      level: "Level-Introductory",
+      date: "October 2023",
+      category: "Weapons Systems"
     },
     {
-      category: "AI & Machine Learning Security",
-      skills: [
-        "Data Model Security", "Adversarial Attacks", "Data Poisoning & Quality",
-        "Data Privacy", "Model Repurposing", "AI Risk Assessment"
-      ]
+      title: "Lethal Autonomous Weapon Systems",
+      issuer: "United Nations Office for Disarmament Affairs", 
+      type: "Online Short Course",
+      level: "Level-Introductory",
+      date: "October 2023",
+      category: "Weapons Systems"
     },
     {
-      category: "Security Engineering & Architecture",
-      skills: [
-        "SAST/DAST", "Security SDLC", "Container Security", "CSPM",
-        "Shift Left Security", "Cloud Security", "SCADA Security"
-      ]
+      title: "Nuclear Security",
+      issuer: "United Nations Office for Disarmament Affairs",
+      type: "Online Short Course", 
+      level: "Level-Introductory",
+      date: "October 2023",
+      category: "Nuclear Security"
     },
     {
-      category: "Governance, Risk & Compliance",
-      skills: [
-        "Risk Management", "Compliance Programs", "Security Governance",
-        "Incident Response", "Business Continuity", "Audit Management"
-      ]
-    },
-    {
-      category: "Technical Operations",
-      skills: [
-        "Penetration Testing", "Vulnerability Assessment", "Security Monitoring",
-        "SIEM/SOC", "PKI", "Network Security", "Forensics"
-      ]
-    },
-    {
-      category: "Infrastructure & Cloud",
-      skills: [
-        "AWS/Azure/GCP", "Kubernetes Security", "Infrastructure as Code",
-        "Zero Trust", "Identity & Access Management", "Network Segmentation"
-      ]
-    },
-    {
-      category: "Internet Security Standards",
-      skills: [
-        "DNSSEC", "RPKI", "BGP Security", "Internet Governance",
-        "Cybersecurity Policy", "Multi-stakeholder Coordination"
-      ]
+      title: "Introduction to Disarmament",
+      issuer: "United Nations Office for Disarmament Affairs",
+      type: "Online Short Course",
+      level: "Level-Introductory", 
+      date: "October 2023",
+      category: "International Relations"
     }
   ];
+
+  const recognition = {
+    title: "UN Internet Governance Forum 2021",
+    issuer: "Republic of Poland - Chancellery of the Prime Minister",
+    signatory: "Krzysztof Szubert",
+    position: "High Representative for European Digital Policy",
+    description: "Acknowledgment for active involvement in the 16th UN Internet Governance Forum meeting in Katowice, Poland",
+    date: "December 15th, 2021"
+  };
   
   // Extract volunteer work
   const volunteerElements = document.querySelectorAll('[data-volunteer-role]');
@@ -252,19 +242,6 @@ const extractDataFromPage = () => {
     });
   }
   
-  // Extract certifications if available
-  const certificationSection = document.querySelector('#certifications');
-  let certifications: any[] = [];
-  if (certificationSection) {
-    const certItems = certificationSection.querySelectorAll('[data-certification]');
-    certifications = Array.from(certItems).map(item => ({
-      title: extractTextFromElement(item.querySelector('[data-cert-title]')),
-      issuer: extractTextFromElement(item.querySelector('[data-cert-issuer]')),
-      date: extractTextFromElement(item.querySelector('[data-cert-date]')),
-      category: extractTextFromElement(item.querySelector('[data-cert-category]'))
-    }));
-  }
-  
   return {
     name,
     title,
@@ -273,15 +250,15 @@ const extractDataFromPage = () => {
     location,
     highlights,
     industries,
-    competencies: allTechnicalCompetencies,
     cybersecurityDomains: allCybersecurityDomains,
+    certifications: allCertifications,
+    recognition,
     volunteerWork,
     speakingEngagements,
     currentRole,
     availability,
     specialization,
     experiences,
-    certifications,
     languages
   };
 };
@@ -371,7 +348,7 @@ export const generateDOCX = () => {
     })
   ];
 
-  // Create comprehensive Cybersecurity Domain Expertise content (middle left)
+  // Create comprehensive Cybersecurity Domain Expertise content (bottom left)
   const domainExpertiseContent = [
     new Paragraph({
       children: [
@@ -394,7 +371,7 @@ export const generateDOCX = () => {
     }),
     new Paragraph({ text: "" }),
     
-    // Include ALL cybersecurity domains
+    // Include ALL cybersecurity domains with integrated technical competencies
     ...data.cybersecurityDomains.flatMap((domain: any) => [
       new Paragraph({
         children: [
@@ -419,98 +396,7 @@ export const generateDOCX = () => {
     ])
   ];
 
-  // Create comprehensive Technical Competencies content (middle right)
-  const technicalCompetenciesContent = [
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: "TECHNICAL COMPETENCIES",
-          bold: true,
-          size: 24,
-          font: "Calibri"
-        })
-      ]
-    }),
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: "___________________________",
-          size: 20,
-          font: "Calibri"
-        })
-      ]
-    }),
-    new Paragraph({ text: "" }),
-    
-    // Include ALL technical competencies
-    ...data.competencies.flatMap((comp: any) => [
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: comp.category,
-            bold: true,
-            size: 16,
-            font: "Calibri"
-          })
-        ]
-      }),
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: comp.skills.join(" • "),
-            size: 14,
-            font: "Calibri"
-          })
-        ]
-      }),
-      new Paragraph({ text: "" })
-    ])
-  ];
-
-  // Create Languages content (bottom left)
-  const languagesContent = [
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: "LANGUAGES",
-          bold: true,
-          size: 24,
-          font: "Calibri"
-        })
-      ]
-    }),
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: "___________________________",
-          size: 20,
-          font: "Calibri"
-        })
-      ]
-    }),
-    new Paragraph({ text: "" }),
-    
-    ...data.languages.map((lang: any) =>
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: lang.name,
-            bold: true,
-            size: 18,
-            font: "Calibri"
-          }),
-          new TextRun({
-            text: ` - ${lang.level}`,
-            size: 16,
-            font: "Calibri",
-            color: "666666"
-          })
-        ]
-      })
-    )
-  ];
-
-  // Create Certifications & Recognition content (bottom right)
+  // Create comprehensive Certifications & Recognition content (bottom right)
   const certificationsContent = [
     new Paragraph({
       children: [
@@ -528,6 +414,72 @@ export const generateDOCX = () => {
           text: "___________________________",
           size: 20,
           font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({ text: "" }),
+    
+    // UN Certificates
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "UN Disarmament Affairs Certificates:",
+          bold: true,
+          size: 16,
+          font: "Calibri"
+        })
+      ]
+    }),
+    ...data.certifications.map((cert: any) => 
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: `• ${cert.title} - ${cert.issuer} (${cert.date})`,
+            size: 14,
+            font: "Calibri"
+          })
+        ]
+      })
+    ),
+    new Paragraph({ text: "" }),
+    
+    // International Recognition
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "International Recognition:",
+          bold: true,
+          size: 16,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: `• ${data.recognition.title}`,
+          size: 14,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: `  ${data.recognition.issuer}`,
+          size: 12,
+          font: "Calibri",
+          color: "666666"
+        })
+      ]
+    }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: `  ${data.recognition.date}`,
+          size: 12,
+          font: "Calibri",
+          color: "666666"
         })
       ]
     }),
@@ -573,6 +525,49 @@ export const generateDOCX = () => {
         })
       ]
     })
+  ];
+
+  // Create Languages content (center)
+  const languagesContent = [
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "LANGUAGES",
+          bold: true,
+          size: 24,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "___________________________",
+          size: 20,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({ text: "" }),
+    
+    ...data.languages.map((lang: any) =>
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: lang.name,
+            bold: true,
+            size: 18,
+            font: "Calibri"
+          }),
+          new TextRun({
+            text: ` - ${lang.level}`,
+            size: 16,
+            font: "Calibri",
+            color: "666666"
+          })
+        ]
+      })
+    )
   ];
 
   // Create compact experience content for single column
@@ -640,7 +635,7 @@ export const generateDOCX = () => {
     ])
   ];
 
-  // Create the document with restructured grid layout
+  // Create the document with 2x2 grid layout
   const doc = new Document({
     sections: [
       {
@@ -683,7 +678,7 @@ export const generateDOCX = () => {
           new Paragraph({ text: "" }),
           new Paragraph({ text: "" }),
 
-          // Grid layout using table with multiple rows
+          // 2x2 Grid layout using table
           new Table({
             width: {
               size: 100,
@@ -721,7 +716,7 @@ export const generateDOCX = () => {
                   }),
                 ],
               }),
-              // Middle row: Cybersecurity Domain Expertise (left) and Technical Competencies (right)
+              // Bottom row: Cybersecurity Domain Expertise (left) and Certifications & Recognition (right)
               new TableRow({
                 children: [
                   new TableCell({
@@ -742,7 +737,7 @@ export const generateDOCX = () => {
                       size: 50,
                       type: WidthType.PERCENTAGE,
                     },
-                    children: technicalCompetenciesContent,
+                    children: certificationsContent,
                     margins: {
                       top: 100,
                       bottom: 100,
@@ -752,9 +747,27 @@ export const generateDOCX = () => {
                   }),
                 ],
               }),
-              // Bottom row: Languages (left) and Certifications & Recognition (right)
+            ],
+          }),
+
+          // Languages section in single column (centered)
+          new Paragraph({ text: "" }),
+          new Paragraph({ text: "" }),
+          new Table({
+            width: {
+              size: 100,
+              type: WidthType.PERCENTAGE,
+            },
+            rows: [
               new TableRow({
                 children: [
+                  new TableCell({
+                    width: {
+                      size: 25,
+                      type: WidthType.PERCENTAGE,
+                    },
+                    children: [new Paragraph({ text: "" })],
+                  }),
                   new TableCell({
                     width: {
                       size: 50,
@@ -765,21 +778,15 @@ export const generateDOCX = () => {
                       top: 100,
                       bottom: 100,
                       left: 100,
-                      right: 200,
+                      right: 100,
                     },
                   }),
                   new TableCell({
                     width: {
-                      size: 50,
+                      size: 25,
                       type: WidthType.PERCENTAGE,
                     },
-                    children: certificationsContent,
-                    margins: {
-                      top: 100,
-                      bottom: 100,
-                      left: 200,
-                      right: 100,
-                    },
+                    children: [new Paragraph({ text: "" })],
                   }),
                 ],
               }),
