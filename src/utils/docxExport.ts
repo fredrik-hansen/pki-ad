@@ -43,13 +43,6 @@ const extractDataFromPage = () => {
     description: extractTextFromElement(el.querySelector('p'))
   }));
   
-  // Extract achievements
-  const achievementElements = document.querySelectorAll('[data-achievement]');
-  const achievements = Array.from(achievementElements).map(el => ({
-    title: extractTextFromElement(el.querySelector('h4')),
-    description: extractTextFromElement(el.querySelector('p'))
-  }));
-  
   // Extract speaking engagements from the new section
   const speakingElements = document.querySelectorAll('[data-speaking]');
   const speakingEngagements = Array.from(speakingElements).map(el => ({
@@ -267,7 +260,6 @@ const extractDataFromPage = () => {
     volunteerWork,
     speakingEngagements,
     professionalRoles,
-    achievements,
     currentRole,
     availability,
     specialization,
@@ -714,41 +706,6 @@ export const generateDOCX = () => {
               children: [
                 new TextRun({
                   text: role.description,
-                  size: 20,
-                  font: "Calibri"
-                })
-              ]
-            }),
-            new Paragraph({ text: "" })
-          ]),
-
-          // Achievements
-          new Paragraph({
-            heading: HeadingLevel.HEADING_1,
-            children: [
-              new TextRun({
-                text: "KEY ACHIEVEMENTS",
-                bold: true,
-                size: 24,
-                font: "Calibri"
-              })
-            ]
-          }),
-          ...data.achievements.flatMap((achievement: any) => [
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: achievement.title,
-                  bold: true,
-                  size: 22,
-                  font: "Calibri"
-                })
-              ]
-            }),
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: achievement.description,
                   size: 20,
                   font: "Calibri"
                 })

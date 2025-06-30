@@ -1,3 +1,4 @@
+
 export const experiences = [
   {
     title: "Information Security Professional, CEO",
@@ -339,15 +340,4 @@ export const professionalRoles = [
   }
 ];
 
-export const achievements = [
-  {
-    title: "ITIL Foundation Course",
-    description: "Certified in IT Infrastructure Library best practices for IT service management",
-    dataAchievement: "itil-foundation"
-  },
-  {
-    title: "PEJL Course",
-    description: "Completed specialized leadership and project management certification",
-    dataAchievement: "pejl-course"
-  }
-];
+// Removed achievements array as it's no longer needed
