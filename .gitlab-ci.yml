@@ -906,7 +906,7 @@ license_compliance_backend:
     entrypoint: [""]
   stage: security
   script:
-    - trivy fs --scanners license --license-full --format table --output trivy-backend-licenses.txt ./logic || true
+    - trivy fs --scanners license --license-full --format table --output trivy-backend-licenses.txt ./backend || true
   allow_failure: true
   artifacts:
     paths:
@@ -919,7 +919,7 @@ license_compliance_frontend:
     entrypoint: [""]
   stage: security
   script:
-    - trivy fs --scanners license --license-full --format table --output trivy-frontend-licenses.txt ./frontend || true
+    - trivy fs --scanners license --license-full --format table --output trivy-frontend-licenses.txt . || true
   allow_failure: true
   artifacts:
     paths:
