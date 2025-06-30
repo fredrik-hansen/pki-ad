@@ -42,17 +42,17 @@ export const Contact = () => {
           <div className="text-center">
             <div className="inline-flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8 p-8 bg-slate-800/50 rounded-lg border border-slate-700/50" data-current-info>
               <div className="text-center" data-current-role="CEO, Digital Companion">
-                <p className="text-slate-400 text-sm mb-1">Current Role</p>
+                <p className="text-slate-400 text-sm mb-1">Current Role: </p>
                 <p className="text-white font-medium">CEO, Digital Companion</p>
               </div>
               <div className="w-px h-12 bg-slate-600 hidden md:block"></div>
               <div className="text-center" data-availability="Open for Consulting">
-                <p className="text-slate-400 text-sm mb-1">Availability</p>
+                <p className="text-slate-400 text-sm mb-1">Availability: </p>
                 <p className="text-green-400 font-medium">Open for Consulting</p>
               </div>
               <div className="w-px h-12 bg-slate-600 hidden md:block"></div>
               <div className="text-center" data-specialization="Cybersecurity & AI Security">
-                <p className="text-slate-400 text-sm mb-1">Specialization</p>
+                <p className="text-slate-400 text-sm mb-1">Specialization: </p>
                 <p className="text-white font-medium">Cybersecurity & AI Security</p>
               </div>
             </div>
@@ -75,7 +75,7 @@ export const Contact = () => {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
               <p className="text-slate-400 text-sm">
-                © 2025 Fredrik Hansen. Professional portfolio showcasing 26+ years of cybersecurity expertise.
+                © 2025 Fredrik Hansen. 
               </p>
             </div>
             <div className="flex space-x-6">
