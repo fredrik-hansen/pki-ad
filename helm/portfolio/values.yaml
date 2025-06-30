@@ -3,7 +3,7 @@
 replicaCount: 2
 
 image:
-  repository: your-registry/portfolio
+  repository: gitlab.int.pki.ad:5050/cognita/portfolio
   pullPolicy: IfNotPresent
   tag: "latest"
 
