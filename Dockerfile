@@ -8,8 +8,10 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
+RUN npm install -g vite
+
 # Install dependencies
-RUN npm ci --only=production
+RUN npm i
 
 # Copy source code
 COPY . .
