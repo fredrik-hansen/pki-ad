@@ -78,7 +78,7 @@ export const About = () => {
         <div className="text-center">
           <div className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-600/20 to-cyan-600/20 rounded-lg border border-blue-500/30" data-location="Europe (CET)" data-nationality="Swedish National">
             <div className="w-3 h-3 rounded-full bg-green-400"></div>
-            <span className="text-slate-300">Based in Europe (CET) • Swedish National</span>
+            <span className="text-slate-300">Based in Europe (CET) • Swedish National </span>
           </div>
         </div>
       </div>
