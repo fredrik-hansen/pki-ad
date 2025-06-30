@@ -120,8 +120,8 @@ export const experiences = [
     ]
   },
   {
-    title: "Project Manager",
-    company: "Finance/Bank Customer",
+    title: "Cybersecurity Project Manager",
+    company: "Swedbank",
     period: "2016 - 2017",
     industry: "Financial Services",
     highlights: [
