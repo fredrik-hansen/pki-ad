@@ -9,7 +9,7 @@ export const Certifications = () => {
       issuer: "Change Management Framework",
       type: "ITIL Foundation Course",
       level: "Level-Introductory",
-      date: "October 2010,
+      date: "October 2010",
       image: "/lovable-uploads/1e973b5f-757d-4ee5-8ace-8aa30b8f51ce.png",
       icon: Shield,
       category: "IT Service Management"
