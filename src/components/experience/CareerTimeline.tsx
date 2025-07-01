@@ -6,7 +6,7 @@ export const CareerTimeline = () => {
   return (
     <div className="space-y-8">
       <h3 className="text-2xl font-bold mb-8 text-center bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-        Career Timeline
+        Career Timeline (Assignments and Employments)
       </h3>
       {experiences.map((exp, index) => (
         <div key={index} className="group relative">
