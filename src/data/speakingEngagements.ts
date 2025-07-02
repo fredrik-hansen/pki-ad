@@ -14,7 +14,7 @@ export const speakingEngagements = [
   },
   {
     event: "Afric'Up Tech & Startup Summit 2019",
-    location: "Africa",
+    location: "Tunis, Tunisia",
     topic: "Secure Smart Cities Development",
     audience: "3,700+ attendees from 32 nations",
     description: "Advocated for citizen-centric secure smart cities and served as startup pitch jury member."
