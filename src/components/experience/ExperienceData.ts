@@ -13,6 +13,17 @@ export const experiences = [
     ]
   },
   {
+    title: "CTO, Architect, Lead Developer",
+    company: "AI Tech Startup",
+    period: "2025 - 2025",
+    industry: "Information Technology",
+    highlights: [
+      "Drives development of cutting-edge AI-driven email intelligence, enhancing business process automation and efficiency",
+      "Pioneering an AI startup to seamlessly integrate with and optimize email intelligence and knowledge base",
+      "Manages full lifecycle of product development, from conceptualization to maintenance, ensuring robust information security solutions"
+    ]
+  },
+  {
     title: "Subject Matter Expert, Cybersecurity Researcher",
     company: "Internet Standards, Security and Safety Coalition (IS3C)",
     period: "2023 - Present",
