@@ -1,4 +1,3 @@
-
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, PageBreak, Table, TableRow, TableCell, WidthType } from 'docx';
 
 const extractTextFromElement = (element: Element | null): string => {
@@ -166,6 +165,22 @@ const extractDataFromPage = () => {
   
   // Extract ALL certifications and recognition data
   const allCertifications = [
+    {
+      title: "ITIL Foundation",
+      issuer: "Change Management Framework",
+      type: "ITIL Foundation Course",
+      level: "Level-Introductory",
+      date: "October 2010",
+      category: "IT Service Management"
+    },
+    {
+      title: "PEJL",
+      issuer: "PEJL AB",
+      type: "Completed specialized leadership and project management certification",
+      level: " ",
+      date: "October 2010",
+      category: "Project Management"
+    },
     {
       title: "Cluster Munitions",
       issuer: "United Nations Office for Disarmament Affairs",
@@ -375,7 +390,7 @@ export const generateDOCX = () => {
     }),
     new Paragraph({ text: "" }),
     
-    // UN Certificates (compact)
+    // All UN Certificates grouped by issuer
     new Paragraph({
       children: [
         new TextRun({
@@ -386,7 +401,7 @@ export const generateDOCX = () => {
         })
       ]
     }),
-    ...data.certifications.slice(0, 2).map((cert: any) => 
+    ...data.certifications.filter((cert: any) => cert.issuer === "United Nations Office for Disarmament Affairs").map((cert: any) => 
       new Paragraph({
         children: [
           new TextRun({
@@ -399,7 +414,31 @@ export const generateDOCX = () => {
     ),
     new Paragraph({ text: "" }),
     
-    // International Recognition (compact)
+    // Other Certifications
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "Professional Certifications:",
+          bold: true,
+          size: 14,
+          font: "Calibri"
+        })
+      ]
+    }),
+    ...data.certifications.filter((cert: any) => cert.issuer !== "United Nations Office for Disarmament Affairs").map((cert: any) => 
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: `• ${cert.title} - ${cert.issuer} (${cert.date})`,
+            size: 12,
+            font: "Calibri"
+          })
+        ]
+      })
+    ),
+    new Paragraph({ text: "" }),
+    
+    // International Recognition
     new Paragraph({
       children: [
         new TextRun({
