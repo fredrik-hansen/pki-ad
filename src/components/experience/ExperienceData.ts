@@ -13,7 +13,7 @@ export const experiences = [
     ]
   },
   {
-    title: "CTO, Architect, Lead Developer",
+    title: "CTO, Architect, Lead DevOps Engineer - Technical Jack-of-All-Trades",
     company: "Dubai based AI Tech Startup",
     period: "2024 - 2025",
     industry: "Information Technology",
