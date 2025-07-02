@@ -43,10 +43,16 @@ const extractDataFromPage = () => {
   }));
   
   // Extract speaking engagements from the new section
-  const speakingElements = document.querySelectorAll('[data-speaking]');
-  const speakingEngagements = Array.from(speakingElements).map(el => ({
-    event: extractTextFromElement(el.querySelector('h4')),
-    description: extractTextFromElement(el.querySelector('p'))
+  //const speakingElements = document.querySelectorAll('[data-speaking]');
+  const speakingElements = document.querySelectorAll('[data-speaking-engagement]');
+  //const speakingEngagements = Array.from(speakingElements).map(el => ({
+  //  event: extractTextFromElement(el.querySelector('h4')),
+  //  description: extractTextFromElement(el.querySelector('p'))
+  event: el.getAttribute('data-event') || '',
+  location: el.getAttribute('data-location') || '',
+  topic: el.getAttribute('data-topic') || '',
+  audience: el.getAttribute('data-audience') || '',
+  description: el.getAttribute('data-description') || ''
   }));
   
   // Extract ALL cybersecurity domains information with integrated technical competencies
@@ -824,8 +830,38 @@ export const generateDOCX = () => {
             new Paragraph({
               children: [
                 new TextRun({
+                  text: engagement.location,
+                  italics: true,
+                  size: 18,
+                  font: "Calibri",
+                  color: "666666"
+                })
+              ]
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `Topic: ${engagement.topic}`,
+                  size: 16,
+                  font: "Calibri"
+                })
+              ]
+            }),
+            ...(engagement.audience ? [new Paragraph({
+              children: [
+                new TextRun({
+                  text: `Audience: ${engagement.audience}`,
+                  size: 16,
+                  font: "Calibri",
+                  color: "666666"
+                })
+              ]
+            })] : []),
+            new Paragraph({
+              children: [
+                new TextRun({
                   text: engagement.description,
-                  size: 20,
+                  size: 16,
                   font: "Calibri"
                 })
               ]
