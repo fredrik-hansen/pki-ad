@@ -10,7 +10,7 @@ export const Certifications = () => {
       type: "ITIL Foundation Course",
       level: "Level-Introductory",
       date: "October 2010",
-      image: "/lovable-uploads/1e973b5f-757d-4ee5-8ace-8aa30b8f51ce.png",
+      image: "/images/1e973b5f-757d-4ee5-8ace-8aa30b8f51ce.png",
       icon: Shield,
       category: "IT Service Management"
     },    {
@@ -19,7 +19,7 @@ export const Certifications = () => {
       type: "Completed specialized leadership and project management certification",
       level: " ",
       date: "October 2010",
-      image: "/lovable-uploads/1e973b5f-757d-4ee5-8ace-8aa30b8f51ce.png",
+      image: "/images/1e973b5f-757d-4ee5-8ace-8aa30b8f51ce.png",
       icon: Shield,
       category: "Project Management"
     },    {
@@ -28,7 +28,7 @@ export const Certifications = () => {
       type: "Online Short Course",
       level: "Level-Introductory",
       date: "October 2023",
-      image: "/lovable-uploads/1e973b5f-757d-4ee5-8ace-8aa30b8f51ce.png",
+      image: "/images/1e973b5f-757d-4ee5-8ace-8aa30b8f51ce.png",
       icon: Shield,
       category: "Weapons Systems"
     },
@@ -38,7 +38,7 @@ export const Certifications = () => {
       type: "Online Short Course",
       level: "Level-Introductory",
       date: "October 2023",
-      image: "/lovable-uploads/1062d581-372a-4f92-b112-5aec3ae9e5fc.png",
+      image: "/images/1062d581-372a-4f92-b112-5aec3ae9e5fc.png",
       icon: Shield,
       category: "Weapons Systems"
     },
@@ -48,7 +48,7 @@ export const Certifications = () => {
       type: "Online Short Course", 
       level: "Level-Introductory",
       date: "October 2023",
-      image: "/lovable-uploads/d345539c-6195-4d9d-8f86-b7f5ea233e83.png",
+      image: "/images/d345539c-6195-4d9d-8f86-b7f5ea233e83.png",
       icon: Shield,
       category: "Nuclear Security"
     },
@@ -58,7 +58,7 @@ export const Certifications = () => {
       type: "Online Short Course",
       level: "Level-Introductory", 
       date: "October 2023",
-      image: "/lovable-uploads/79fbd4b7-89b3-4864-aa05-a0999f2e63a0.png",
+      image: "/images/79fbd4b7-89b3-4864-aa05-a0999f2e63a0.png",
       icon: Globe,
       category: "International Relations"
     }
@@ -71,7 +71,7 @@ export const Certifications = () => {
     position: "High Representative for European Digital Policy",
     description: "Acknowledgment for active involvement in the 16th UN Internet Governance Forum meeting in Katowice, Poland",
     date: "December 15th, 2021",
-    image: "/lovable-uploads/cdaa755b-7933-47de-a383-3e2daa2347e0.png"
+    image: "/images/cdaa755b-7933-47de-a383-3e2daa2347e0.png"
   };
 
   return (
