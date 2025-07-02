@@ -14,13 +14,14 @@ export const experiences = [
   },
   {
     title: "CTO, Architect, Lead Developer",
-    company: "AI Tech Startup",
-    period: "2025 - 2025",
+    company: "Dubai based AI Tech Startup",
+    period: "2024 - 2025",
     industry: "Information Technology",
     highlights: [
-      "Drives development of cutting-edge AI-driven email intelligence, enhancing business process automation and efficiency",
-      "Pioneering an AI startup to seamlessly integrate with and optimize email intelligence and knowledge base",
-      "Manages full lifecycle of product development, from conceptualization to maintenance, ensuring robust information security solutions"
+      "Successfully created, designed and implemented a modern, secure knowledge base application that captures and preserves institutional knowledge from email communications, reducing knowledge loss and preserving critical business intelligence.",
+      "The AI-powered solution automates the process of extracting insights from email communications, resulting in substantial time savings for employees and significant cost reductions for organizations.",
+      "It's designed to provide real-time, actionable insights into communication patterns, collaboration networks, and business decisions, enabling organizations to make informed decisions and drive business growth.",
+      "Managed full lifecycle of the product, from conceptualization to development and maintenance, ensuring a robust delivery."
     ]
   },
   {
