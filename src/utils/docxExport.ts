@@ -1,4 +1,5 @@
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, PageBreak, Table, TableRow, TableCell, WidthType } from 'docx';
+import { speakingEngagements } from '../data/speakingEngagements';
 
 const extractTextFromElement = (element: Element | null): string => {
   if (!element) return '';
@@ -40,19 +41,6 @@ const extractDataFromPage = () => {
   const professionalRoles = Array.from(roleElements).map(el => ({
     role: extractTextFromElement(el.querySelector('h4')),
     description: extractTextFromElement(el.querySelector('p'))
-  }));
-  
-  // Extract speaking engagements from the new section
-  //const speakingElements = document.querySelectorAll('[data-speaking]');
-  const speakingElements = document.querySelectorAll('[data-speaking-engagement]');
-  //const speakingEngagements = Array.from(speakingElements).map(el => ({
-  //  event: extractTextFromElement(el.querySelector('h4')),
-  //  description: extractTextFromElement(el.querySelector('p'))
-  event: el.getAttribute('data-event') || '',
-  location: el.getAttribute('data-location') || '',
-  topic: el.getAttribute('data-topic') || '',
-  audience: el.getAttribute('data-audience') || '',
-  description: el.getAttribute('data-description') || ''
   }));
   
   // Extract ALL cybersecurity domains information with integrated technical competencies
@@ -279,7 +267,7 @@ const extractDataFromPage = () => {
     certifications: allCertifications,
     recognition,
     volunteerWork,
-    speakingEngagements,
+    speakingEngagements, // Use imported data instead of DOM extraction
     professionalRoles,
     currentRole,
     availability,
