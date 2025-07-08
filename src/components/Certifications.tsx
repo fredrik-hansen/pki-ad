@@ -1,8 +1,46 @@
 
 import React from 'react';
-import { Award, Shield, Users, Globe } from 'lucide-react';
+import { Award, Shield, Users, Globe, Monitor } from 'lucide-react';
 
 export const Certifications = () => {
+  const operatingSystems = [
+    {
+      name: "FreeBSD",
+      level: "Expert",
+      experience: "Decades of experience"
+    },
+    {
+      name: "OpenBSD", 
+      level: "Expert",
+      experience: "Decades of experience"
+    },
+    {
+      name: "macOS",
+      level: "Expert", 
+      experience: "Decades of experience"
+    },
+    {
+      name: "Debian",
+      level: "Expert",
+      experience: "Decades of experience"
+    },
+    {
+      name: "Ubuntu",
+      level: "Expert",
+      experience: "Decades of experience"
+    },
+    {
+      name: "Windows Client",
+      level: "Expert",
+      experience: "Decades of experience"
+    },
+    {
+      name: "Windows Server",
+      level: "Advanced",
+      experience: "Decades of experience"
+    }
+  ];
+
   const certificates = [
     {
       title: "ITIL Foundation",
@@ -85,6 +123,48 @@ export const Certifications = () => {
             Professional certifications and international recognition in cybersecurity, 
             disarmament affairs, and global digital governance initiatives.
           </p>
+        </div>
+
+        {/* Operating Systems Section */}
+        <div className="mb-16">
+          <div className="flex items-center mb-8">
+            <Monitor className="w-6 h-6 text-purple-400 mr-3" />
+            <h3 className="text-2xl font-semibold text-white">Operating Systems Experience</h3>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {operatingSystems.map((os, index) => (
+              <div key={index} className="group relative" data-os-item data-name={os.name} data-level={os.level} data-experience={os.experience}>
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-indigo-500/20 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                <div className="relative h-full p-6 bg-slate-800/80 backdrop-blur-sm rounded-lg border border-slate-700/50 hover:border-slate-600 transition-all duration-300">
+                  <div className="flex items-start space-x-4">
+                    <div className="flex-shrink-0">
+                      <Monitor className="w-8 h-8 text-purple-400" />
+                    </div>
+                    
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-lg font-semibold text-white mb-2 leading-tight">
+                        {os.name}
+                      </h4>
+                      <div className="flex flex-wrap gap-2 mb-3">
+                        <span className={`px-2 py-1 text-xs rounded-full border ${
+                          os.level === 'Expert' 
+                            ? 'bg-purple-600/20 text-purple-300 border-purple-500/50'
+                            : 'bg-indigo-600/20 text-indigo-300 border-indigo-500/50'
+                        }`}>
+                          {os.level}
+                        </span>
+                      </div>
+                      <p className="text-slate-400 text-sm">{os.experience}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-4 h-1 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 opacity-60"></div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* UN Certificates Section */}
@@ -217,12 +297,17 @@ export const Certifications = () => {
               <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></div>
               <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse delay-100"></div>
               <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse delay-200"></div>
+              <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse delay-300"></div>
             </div>
             <div className="text-center">
               <p className="text-slate-300 font-medium text-lg mb-2">
                 Professional Development Summary
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div className="text-center">
+                  <p className="text-purple-300 font-semibold">7 Operating Systems</p>
+                  <p className="text-slate-400">Expert & Advanced</p>
+                </div>
                 <div className="text-center">
                   <p className="text-blue-300 font-semibold">4 UN Certificates</p>
                   <p className="text-slate-400">Disarmament & Security</p>

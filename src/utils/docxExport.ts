@@ -1,3 +1,4 @@
+
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, PageBreak, Table, TableRow, TableCell, WidthType } from 'docx';
 import { speakingEngagements } from '../data/speakingEngagements';
 
@@ -41,6 +42,14 @@ const extractDataFromPage = () => {
   const professionalRoles = Array.from(roleElements).map(el => ({
     role: extractTextFromElement(el.querySelector('h4')),
     description: extractTextFromElement(el.querySelector('p'))
+  }));
+  
+  // Extract operating systems data
+  const osElements = document.querySelectorAll('[data-os-item]');
+  const operatingSystems = Array.from(osElements).map(el => ({
+    name: el.getAttribute('data-name') || '',
+    level: el.getAttribute('data-level') || '',
+    experience: el.getAttribute('data-experience') || ''
   }));
   
   // Extract ALL cybersecurity domains information with integrated technical competencies
@@ -264,6 +273,7 @@ const extractDataFromPage = () => {
     highlights,
     industries,
     cybersecurityDomains: allCybersecurityDomains,
+    operatingSystems,
     certifications: allCertifications,
     recognition,
     volunteerWork,
@@ -280,7 +290,7 @@ const extractDataFromPage = () => {
 export const generateDOCX = () => {
   const data = extractDataFromPage();
   
-  // Create left column content (Summary, Industry Experience, Certifications, Languages)
+  // Create left column content (Summary, Industry Experience, Operating Systems, Certifications, Languages)
   const leftColumnContent = [
     // SUMMARY
     new Paragraph({
@@ -360,6 +370,76 @@ export const generateDOCX = () => {
         })
       ]
     }),
+    new Paragraph({ text: "" }),
+    
+    // OPERATING SYSTEMS
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "OPERATING SYSTEMS",
+          bold: true,
+          size: 22,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "___________________________",
+          size: 18,
+          font: "Calibri"
+        })
+      ]
+    }),
+    new Paragraph({ text: "" }),
+    
+    // Expert level OS
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "Expert Level:",
+          bold: true,
+          size: 14,
+          font: "Calibri"
+        })
+      ]
+    }),
+    ...data.operatingSystems.filter((os: any) => os.level === "Expert").map((os: any) => 
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: `• ${os.name}`,
+            size: 12,
+            font: "Calibri"
+          })
+        ]
+      })
+    ),
+    new Paragraph({ text: "" }),
+    
+    // Advanced level OS
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "Advanced Level:",
+          bold: true,
+          size: 14,
+          font: "Calibri"
+        })
+      ]
+    }),
+    ...data.operatingSystems.filter((os: any) => os.level === "Advanced").map((os: any) => 
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: `• ${os.name}`,
+            size: 12,
+            font: "Calibri"
+          })
+        ]
+      })
+    ),
     new Paragraph({ text: "" }),
     
     // CERTIFICATIONS & RECOGNITION
@@ -671,7 +751,7 @@ export const generateDOCX = () => {
             rows: [
               new TableRow({
                 children: [
-                  // Left column: Summary, Industry Experience, Certifications, Languages
+                  // Left column: Summary, Industry Experience, Operating Systems, Certifications, Languages
                   new TableCell({
                     width: {
                       size: 50,
