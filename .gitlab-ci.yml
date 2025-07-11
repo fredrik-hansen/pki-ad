@@ -226,8 +226,7 @@ e2e_frontend:
     paths:
       - frontend/playwright-report
     expire_in: 1h
-  allow_failure: true
-
+  
 ##############################
 # 7. Build Images            #
 ##############################
@@ -889,7 +888,7 @@ dependency_updates:
 #  only:
     - schedules
     - main
-  allow_failure: true
+
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
       when: always
