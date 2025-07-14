@@ -15,7 +15,7 @@ export const experiences = [
   {
     title: "CTO, Architect, Lead DevOps Engineer - Technical Jack-of-All-Trades",
     company: "Dubai based AI Tech Startup",
-    period: "2024 - 2025",
+    period: "2025 - 2025",
     industry: "Information Technology",
     highlights: [
       "Successfully created, designed and implemented a modern, secure knowledge base application that captures and preserves institutional knowledge from email communications, reducing knowledge loss and preserving critical business intelligence.",
