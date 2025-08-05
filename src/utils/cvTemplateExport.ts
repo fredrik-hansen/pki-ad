@@ -1049,229 +1049,564 @@ const generateAcademicTemplate = (data: any) => {
   return doc;
 };
 
-// Template 5: Creative/Design-Focused
+// Template 5: Dark Professional Layout (Based on Screenshot)
 const generateCreativeTemplate = (data: any) => {
   const doc = new Document({
     sections: [
       {
-        properties: {},
+        properties: {
+          page: {
+            margin: {
+              top: 720,
+              right: 720,
+              bottom: 720,
+              left: 720
+            }
+          }
+        },
         children: [
-          // Creative header with visual elements
+          // Header with branding
           new Paragraph({
             alignment: AlignmentType.CENTER,
             children: [
               new TextRun({
-                text: "◆ ◆ ◆",
+                text: "PISCER",
+                bold: true,
                 size: 24,
-                font: "Segoe UI",
-                color: "E11D48"
-              })
-            ]
-          }),
-          new Paragraph({
-            alignment: AlignmentType.CENTER,
-            children: [
+                font: "Arial",
+                color: "D4AF37"
+              }),
               new TextRun({
-                text: data.name.toUpperCase(),
+                text: " ONE",
                 bold: true,
-                size: 42,
-                font: "Segoe UI",
-                color: "1E293B"
-              })
-            ]
-          }),
-          new Paragraph({
-            alignment: AlignmentType.CENTER,
-            children: [
-              new TextRun({
-                text: "◆ ◆ ◆",
                 size: 24,
-                font: "Segoe UI",
-                color: "E11D48"
-              })
-            ]
-          }),
-          new Paragraph({
-            alignment: AlignmentType.CENTER,
-            children: [
-              new TextRun({
-                text: data.title,
-                size: 24,
-                font: "Segoe UI",
-                color: "7C3AED"
+                font: "Arial",
+                color: "FFFFFF"
               })
             ]
           }),
           new Paragraph({ text: "" }),
           
-          // Contact info in creative layout
-          new Paragraph({
-            alignment: AlignmentType.CENTER,
-            children: [
-              new TextRun({
-                text: `✉ ${data.email} • 📍 ${data.location}`,
-                size: 16,
-                font: "Segoe UI"
-              })
-            ]
-          }),
-          new Paragraph({ text: "" }),
-          new Paragraph({ text: "" }),
-          
-          // About section with visual flair
-          new Paragraph({
-            alignment: AlignmentType.CENTER,
-            children: [
-              new TextRun({
-                text: "▼ WHO I AM ▼",
-                bold: true,
-                size: 18,
-                font: "Segoe UI",
-                color: "E11D48"
-              })
-            ]
-          }),
-          new Paragraph({ text: "" }),
-          new Paragraph({
-            children: [
-              new TextRun({
-                text: data.summary,
-                size: 16,
-                font: "Segoe UI"
-              })
-            ]
-          }),
-          new Paragraph({ text: "" }),
-          
-          // Highlights with icons
-          new Paragraph({
-            alignment: AlignmentType.CENTER,
-            children: [
-              new TextRun({
-                text: "▼ KEY ACHIEVEMENTS ▼",
-                bold: true,
-                size: 18,
-                font: "Segoe UI",
-                color: "E11D48"
-              })
-            ]
-          }),
-          new Paragraph({ text: "" }),
-          
-          ...data.highlights.slice(0, 4).map((highlight: string) =>
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: `⭐ ${highlight}`,
-                  size: 14,
-                  font: "Segoe UI"
-                })
-              ]
-            })
-          ),
-          new Paragraph({ text: "" }),
-          
-          // Experience with visual separators
-          new Paragraph({
-            alignment: AlignmentType.CENTER,
-            children: [
-              new TextRun({
-                text: "▼ PROFESSIONAL JOURNEY ▼",
-                bold: true,
-                size: 18,
-                font: "Segoe UI",
-                color: "E11D48"
-              })
-            ]
-          }),
-          new Paragraph({ text: "" }),
-          
-          ...data.experiences.slice(0, 3).flatMap((exp: any, index: number) => [
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: `${index + 1}. `,
-                  bold: true,
-                  size: 20,
-                  font: "Segoe UI",
-                  color: "7C3AED"
-                }),
-                new TextRun({
-                  text: exp.title,
-                  bold: true,
-                  size: 18,
-                  font: "Segoe UI"
-                })
-              ]
-            }),
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: `🏢 ${exp.company} | 📅 ${exp.period}`,
-                  size: 14,
-                  font: "Segoe UI",
-                  color: "666666"
-                })
-              ]
-            }),
-            ...exp.highlights.slice(0, 2).map((highlight: string) =>
-              new Paragraph({
+          // Three-column layout using table
+          new Table({
+            width: { size: 100, type: WidthType.PERCENTAGE },
+            borders: {
+              top: { style: BorderStyle.SINGLE, size: 1, color: "666666" },
+              bottom: { style: BorderStyle.SINGLE, size: 1, color: "666666" },
+              left: { style: BorderStyle.SINGLE, size: 1, color: "666666" },
+              right: { style: BorderStyle.SINGLE, size: 1, color: "666666" },
+              insideHorizontal: { style: BorderStyle.SINGLE, size: 1, color: "666666" },
+              insideVertical: { style: BorderStyle.SINGLE, size: 1, color: "666666" }
+            },
+            rows: [
+              new TableRow({
                 children: [
-                  new TextRun({
-                    text: `   ▸ ${highlight}`,
-                    size: 14,
-                    font: "Segoe UI"
+                  // Left column - Personal info, photo, summary
+                  new TableCell({
+                    width: { size: 33, type: WidthType.PERCENTAGE },
+                    shading: {
+                      fill: "2A2A2A"
+                    },
+                    children: [
+                      // Photo placeholder
+                      new Paragraph({
+                        children: [
+                          new TextRun({
+                            text: "[Insert your image]",
+                            size: 12,
+                            font: "Arial",
+                            color: "CCCCCC",
+                            italics: true
+                          })
+                        ]
+                      }),
+                      new Paragraph({ text: "" }),
+                      
+                      // Name
+                      new Paragraph({
+                        children: [
+                          new TextRun({
+                            text: "Name",
+                            bold: true,
+                            size: 16,
+                            font: "Arial",
+                            color: "FFFFFF"
+                          })
+                        ]
+                      }),
+                      new Paragraph({
+                        children: [
+                          new TextRun({
+                            text: data.name,
+                            size: 14,
+                            font: "Arial",
+                            color: "CCCCCC"
+                          })
+                        ]
+                      }),
+                      new Paragraph({ text: "" }),
+                      
+                      // Summary
+                      new Paragraph({
+                        children: [
+                          new TextRun({
+                            text: "Summary",
+                            bold: true,
+                            size: 14,
+                            font: "Arial",
+                            color: "FFFFFF"
+                          })
+                        ]
+                      }),
+                      new Paragraph({
+                        children: [
+                          new TextRun({
+                            text: data.summary.substring(0, 200) + "...",
+                            size: 10,
+                            font: "Arial",
+                            color: "CCCCCC"
+                          })
+                        ]
+                      }),
+                      new Paragraph({ text: "" }),
+                      
+                      // Technical environment
+                      new Paragraph({
+                        children: [
+                          new TextRun({
+                            text: "Technical environment:",
+                            bold: true,
+                            size: 12,
+                            font: "Arial",
+                            color: "FFFFFF"
+                          })
+                        ]
+                      }),
+                      new Paragraph({
+                        children: [
+                          new TextRun({
+                            text: "programming languages, tools, etc.",
+                            size: 10,
+                            font: "Arial",
+                            color: "CCCCCC"
+                          })
+                        ]
+                      }),
+                      new Paragraph({ text: "" }),
+                      
+                      // General experience
+                      new Paragraph({
+                        children: [
+                          new TextRun({
+                            text: "General experience",
+                            bold: true,
+                            size: 14,
+                            font: "Arial",
+                            color: "FFFFFF"
+                          })
+                        ]
+                      }),
+                      new Paragraph({ text: "" }),
+                      
+                      // Roles and Sectors in two columns
+                      new Table({
+                        width: { size: 100, type: WidthType.PERCENTAGE },
+                        borders: {
+                          top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                          bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                          left: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                          right: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                          insideHorizontal: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                          insideVertical: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" }
+                        },
+                        rows: [
+                          new TableRow({
+                            children: [
+                              new TableCell({
+                                width: { size: 50, type: WidthType.PERCENTAGE },
+                                shading: { fill: "2A2A2A" },
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({
+                                        text: "Roles",
+                                        bold: true,
+                                        size: 11,
+                                        font: "Arial",
+                                        color: "FFFFFF"
+                                      })
+                                    ]
+                                  }),
+                                  ...data.professionalRoles.slice(0, 6).map((role: any) =>
+                                    new Paragraph({
+                                      children: [
+                                        new TextRun({
+                                          text: `• ${role.role}`,
+                                          size: 9,
+                                          font: "Arial",
+                                          color: "CCCCCC"
+                                        })
+                                      ]
+                                    })
+                                  )
+                                ]
+                              }),
+                              new TableCell({
+                                width: { size: 50, type: WidthType.PERCENTAGE },
+                                shading: { fill: "2A2A2A" },
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({
+                                        text: "Sectors",
+                                        bold: true,
+                                        size: 11,
+                                        font: "Arial",
+                                        color: "FFFFFF"
+                                      })
+                                    ]
+                                  }),
+                                  ...data.industries.slice(0, 6).map((industry: string) =>
+                                    new Paragraph({
+                                      children: [
+                                        new TextRun({
+                                          text: `• ${industry}`,
+                                          size: 9,
+                                          font: "Arial",
+                                          color: "CCCCCC"
+                                        })
+                                      ]
+                                    })
+                                  )
+                                ]
+                              })
+                            ]
+                          })
+                        ]
+                      })
+                    ]
+                  }),
+                  
+                  // Middle column - Work experience
+                  new TableCell({
+                    width: { size: 33, type: WidthType.PERCENTAGE },
+                    shading: {
+                      fill: "2A2A2A"
+                    },
+                    children: [
+                      new Paragraph({
+                        children: [
+                          new TextRun({
+                            text: "Work experience",
+                            bold: true,
+                            size: 14,
+                            font: "Arial",
+                            color: "FFFFFF"
+                          })
+                        ]
+                      }),
+                      new Paragraph({ text: "" }),
+                      
+                      ...data.experiences.slice(0, 4).flatMap((exp: any) => [
+                        // Date range with colored background
+                        new Paragraph({
+                          children: [
+                            new TextRun({
+                              text: exp.period.substring(0, 7) || "20XX-XX",
+                              size: 10,
+                              font: "Arial",
+                              color: "000000"
+                            })
+                          ]
+                        }),
+                        
+                        // Company Name
+                        new Paragraph({
+                          children: [
+                            new TextRun({
+                              text: "Company Name",
+                              bold: true,
+                              size: 12,
+                              font: "Arial",
+                              color: "D4AF37"
+                            })
+                          ]
+                        }),
+                        
+                        // Title
+                        new Paragraph({
+                          children: [
+                            new TextRun({
+                              text: exp.title || "Title",
+                              size: 11,
+                              font: "Arial",
+                              color: "FFFFFF"
+                            })
+                          ]
+                        }),
+                        
+                        // Company description
+                        new Paragraph({
+                          children: [
+                            new TextRun({
+                              text: `[Company name] is a...`,
+                              size: 9,
+                              font: "Arial",
+                              color: "CCCCCC"
+                            })
+                          ]
+                        }),
+                        
+                        // Responsibilities
+                        new Paragraph({
+                          children: [
+                            new TextRun({
+                              text: `[Name's] responsibility was to...`,
+                              size: 9,
+                              font: "Arial",
+                              color: "CCCCCC"
+                            })
+                          ]
+                        }),
+                        
+                        // Technical environment
+                        new Paragraph({
+                          children: [
+                            new TextRun({
+                              text: "Technical environment: programming languages, tools, etc.",
+                              size: 9,
+                              font: "Arial",
+                              color: "CCCCCC",
+                              italics: true
+                            })
+                          ]
+                        }),
+                        new Paragraph({ text: "" })
+                      ]),
+                      
+                      // Employment section
+                      new Paragraph({
+                        children: [
+                          new TextRun({
+                            text: "Employment",
+                            bold: true,
+                            size: 14,
+                            font: "Arial",
+                            color: "FFFFFF"
+                          })
+                        ]
+                      }),
+                      new Paragraph({ text: "" }),
+                      
+                      ...data.experiences.slice(4, 8).map((exp: any) => [
+                        new Paragraph({
+                          children: [
+                            new TextRun({
+                              text: exp.period.substring(0, 7) || "20XX-XX",
+                              size: 10,
+                              font: "Arial",
+                              color: "000000"
+                            })
+                          ]
+                        }),
+                        new Paragraph({
+                          children: [
+                            new TextRun({
+                              text: "Company Name",
+                              bold: true,
+                              size: 11,
+                              font: "Arial",
+                              color: "D4AF37"
+                            })
+                          ]
+                        }),
+                        new Paragraph({
+                          children: [
+                            new TextRun({
+                              text: exp.title || "Title",
+                              size: 10,
+                              font: "Arial",
+                              color: "FFFFFF"
+                            })
+                          ]
+                        }),
+                        new Paragraph({ text: "" })
+                      ]).flat()
+                    ]
+                  }),
+                  
+                  // Right column - Education, Certifications, Languages
+                  new TableCell({
+                    width: { size: 34, type: WidthType.PERCENTAGE },
+                    shading: {
+                      fill: "2A2A2A"
+                    },
+                    children: [
+                      // Education
+                      new Paragraph({
+                        children: [
+                          new TextRun({
+                            text: "Education",
+                            bold: true,
+                            size: 14,
+                            font: "Arial",
+                            color: "FFFFFF"
+                          })
+                        ]
+                      }),
+                      new Paragraph({ text: "" }),
+                      
+                      new Paragraph({
+                        children: [
+                          new TextRun({
+                            text: "2000",
+                            size: 10,
+                            font: "Arial",
+                            color: "000000"
+                          })
+                        ]
+                      }),
+                      new Paragraph({
+                        children: [
+                          new TextRun({
+                            text: "School name",
+                            bold: true,
+                            size: 11,
+                            font: "Arial",
+                            color: "D4AF37"
+                          })
+                        ]
+                      }),
+                      new Paragraph({
+                        children: [
+                          new TextRun({
+                            text: "Orientation",
+                            size: 10,
+                            font: "Arial",
+                            color: "FFFFFF"
+                          })
+                        ]
+                      }),
+                      new Paragraph({ text: "" }),
+                      
+                      // Courses
+                      new Paragraph({
+                        children: [
+                          new TextRun({
+                            text: "Courses",
+                            bold: true,
+                            size: 14,
+                            font: "Arial",
+                            color: "FFFFFF"
+                          })
+                        ]
+                      }),
+                      new Paragraph({ text: "" }),
+                      
+                      new Paragraph({
+                        children: [
+                          new TextRun({
+                            text: "2014",
+                            size: 10,
+                            font: "Arial",
+                            color: "000000"
+                          })
+                        ]
+                      }),
+                      new Paragraph({
+                        children: [
+                          new TextRun({
+                            text: "School name",
+                            bold: true,
+                            size: 11,
+                            font: "Arial",
+                            color: "D4AF37"
+                          })
+                        ]
+                      }),
+                      new Paragraph({
+                        children: [
+                          new TextRun({
+                            text: "Orientation",
+                            size: 10,
+                            font: "Arial",
+                            color: "FFFFFF"
+                          })
+                        ]
+                      }),
+                      new Paragraph({ text: "" }),
+                      
+                      // Certifications
+                      new Paragraph({
+                        children: [
+                          new TextRun({
+                            text: "Certifications",
+                            bold: true,
+                            size: 14,
+                            font: "Arial",
+                            color: "FFFFFF"
+                          })
+                        ]
+                      }),
+                      new Paragraph({ text: "" }),
+                      
+                      ...data.certifications.slice(0, 3).map((cert: any) => [
+                        new Paragraph({
+                          children: [
+                            new TextRun({
+                              text: cert.date.substring(0, 4) || "2023",
+                              size: 10,
+                              font: "Arial",
+                              color: "000000"
+                            })
+                          ]
+                        }),
+                        new Paragraph({
+                          children: [
+                            new TextRun({
+                              text: cert.title || "Certificate?",
+                              bold: true,
+                              size: 11,
+                              font: "Arial",
+                              color: "D4AF37"
+                            })
+                          ]
+                        }),
+                        new Paragraph({ text: "" })
+                      ]).flat(),
+                      
+                      // Languages
+                      new Paragraph({
+                        children: [
+                          new TextRun({
+                            text: "Language skills (1-5)",
+                            bold: true,
+                            size: 14,
+                            font: "Arial",
+                            color: "FFFFFF"
+                          })
+                        ]
+                      }),
+                      new Paragraph({ text: "" }),
+                      
+                      ...data.languages.map((lang: any) =>
+                        new Paragraph({
+                          children: [
+                            new TextRun({
+                              text: `• ${lang.name}: ${lang.level}`,
+                              size: 10,
+                              font: "Arial",
+                              color: "CCCCCC"
+                            })
+                          ]
+                        })
+                      )
+                    ]
                   })
                 ]
               })
-            ),
-            new Paragraph({
-              alignment: AlignmentType.CENTER,
-              children: [
-                new TextRun({
-                  text: "◇ ◇ ◇",
-                  size: 16,
-                  font: "Segoe UI",
-                  color: "CBD5E1"
-                })
-              ]
-            }),
-            new Paragraph({ text: "" })
-          ]),
-          
-          // Skills in creative format
-          new Paragraph({
-            alignment: AlignmentType.CENTER,
-            children: [
-              new TextRun({
-                text: "▼ EXPERTISE AREAS ▼",
-                bold: true,
-                size: 18,
-                font: "Segoe UI",
-                color: "E11D48"
-              })
             ]
-          }),
-          new Paragraph({ text: "" }),
-          
-          ...data.cybersecurityDomains.slice(0, 6).map((domain: any) =>
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: `🔒 ${domain.category}`,
-                  bold: true,
-                  size: 14,
-                  font: "Segoe UI"
-                }),
-                new TextRun({
-                  text: ` [${domain.level}]`,
-                  size: 12,
-                  font: "Segoe UI",
-                  color: "7C3AED"
-                })
-              ]
-            })
-          )
+          })
         ]
       }
     ]
