@@ -8,13 +8,13 @@ import { Certifications } from "../components/Certifications";
 import { VolunteerWork } from "../components/VolunteerWork";
 import { Contact } from "../components/Contact";
 import { Navigation } from "../components/Navigation";
-import { DOCXExportButton } from "../components/DOCXExportButton";
+import { ExportMenu } from "../components/ExportMenu";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-slate-950 text-white">
       <Navigation />
-      <DOCXExportButton />
+      <ExportMenu />
        
       <Hero />
       <About />
