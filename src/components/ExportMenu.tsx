@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "./ui/dropdown-menu";
 import { generateDOCX } from "../utils/docxExport";
 import { generateCVTemplate } from "../utils/cvTemplateExport";
+import { generateCareerTimelineExport } from "../utils/careerTimelineExport";
 
 export const ExportMenu = () => {
   const handleExportDOCX = () => {
@@ -12,6 +13,10 @@ export const ExportMenu = () => {
 
   const handleExportTemplate = (templateNumber: number) => {
     generateCVTemplate(templateNumber);
+  };
+
+  const handleExportTimeline = () => {
+    generateCareerTimelineExport();
   };
 
   const templates = [
@@ -47,6 +52,19 @@ export const ExportMenu = () => {
             </div>
           </DropdownMenuItem>
           
+          <DropdownMenuSeparator className="bg-slate-700" />
+          
+          <DropdownMenuItem
+            onClick={handleExportTimeline}
+            className="flex items-center p-3 cursor-pointer text-slate-200 hover:bg-slate-800"
+          >
+            <FileText className="w-4 h-4 mr-3" />
+            <div className="flex flex-col">
+              <div className="font-medium">Career Timeline</div>
+              <div className="text-sm text-slate-400">Export formatted timeline</div>
+            </div>
+          </DropdownMenuItem>
+
           <DropdownMenuSeparator className="bg-slate-700" />
           
           <div className="px-3 py-2">
