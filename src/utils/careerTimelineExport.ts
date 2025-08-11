@@ -54,23 +54,89 @@ export const generateCareerTimelineExport = () => {
     return `
       <div class="section">
         <h2 class="section-title">${title}</h2>
-        ${experiences.map(exp => `
+        ${experiences
+          .map((exp) => {
+            const parsePeriod = (period: string): [string, string] => {
+              // Examples: "2019", "2019 - 2023", "2023 - Present"
+              if (!period.includes(' - ')) {
+                return [`${period}-01`, `${period}-12`];
+              }
+              const [startRaw, endRaw] = period.split(' - ').map((p) => p.trim());
+              const start = `${startRaw}-01`;
+              const end = endRaw.toLowerCase().includes('present') ? 'current' : `${endRaw}-12`;
+              return [start, end];
+            };
+
+            const [startLabel, endLabel] = parsePeriod(exp.period);
+
+            const nameEl = document.querySelector('[data-name]') as HTMLElement | null;
+            const authorName = nameEl?.getAttribute('data-name') || 'My';
+
+            const toSentence = (s: string) => (s.endsWith('.') ? s : `${s}.`);
+            const lowerFirst = (s: string) => (s ? s.charAt(0).toLowerCase() + s.slice(1) : s);
+            const stripTrailingPunct = (s: string) => s.replace(/[\.;:!\s]+$/g, '');
+
+            const companyDescription = exp.industry
+              ? `${exp.company} is a ${exp.industry.toLowerCase()}.`
+              : `${exp.company} is an organization.`;
+
+            const firstHighlight = exp.highlights?.[0] || '';
+            const responsibility = firstHighlight
+              ? `${authorName}’s responsibility was to ${lowerFirst(stripTrailingPunct(firstHighlight))}.`
+              : '';
+
+            const allText = (exp.highlights || []).join(' ').toLowerCase();
+            const techKeywords = [
+              'react',
+              'python',
+              'cuda',
+              'kubernetes',
+              'gitlab',
+              'github',
+              'opensearch',
+              'memgraph',
+              'dnssec',
+              'rpki',
+              'pki',
+              'iso 27001',
+              'gdpr',
+              'pci dss',
+              'cspm',
+              'neovim',
+              'zed',
+              'aws',
+              'azure',
+              'gcp',
+              'node',
+              'typescript',
+              'javascript'
+            ];
+            const capitalize = (w: string) => w.charAt(0).toUpperCase() + w.slice(1);
+            const techFound = techKeywords
+              .filter((k) => allText.includes(k))
+              .map((k) => (k === 'iso 27001' ? 'ISO 27001' : k === 'pci dss' ? 'PCI DSS' : k.toUpperCase() === k ? k : capitalize(k)));
+            const techEnv = techFound.join(', ');
+
+            return `
           <div class="experience-item">
-            <div class="date-range">${formatPeriod(exp.period)}</div>
+            <div class="date-range">
+              <div class="date-pill">${startLabel}</div>
+              <div class="date-pill">${endLabel}</div>
+            </div>
             <div class="experience-content">
               <div class="company-title">
                 <div class="company-name">${exp.company}</div>
                 <div class="job-title">${exp.title}</div>
-                <div class="industry">${exp.industry}</div>
               </div>
-              <div class="highlights">
-                ${exp.highlights.slice(0, 2).map(highlight => `
-                  <div class="highlight">• ${highlight}</div>
-                `).join('')}
+              <div class="description">
+                <p>${toSentence(companyDescription)}</p>
+                ${responsibility ? `<p>${toSentence(responsibility)}</p>` : ''}
+                ${techEnv ? `<p><span class="label-strong">Technical environment:</span> ${techEnv}</p>` : ''}
               </div>
             </div>
-          </div>
-        `).join('')}
+          </div>`;
+          })
+          .join('')}
       </div>
     `;
   };
@@ -83,184 +149,75 @@ export const generateCareerTimelineExport = () => {
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Career Timeline Export</title>
       <style>
+        :root {
+          --bg: #0b0b0b;
+          --fg: #e7e2d6;
+          --muted: #c2bbad;
+          --gold: #c5a463;
+          --gold-dark: #6b5a2e;
+          --panel: #111111;
+          --border: #2a2a2a;
+        }
+
         * {
           margin: 0;
           padding: 0;
           box-sizing: border-box;
         }
-        
+
         body {
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-          background: #0f172a;
-          color: #e2e8f0;
+          font-family: Georgia, "Times New Roman", serif;
+          background: var(--bg);
+          color: var(--fg);
           padding: 40px 20px;
           line-height: 1.6;
         }
-        
-        .container {
-          max-width: 1200px;
-          margin: 0 auto;
-        }
-        
-        .header {
-          text-align: center;
-          margin-bottom: 40px;
-          padding-bottom: 20px;
-          border-bottom: 2px solid #334155;
-        }
-        
-        .main-title {
-          font-size: 2.5rem;
-          font-weight: 700;
-          background: linear-gradient(135deg, #60a5fa, #06b6d4);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          margin-bottom: 10px;
-        }
-        
-        .subtitle {
-          font-size: 1.2rem;
-          color: #94a3b8;
-        }
-        
-        .section {
-          margin-bottom: 50px;
-        }
-        
-        .section-title {
-          font-size: 1.8rem;
-          font-weight: 600;
-          color: #f1f5f9;
-          margin-bottom: 30px;
-          padding-left: 20px;
-          border-left: 4px solid #3b82f6;
-        }
-        
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .header { margin-bottom: 28px; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+        .main-title { font-size: 2rem; font-weight: 700; color: var(--fg); }
+        .subtitle { font-size: 1rem; color: var(--muted); }
+
+        .section { margin-top: 18px; }
+        .section-title { display: none; }
+
         .experience-item {
           display: flex;
-          margin-bottom: 30px;
-          padding: 25px;
-          background: rgba(15, 23, 42, 0.8);
-          border: 1px solid #334155;
-          border-radius: 12px;
-          transition: all 0.3s ease;
+          gap: 24px;
+          padding: 20px 0 28px 0;
+          border-bottom: 1px solid var(--border);
         }
-        
-        .experience-item:hover {
-          border-color: #3b82f6;
-          box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
-          transform: translateY(-2px);
-        }
-        
-        .date-range {
-          min-width: 180px;
-          margin-right: 30px;
-          font-weight: 600;
-          color: #60a5fa;
+
+        .date-range { min-width: 140px; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+        .date-pill {
+          background: var(--gold-dark);
+          color: #0b0b0b;
+          font-weight: 800;
+          letter-spacing: 0.5px;
+          padding: 4px 8px;
+          border-radius: 3px;
           font-size: 0.95rem;
-          padding-right: 20px;
-          border-right: 2px solid #334155;
-          display: flex;
-          align-items: flex-start;
-          padding-top: 2px;
         }
-        
-        .experience-content {
-          flex: 1;
-        }
-        
-        .company-title {
-          margin-bottom: 15px;
-        }
-        
-        .company-name {
-          font-size: 1.25rem;
-          font-weight: 700;
-          color: #f8fafc;
-          margin-bottom: 5px;
-        }
-        
-        .job-title {
-          font-size: 1.1rem;
-          font-weight: 600;
-          color: #06b6d4;
-          margin-bottom: 3px;
-        }
-        
-        .industry {
-          font-size: 0.9rem;
-          color: #94a3b8;
-          font-style: italic;
-        }
-        
-        .highlights {
-          margin-top: 15px;
-        }
-        
-        .highlight {
-          margin-bottom: 8px;
-          color: #cbd5e1;
-          font-size: 0.95rem;
-          padding-left: 10px;
-        }
-        
+
+        .experience-content { flex: 1; }
+        .company-title { margin-bottom: 8px; }
+        .company-name { color: var(--gold); font-size: 1.25rem; font-weight: 700; }
+        .job-title { color: var(--fg); font-size: 1rem; font-weight: 600; margin-top: -2px; }
+
+        .description p { margin: 14px 0; color: var(--fg); }
+        .label-strong { font-weight: 700; color: var(--fg); }
+
         @media print {
-          body {
-            background: white;
-            color: black;
-          }
-          
-          .main-title {
-            -webkit-text-fill-color: #1e40af;
-          }
-          
-          .experience-item {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-          }
-          
-          .section-title {
-            color: #1e293b;
-            border-left-color: #3b82f6;
-          }
-          
-          .company-name {
-            color: #1e293b;
-          }
-          
-          .job-title {
-            color: #0891b2;
-          }
-          
-          .date-range {
-            color: #3b82f6;
-            border-right-color: #e2e8f0;
-          }
-          
-          .highlight {
-            color: #475569;
-          }
-          
-          .industry {
-            color: #64748b;
-          }
+          body { background: white; color: #111; }
+          .date-pill { color: #111; background: #e5d5b0; }
+          .company-name { color: #8b6b2f; }
+          .experience-item { border-color: #ddd; }
         }
-        
+
         @media (max-width: 768px) {
-          .experience-item {
-            flex-direction: column;
-          }
-          
-          .date-range {
-            min-width: auto;
-            margin-right: 0;
-            margin-bottom: 15px;
-            border-right: none;
-            border-bottom: 2px solid #334155;
-            padding-bottom: 10px;
-            padding-right: 0;
-          }
+          .experience-item { flex-direction: column; }
+          .date-range { flex-direction: row; gap: 8px; }
         }
       </style>
     </head>
