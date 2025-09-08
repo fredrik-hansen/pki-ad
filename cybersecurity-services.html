@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberGuard Solutions - Expert Cybersecurity Services</title>
+    <meta name="description" content="Professional cybersecurity services including AI security, cloud protection, compliance consulting, and security architecture. Expert-level security solutions for enterprise organizations.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0f172a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1), transparent 50%);
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #ffffff, #93c5fd, #67e8f9);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero .tagline {
+            font-size: 1.5rem;
+            color: #60a5fa;
+            margin-bottom: 1rem;
+        }
+
+        .hero .description {
+            font-size: 1.125rem;
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .services-section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #60a5fa, #06b6d4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-header p {
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .service-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 12px;
+        }
+
+        .service-card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 8px;
+            background: rgba(59, 130, 246, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .service-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .service-level {
+            background: rgba(59, 130, 246, 0.2);
+            color: #93c5fd;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            margin-left: auto;
+        }
+
+        .service-description {
+            color: #cbd5e1;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .feature-tag {
+            background: rgba(51, 65, 85, 0.7);
+            color: #cbd5e1;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            transition: all 0.2s ease;
+        }
+
+        .feature-tag:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            color: #93c5fd;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: rgba(30, 41, 59, 0.3);
+            border-top: 1px solid rgba(71, 85, 105, 0.5);
+        }
+
+        .cta-section h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .cta-section p {
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .service-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <div class="hero-content">
+            <div class="hero-logo">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <path d="m9 12 2 2 4-4"/>
+                </svg>
+            </div>
+            <h1>CyberGuard Solutions</h1>
+            <p class="tagline">Expert Cybersecurity Services</p>
+            <p class="description">
+                Comprehensive cybersecurity solutions for enterprise organizations. 
+                From AI security to cloud protection, we deliver expert-level security services 
+                backed by 27+ years of industry experience.
+            </p>
+        </div>
+    </header>
+
+    <main class="services-section">
+        <div class="section-header">
+            <h2>Our Security Services</h2>
+            <p>Comprehensive cybersecurity solutions tailored to protect your organization against evolving threats</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">🛡️</div>
+                    <div class="service-title">Security Architecture & Design</div>
+                    <div class="service-level">Expert</div>
+                </div>
+                <div class="service-description">
+                    Design and implement comprehensive security architectures that protect your organization's critical assets while enabling business growth and innovation.
+                </div>
+                <div class="service-features">
+                    <span class="feature-tag">Enterprise Architecture</span>
+                    <span class="feature-tag">Security Design</span>
+                    <span class="feature-tag">Risk Assessment</span>
+                    <span class="feature-tag">Threat Modeling</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">🤖</div>
+                    <div class="service-title">AI & Machine Learning Security</div>
+                    <div class="service-level">Expert</div>
+                </div>
+                <div class="service-description">
+                    Secure your AI initiatives with comprehensive security assessments, model protection, and data privacy safeguards for machine learning systems.
+                </div>
+                <div class="service-features">
+                    <span class="feature-tag">Model Security</span>
+                    <span class="feature-tag">Data Privacy</span>
+                    <span class="feature-tag">Adversarial Testing</span>
+                    <span class="feature-tag">AI Risk Assessment</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">☁️</div>
+                    <div class="service-title">Cloud Security Solutions</div>
+                    <div class="service-level">Expert</div>
+                </div>
+                <div class="service-description">
+                    Comprehensive cloud security services including CSPM, container security, and multi-cloud protection strategies for AWS, Azure, and GCP.
+                </div>
+                <div class="service-features">
+                    <span class="feature-tag">CSPM</span>
+                    <span class="feature-tag">Container Security</span>
+                    <span class="feature-tag">Multi-Cloud</span>
+                    <span class="feature-tag">Zero Trust</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">📋</div>
+                    <div class="service-title">Compliance & Governance</div>
+                    <div class="service-level">Expert</div>
+                </div>
+                <div class="service-description">
+                    Navigate complex regulatory requirements with expert guidance on ISO 27001, GDPR, PCI DSS, and other critical compliance frameworks.
+                </div>
+                <div class="service-features">
+                    <span class="feature-tag">ISO 27001</span>
+                    <span class="feature-tag">GDPR</span>
+                    <span class="feature-tag">PCI DSS</span>
+                    <span class="feature-tag">DORA</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">🔍</div>
+                    <div class="service-title">Penetration Testing & Assessment</div>
+                    <div class="service-level">Expert</div>
+                </div>
+                <div class="service-description">
+                    Comprehensive security testing services including penetration testing, vulnerability assessments, and security audits to identify and remediate risks.
+                </div>
+                <div class="service-features">
+                    <span class="feature-tag">Penetration Testing</span>
+                    <span class="feature-tag">Vulnerability Assessment</span>
+                    <span class="feature-tag">Red Team</span>
+                    <span class="feature-tag">Security Audits</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">🚨</div>
+                    <div class="service-title">Incident Response & Forensics</div>
+                    <div class="service-level">Expert</div>
+                </div>
+                <div class="service-description">
+                    Rapid incident response services with expert forensic analysis, containment strategies, and recovery planning to minimize business impact.
+                </div>
+                <div class="service-features">
+                    <span class="feature-tag">Incident Response</span>
+                    <span class="feature-tag">Digital Forensics</span>
+                    <span class="feature-tag">Breach Investigation</span>
+                    <span class="feature-tag">Recovery Planning</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">🔐</div>
+                    <div class="service-title">Identity & Access Management</div>
+                    <div class="service-level">Expert</div>
+                </div>
+                <div class="service-description">
+                    Implement robust identity and access management solutions including privileged access management, SSO, and multi-factor authentication.
+                </div>
+                <div class="service-features">
+                    <span class="feature-tag">PAM</span>
+                    <span class="feature-tag">SSO</span>
+                    <span class="feature-tag">MFA</span>
+                    <span class="feature-tag">Identity Governance</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">📱</div>
+                    <div class="service-title">Application Security</div>
+                    <div class="service-level">Expert</div>
+                </div>
+                <div class="service-description">
+                    Secure your applications throughout the development lifecycle with SAST, DAST, secure code review, and API security solutions.
+                </div>
+                <div class="service-features">
+                    <span class="feature-tag">SAST/DAST</span>
+                    <span class="feature-tag">API Security</span>
+                    <span class="feature-tag">Secure SDLC</span>
+                    <span class="feature-tag">Code Review</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">🌐</div>
+                    <div class="service-title">Network Security</div>
+                    <div class="service-level">Expert</div>
+                </div>
+                <div class="service-description">
+                    Comprehensive network security solutions including firewall management, intrusion detection, and network segmentation strategies.
+                </div>
+                <div class="service-features">
+                    <span class="feature-tag">Firewall Management</span>
+                    <span class="feature-tag">IDS/IPS</span>
+                    <span class="feature-tag">Network Segmentation</span>
+                    <span class="feature-tag">VPN Security</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">📊</div>
+                    <div class="service-title">Security Operations Center (SOC)</div>
+                    <div class="service-level">Expert</div>
+                </div>
+                <div class="service-description">
+                    Build and optimize security operations with SIEM deployment, threat hunting, security monitoring, and 24/7 security operations.
+                </div>
+                <div class="service-features">
+                    <span class="feature-tag">SIEM</span>
+                    <span class="feature-tag">Threat Hunting</span>
+                    <span class="feature-tag">Security Monitoring</span>
+                    <span class="feature-tag">SOC Operations</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">🔑</div>
+                    <div class="service-title">Cryptography & PKI</div>
+                    <div class="service-level">Expert</div>
+                </div>
+                <div class="service-description">
+                    Expert cryptographic solutions including PKI design and implementation, certificate management, and encryption key management.
+                </div>
+                <div class="service-features">
+                    <span class="feature-tag">PKI Design</span>
+                    <span class="feature-tag">Certificate Management</span>
+                    <span class="feature-tag">Key Management</span>
+                    <span class="feature-tag">Encryption Solutions</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">🛡️</div>
+                    <div class="service-title">Data Protection & Privacy</div>
+                    <div class="service-level">Expert</div>
+                </div>
+                <div class="service-description">
+                    Comprehensive data protection strategies including data classification, encryption, DLP implementation, and privacy compliance.
+                </div>
+                <div class="service-features">
+                    <span class="feature-tag">Data Classification</span>
+                    <span class="feature-tag">DLP</span>
+                    <span class="feature-tag">Encryption</span>
+                    <span class="feature-tag">Privacy Compliance</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">🎯</div>
+                    <div class="service-title">Threat Intelligence</div>
+                    <div class="service-level">Advanced</div>
+                </div>
+                <div class="service-description">
+                    Advanced threat intelligence services including threat analysis, intelligence gathering, and proactive threat hunting to stay ahead of attackers.
+                </div>
+                <div class="service-features">
+                    <span class="feature-tag">Threat Analysis</span>
+                    <span class="feature-tag">Intelligence Gathering</span>
+                    <span class="feature-tag">MITRE ATT&CK</span>
+                    <span class="feature-tag">Threat Hunting</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">🏭</div>
+                    <div class="service-title">Industrial & IoT Security</div>
+                    <div class="service-level">Advanced</div>
+                </div>
+                <div class="service-description">
+                    Specialized security solutions for industrial control systems, IoT devices, and critical infrastructure protection.
+                </div>
+                <div class="service-features">
+                    <span class="feature-tag">SCADA Security</span>
+                    <span class="feature-tag">IoT Security</span>
+                    <span class="feature-tag">Industrial Controls</span>
+                    <span class="feature-tag">Critical Infrastructure</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">🎓</div>
+                    <div class="service-title">Security Training & Awareness</div>
+                    <div class="service-level">Advanced</div>
+                </div>
+                <div class="service-description">
+                    Comprehensive security awareness programs, technical training, and cybersecurity education tailored to your organization's needs.
+                </div>
+                <div class="service-features">
+                    <span class="feature-tag">Security Awareness</span>
+                    <span class="feature-tag">Technical Training</span>
+                    <span class="feature-tag">Phishing Simulation</span>
+                    <span class="feature-tag">Custom Curriculum</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">🌍</div>
+                    <div class="service-title">Internet Security Standards</div>
+                    <div class="service-level">Expert</div>
+                </div>
+                <div class="service-description">
+                    Specialized consulting on internet security standards including DNSSEC, RPKI, BGP security, and internet governance frameworks.
+                </div>
+                <div class="service-features">
+                    <span class="feature-tag">DNSSEC</span>
+                    <span class="feature-tag">RPKI</span>
+                    <span class="feature-tag">BGP Security</span>
+                    <span class="feature-tag">Internet Governance</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">⚖️</div>
+                    <div class="service-title">Risk Management & Assessment</div>
+                    <div class="service-level">Expert</div>
+                </div>
+                <div class="service-description">
+                    Comprehensive risk management services including enterprise risk assessment, business impact analysis, and risk mitigation strategies.
+                </div>
+                <div class="service-features">
+                    <span class="feature-tag">Risk Assessment</span>
+                    <span class="feature-tag">Business Impact Analysis</span>
+                    <span class="feature-tag">Risk Mitigation</span>
+                    <span class="feature-tag">NIST Framework</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">🔄</div>
+                    <div class="service-title">Business Continuity & Recovery</div>
+                    <div class="service-level">Advanced</div>
+                </div>
+                <div class="service-description">
+                    Ensure business resilience with comprehensive continuity planning, disaster recovery strategies, and crisis management frameworks.
+                </div>
+                <div class="service-features">
+                    <span class="feature-tag">Business Continuity</span>
+                    <span class="feature-tag">Disaster Recovery</span>
+                    <span class="feature-tag">Crisis Management</span>
+                    <span class="feature-tag">Resilience Planning</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">🎯</div>
+                    <div class="service-title">Executive Security Advisory</div>
+                    <div class="service-level">Expert</div>
+                </div>
+                <div class="service-description">
+                    Strategic cybersecurity consulting for executives and board members, including security strategy development and risk communication.
+                </div>
+                <div class="service-features">
+                    <span class="feature-tag">Strategic Planning</span>
+                    <span class="feature-tag">Board Advisory</span>
+                    <span class="feature-tag">Risk Communication</span>
+                    <span class="feature-tag">Security Governance</span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">🔧</div>
+                    <div class="service-title">DevSecOps & Secure Development</div>
+                    <div class="service-level">Expert</div>
+                </div>
+                <div class="service-description">
+                    Integrate security into your development pipeline with DevSecOps implementation, secure coding practices, and automated security testing.
+                </div>
+                <div class="service-features">
+                    <span class="feature-tag">DevSecOps</span>
+                    <span class="feature-tag">Secure Coding</span>
+                    <span class="feature-tag">Pipeline Security</span>
+                    <span class="feature-tag">Security Automation</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="cta-section">
+        <h3>Ready to Secure Your Organization?</h3>
+        <p>
+            Partner with our cybersecurity experts to build a comprehensive security strategy 
+            that protects your assets and enables your business growth.
+        </p>
+        <a href="mailto:contact@cyberguard-solutions.com" class="cta-button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                <rect width="20" height="16" x="2" y="4" rx="2"/>
+                <path d="m22 7-10 5L2 7"/>
+            </svg>
+            Get Started Today
+        </a>
+    </footer>
+</body>
+</html>
