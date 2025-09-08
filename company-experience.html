@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberGuard Solutions - Our Experience & Portfolio</title>
+    <meta name="description" content="Explore CyberGuard Solutions' extensive experience and successful project portfolio in cybersecurity consulting, with over 27 years of expertise across enterprise organizations.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0f172a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1), transparent 50%);
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #ffffff, #93c5fd, #67e8f9);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero .tagline {
+            font-size: 1.5rem;
+            color: #60a5fa;
+            margin-bottom: 1rem;
+        }
+
+        .hero .description {
+            font-size: 1.125rem;
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stats-section {
+            padding: 3rem 2rem;
+            background: rgba(30, 41, 59, 0.3);
+            border-bottom: 1px solid rgba(71, 85, 105, 0.5);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #60a5fa;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #cbd5e1;
+            font-weight: 500;
+        }
+
+        .experience-section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #60a5fa, #06b6d4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-header p {
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .experience-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .experience-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 12px;
+        }
+
+        .experience-card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .experience-card:hover::before {
+            opacity: 1;
+        }
+
+        .experience-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .experience-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 8px;
+            background: rgba(59, 130, 246, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .experience-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .experience-description {
+            color: #cbd5e1;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .experience-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .feature-tag {
+            background: rgba(51, 65, 85, 0.7);
+            color: #cbd5e1;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            transition: all 0.2s ease;
+        }
+
+        .feature-tag:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            color: #93c5fd;
+        }
+
+        .clients-section {
+            padding: 5rem 2rem;
+            background: rgba(30, 41, 59, 0.3);
+            border-top: 1px solid rgba(71, 85, 105, 0.5);
+            border-bottom: 1px solid rgba(71, 85, 105, 0.5);
+        }
+
+        .clients-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .client-category {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .client-category:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.1);
+        }
+
+        .client-category h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #60a5fa;
+            margin-bottom: 1rem;
+        }
+
+        .client-category p {
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+        }
+
+        .client-examples {
+            color: #94a3b8;
+            font-size: 0.875rem;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .cta-section h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .cta-section p {
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .experience-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .experience-card {
+                padding: 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <div class="hero-content">
+            <div class="hero-logo">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <path d="m9 12 2 2 4-4"/>
+                </svg>
+            </div>
+            <h1>Our Experience</h1>
+            <p class="tagline">Proven Track Record in Cybersecurity</p>
+            <p class="description">
+                With over 27 years of experience in cybersecurity, CyberGuard Solutions has delivered 
+                exceptional security consulting services across diverse industries and organizational scales, 
+                from startups to Fortune 500 companies.
+            </p>
+        </div>
+    </header>
+
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">27+</div>
+                <div class="stat-label">Years of Experience</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">200+</div>
+                <div class="stat-label">Projects Delivered</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Enterprise Clients</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Industry Certifications</div>
+            </div>
+        </div>
+    </section>
+
+    <main class="experience-section">
+        <div class="section-header">
+            <h2>Our Portfolio Highlights</h2>
+            <p>Showcasing our expertise across critical cybersecurity domains and successful project deliveries</p>
+        </div>
+
+        <div class="experience-grid">
+            <div class="experience-card">
+                <div class="experience-header">
+                    <div class="experience-icon">🏗️</div>
+                    <div class="experience-title">Enterprise Security Architecture</div>
+                </div>
+                <div class="experience-description">
+                    Led comprehensive security architecture initiatives for major financial institutions and technology companies, designing resilient security frameworks that scale with business growth while maintaining regulatory compliance.
+                </div>
+                <div class="experience-features">
+                    <span class="feature-tag">Zero Trust Architecture</span>
+                    <span class="feature-tag">Multi-Cloud Security</span>
+                    <span class="feature-tag">Identity Management</span>
+                    <span class="feature-tag">Risk Assessment</span>
+                </div>
+            </div>
+
+            <div class="experience-card">
+                <div class="experience-header">
+                    <div class="experience-icon">🤖</div>
+                    <div class="experience-title">AI Security Innovation</div>
+                </div>
+                <div class="experience-description">
+                    Pioneered AI security research and implementation across multiple organizations, developing novel approaches to secure machine learning systems and protect against emerging AI-based threats.
+                </div>
+                <div class="experience-features">
+                    <span class="feature-tag">ML Security</span>
+                    <span class="feature-tag">Adversarial Testing</span>
+                    <span class="feature-tag">Data Privacy</span>
+                    <span class="feature-tag">Model Protection</span>
+                </div>
+            </div>
+
+            <div class="experience-card">
+                <div class="experience-header">
+                    <div class="experience-icon">🌍</div>
+                    <div class="experience-title">Global Compliance Programs</div>
+                </div>
+                <div class="experience-description">
+                    Designed and implemented comprehensive compliance programs for multinational corporations, ensuring adherence to ISO 27001, GDPR, PCI DSS, and emerging regulations like DORA.
+                </div>
+                <div class="experience-features">
+                    <span class="feature-tag">ISO 27001</span>
+                    <span class="feature-tag">GDPR Compliance</span>
+                    <span class="feature-tag">PCI DSS</span>
+                    <span class="feature-tag">DORA Regulation</span>
+                </div>
+            </div>
+
+            <div class="experience-card">
+                <div class="experience-header">
+                    <div class="experience-icon">🔬</div>
+                    <div class="experience-title">Advanced Threat Research</div>
+                </div>
+                <div class="experience-description">
+                    Conducted cutting-edge security research on emerging threats, developed innovative defensive strategies, and published findings in academic conferences and industry publications.
+                </div>
+                <div class="experience-features">
+                    <span class="feature-tag">Threat Intelligence</span>
+                    <span class="feature-tag">Vulnerability Research</span>
+                    <span class="feature-tag">Academic Publishing</span>
+                    <span class="feature-tag">Industry Speaking</span>
+                </div>
+            </div>
+
+            <div class="experience-card">
+                <div class="experience-header">
+                    <div class="experience-icon">🚀</div>
+                    <div class="experience-title">Digital Transformation Security</div>
+                </div>
+                <div class="experience-description">
+                    Guided organizations through secure digital transformation initiatives, integrating security into DevOps pipelines and cloud migration strategies while maintaining operational efficiency.
+                </div>
+                <div class="experience-features">
+                    <span class="feature-tag">DevSecOps</span>
+                    <span class="feature-tag">Cloud Migration</span>
+                    <span class="feature-tag">Container Security</span>
+                    <span class="feature-tag">CI/CD Security</span>
+                </div>
+            </div>
+
+            <div class="experience-card">
+                <div class="experience-header">
+                    <div class="experience-icon">🛡️</div>
+                    <div class="experience-title">Critical Infrastructure Protection</div>
+                </div>
+                <div class="experience-description">
+                    Secured critical infrastructure for energy, healthcare, and government sectors, implementing robust protection mechanisms against nation-state threats and sophisticated attack vectors.
+                </div>
+                <div class="experience-features">
+                    <span class="feature-tag">OT Security</span>
+                    <span class="feature-tag">SCADA Protection</span>
+                    <span class="feature-tag">Government Security</span>
+                    <span class="feature-tag">Critical Systems</span>
+                </div>
+            </div>
+
+            <div class="experience-card">
+                <div class="experience-header">
+                    <div class="experience-icon">📊</div>
+                    <div class="experience-title">Security Operations Excellence</div>
+                </div>
+                <div class="experience-description">
+                    Built and optimized security operations centers for enterprise clients, implementing advanced threat detection, automated response capabilities, and comprehensive security monitoring.
+                </div>
+                <div class="experience-features">
+                    <span class="feature-tag">SOC Development</span>
+                    <span class="feature-tag">SIEM Implementation</span>
+                    <span class="feature-tag">Threat Hunting</span>
+                    <span class="feature-tag">Incident Response</span>
+                </div>
+            </div>
+
+            <div class="experience-card">
+                <div class="experience-header">
+                    <div class="experience-icon">🎓</div>
+                    <div class="experience-title">Security Education & Training</div>
+                </div>
+                <div class="experience-description">
+                    Developed comprehensive security awareness programs and technical training curricula, educating thousands of professionals across various industries on cybersecurity best practices.
+                </div>
+                <div class="experience-features">
+                    <span class="feature-tag">Security Awareness</span>
+                    <span class="feature-tag">Technical Training</span>
+                    <span class="feature-tag">Curriculum Development</span>
+                    <span class="feature-tag">Industry Workshops</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section class="clients-section">
+        <div class="section-header">
+            <h2>Client Portfolio</h2>
+            <p>Trusted by organizations across multiple industries and scales</p>
+        </div>
+
+        <div class="clients-grid">
+            <div class="client-category">
+                <h3>Financial Services</h3>
+                <p>Major banks, fintech companies, and payment processors</p>
+                <div class="client-examples">Investment banks, digital payment platforms, cryptocurrency exchanges</div>
+            </div>
+
+            <div class="client-category">
+                <h3>Technology Sector</h3>
+                <p>Software companies, cloud providers, and tech startups</p>
+                <div class="client-examples">SaaS platforms, cloud infrastructure providers, AI companies</div>
+            </div>
+
+            <div class="client-category">
+                <h3>Healthcare & Pharma</h3>
+                <p>Healthcare systems, pharmaceutical companies, medical device manufacturers</p>
+                <div class="client-examples">Hospital networks, biotech firms, telemedicine platforms</div>
+            </div>
+
+            <div class="client-category">
+                <h3>Energy & Utilities</h3>
+                <p>Power companies, renewable energy firms, utility providers</p>
+                <div class="client-examples">Smart grid operators, solar energy companies, water utilities</div>
+            </div>
+
+            <div class="client-category">
+                <h3>Government & Defense</h3>
+                <p>Government agencies, defense contractors, public sector organizations</p>
+                <div class="client-examples">Federal agencies, military contractors, state governments</div>
+            </div>
+
+            <div class="client-category">
+                <h3>Manufacturing & Retail</h3>
+                <p>Industrial manufacturers, retail chains, e-commerce platforms</p>
+                <div class="client-examples">Automotive manufacturers, fashion retailers, supply chain companies</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h3>Ready to Secure Your Organization?</h3>
+        <p>
+            Let's discuss how our proven experience and expertise can help strengthen your security posture 
+            and protect your critical assets against evolving cyber threats.
+        </p>
+        <a href="mailto:info@cyberguardsolutions.com" class="cta-button">
+            Contact Our Security Experts
+        </a>
+    </section>
+</body>
+</html>
