@@ -1,4 +1,3 @@
-
 import { ProfessionalRoles } from "./experience/ProfessionalRoles";
 import { CareerTimeline } from "./experience/CareerTimeline";
 
@@ -11,24 +10,28 @@ export const Experience = () => {
             Professional Experience
           </h2>
           <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-            A comprehensive track record spanning multiple industries and security domains, 
-            from startup CSO to enterprise security leadership and international advisory roles.
+            A comprehensive track record spanning multiple industries and
+            security domains, from startup CSO to enterprise security leadership
+            and international advisory roles.
           </p>
         </div>
 
         <ProfessionalRoles />
         <div className="mt-12 text-center">
-          <p className="text-slate-400 text-sm">
-            An extract of client assignment history and employments that showcases the broad experience.
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+            An extract of client assignment history and employments that
+            showcases the broad experience.
           </p>
         </div>
- 
+
         <CareerTimeline />
 
         <div className="mt-12 text-center">
           <p className="text-slate-400 text-sm">
-            This comprehensive timeline represents years of progressive cybersecurity leadership across 
-            diverse industries including finance, government, energy, technology, and international organizations.
+            This comprehensive timeline represents years of progressive
+            cybersecurity leadership across diverse industries including
+            finance, government, energy, technology, and international
+            organizations.
           </p>
         </div>
       </div>
