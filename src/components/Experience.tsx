@@ -17,6 +17,12 @@ export const Experience = () => {
         </div>
 
         <ProfessionalRoles />
+        <div className="mt-12 text-center">
+          <p className="text-slate-400 text-sm">
+            An extract of client assignment history and employments that showcases the broad experience.
+          </p>
+        </div>
+ 
         <CareerTimeline />
 
         <div className="mt-12 text-center">
