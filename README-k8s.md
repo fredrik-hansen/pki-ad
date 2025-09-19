@@ -1,6 +1,7 @@
 
 # Kubernetes Deployment Guide
 
+
 This guide explains how to deploy the Fredrik Hansen Portfolio application on Kubernetes using Docker and Helm.
 
 ## Prerequisites
