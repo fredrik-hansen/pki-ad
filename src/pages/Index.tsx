@@ -2,6 +2,7 @@
 import { Hero } from "../components/Hero";
 import { About } from "../components/About";
 import { Experience } from "../components/Experience";
+import { AIProjects } from "../components/AIProjects";
 import { CybersecurityDomains } from "../components/CybersecurityDomains";
 import { TechnicalCompetencies } from "../components/TechnicalCompetencies";
 import { Certifications } from "../components/Certifications";
@@ -21,6 +22,7 @@ const Index = () => {
       <div className="pdf-page-break">
         <Experience />
       </div>
+      <AIProjects />
       <CybersecurityDomains />
       <TechnicalCompetencies />
       <Certifications />

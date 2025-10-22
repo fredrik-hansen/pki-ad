@@ -252,7 +252,7 @@ const extractDataFromPage = () => {
       const periodElement = card.querySelector('.text-slate-400.text-sm');
       const industryElement = card.querySelector('.text-slate-500.text-xs');
       const highlightElements = card.querySelectorAll('.flex.items-start.space-x-2 p');
-      
+
       return {
         title: extractTextFromElement(titleElement),
         company: extractTextFromElement(companyElement),
@@ -262,7 +262,17 @@ const extractDataFromPage = () => {
       };
     });
   }
-  
+
+  // Extract AI projects
+  const aiProjectElements = document.querySelectorAll('[data-ai-project]');
+  const aiProjects = Array.from(aiProjectElements).map(el => ({
+    name: el.getAttribute('data-project-name') || '',
+    category: el.getAttribute('data-category') || '',
+    year: el.getAttribute('data-year') || '',
+    description: el.getAttribute('data-description') || '',
+    technologies: (el.getAttribute('data-technologies') || '').split(', ').filter(t => t)
+  }));
+
   return {
     name,
     title,
@@ -282,6 +292,7 @@ const extractDataFromPage = () => {
     availability,
     specialization,
     experiences,
+    aiProjects,
     languages
   };
 };
@@ -503,16 +514,82 @@ const generateExecutiveTemplate = (data: any) => {
               })
             ),
             new Paragraph({ text: "" })
-          ])
+          ]),
+
+          // AI & Personal Projects
+          ...(data.aiProjects && data.aiProjects.length > 0 ? [
+            new Paragraph({ children: [new PageBreak()] }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "AI & PERSONAL PROJECTS",
+                  bold: true,
+                  size: 24,
+                  font: "Arial",
+                  color: "2C5AA0"
+                })
+              ]
+            }),
+            new Paragraph({ text: "" }),
+            ...data.aiProjects.flatMap((project: any) => [
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: project.name,
+                    bold: true,
+                    size: 18,
+                    font: "Arial"
+                  })
+                ]
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: `${project.category} | ${project.year}`,
+                    size: 14,
+                    font: "Arial",
+                    color: "666666",
+                    italics: true
+                  })
+                ]
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: project.description,
+                    size: 14,
+                    font: "Arial"
+                  })
+                ]
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: "Technologies: ",
+                    bold: true,
+                    size: 13,
+                    font: "Arial"
+                  }),
+                  new TextRun({
+                    text: project.technologies.join(', '),
+                    size: 13,
+                    font: "Arial",
+                    color: "475569"
+                  })
+                ]
+              }),
+              new Paragraph({ text: "" })
+            ])
+          ] : [])
         ]
       },
-      
+
       {
         // PAGE 3: Additional Qualifications
         properties: {},
         children: [
           new Paragraph({ children: [new PageBreak()] }),
-          
+
           // Certifications
           new Paragraph({
             children: [
@@ -939,16 +1016,75 @@ const generateTechnicalTemplate = (data: any) => {
               ]
             }),
             new Paragraph({ text: "" })
-          ]).flat()
+          ]).flat(),
+
+          // AI & Personal Projects
+          ...(data.aiProjects && data.aiProjects.length > 0 ? [
+            new Paragraph({ text: "" }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "=== AI & PERSONAL PROJECTS ===",
+                  bold: true,
+                  size: 20,
+                  font: "Consolas",
+                  color: "0066cc"
+                })
+              ]
+            }),
+            new Paragraph({ text: "" }),
+            ...data.aiProjects.flatMap((project: any) => [
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: `>>> ${project.name}`,
+                    bold: true,
+                    size: 16,
+                    font: "Consolas",
+                    color: "0066cc"
+                  })
+                ]
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: `    Category: ${project.category} | Year: ${project.year}`,
+                    size: 14,
+                    font: "Consolas"
+                  })
+                ]
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: `    ${project.description}`,
+                    size: 12,
+                    font: "Consolas"
+                  })
+                ]
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: `    Tech Stack: ${project.technologies.join(' | ')}`,
+                    size: 12,
+                    font: "Consolas",
+                    color: "475569"
+                  })
+                ]
+              }),
+              new Paragraph({ text: "" })
+            ])
+          ] : [])
         ]
       },
-      
+
       {
         // PAGE 3: Certifications, Languages, and Additional Info
         properties: {},
         children: [
           new Paragraph({ children: [new PageBreak()] }),
-          
+
           // Certifications in code style
           new Paragraph({
             children: [
@@ -1359,16 +1495,82 @@ const generateModernTemplate = (data: any) => {
               })
             ),
             new Paragraph({ text: "" })
-          ])
+          ]),
+
+          // AI & Personal Projects
+          ...(data.aiProjects && data.aiProjects.length > 0 ? [
+            new Paragraph({ text: "" }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "AI & PERSONAL PROJECTS",
+                  bold: true,
+                  size: 20,
+                  font: "Segoe UI",
+                  color: "6B46C1"
+                })
+              ]
+            }),
+            new Paragraph({ text: "" }),
+            ...data.aiProjects.flatMap((project: any) => [
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: project.name,
+                    bold: true,
+                    size: 16,
+                    font: "Segoe UI"
+                  })
+                ]
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: `${project.category} | ${project.year}`,
+                    size: 13,
+                    font: "Segoe UI",
+                    color: "666666",
+                    italics: true
+                  })
+                ]
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: project.description,
+                    size: 12,
+                    font: "Segoe UI"
+                  })
+                ]
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: "Tech: ",
+                    bold: true,
+                    size: 11,
+                    font: "Segoe UI"
+                  }),
+                  new TextRun({
+                    text: project.technologies.join(', '),
+                    size: 11,
+                    font: "Segoe UI",
+                    color: "475569"
+                  })
+                ]
+              }),
+              new Paragraph({ text: "" })
+            ])
+          ] : [])
         ]
       },
-      
+
       {
         // PAGE 3: Certifications, Languages, Volunteer Work, and Speaking
         properties: {},
         children: [
           new Paragraph({ children: [new PageBreak()] }),
-          
+
           // Professional Roles
           new Paragraph({
             children: [
@@ -2346,7 +2548,93 @@ const generateCreativeTemplate = (data: any) => {
             ),
             new Paragraph({ text: "" }),
             new Paragraph({ text: "" })
-          ])
+          ]),
+
+          // AI & Personal Projects
+          ...(data.aiProjects && data.aiProjects.length > 0 ? [
+            new Paragraph({ text: "" }),
+            new Paragraph({
+              alignment: AlignmentType.CENTER,
+              children: [
+                new TextRun({
+                  text: "AI & PERSONAL PROJECTS",
+                  bold: true,
+                  size: 24,
+                  font: "Arial",
+                  color: "D4AF37"
+                })
+              ]
+            }),
+            new Paragraph({
+              alignment: AlignmentType.CENTER,
+              children: [
+                new TextRun({
+                  text: "═".repeat(40),
+                  color: "D4AF37"
+                })
+              ]
+            }),
+            new Paragraph({ text: "" }),
+            ...data.aiProjects.flatMap((project: any) => [
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: project.name,
+                    bold: true,
+                    size: 18,
+                    font: "Arial",
+                    color: "2A2A2A"
+                  })
+                ]
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: project.category,
+                    bold: true,
+                    size: 16,
+                    font: "Arial",
+                    color: "D4AF37"
+                  }),
+                  new TextRun({
+                    text: ` | ${project.year}`,
+                    size: 14,
+                    font: "Arial",
+                    color: "666666",
+                    italics: true
+                  })
+                ]
+              }),
+              new Paragraph({ text: "" }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: project.description,
+                    size: 13,
+                    font: "Arial",
+                    color: "2A2A2A"
+                  })
+                ]
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: "Technologies: ",
+                    bold: true,
+                    size: 12,
+                    font: "Arial"
+                  }),
+                  new TextRun({
+                    text: project.technologies.join(', '),
+                    size: 12,
+                    font: "Arial",
+                    color: "475569"
+                  })
+                ]
+              }),
+              new Paragraph({ text: "" })
+            ])
+          ] : [])
         ]
       },
 
@@ -2464,6 +2752,69 @@ const generateCreativeTemplate = (data: any) => {
 
           new Paragraph({ text: "" }),
           new Paragraph({ text: "" }),
+
+          // AI & Personal Projects
+          ...(data.aiProjects && data.aiProjects.length > 0 ? [
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "AI & PERSONAL PROJECTS",
+                  bold: true,
+                  size: 18,
+                  font: "Arial",
+                  color: "D4AF37"
+                })
+              ]
+            }),
+            new Paragraph({ text: "" }),
+            ...data.aiProjects.flatMap((project: any) => [
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: `▪ ${project.name}`,
+                    bold: true,
+                    size: 13,
+                    font: "Arial",
+                    color: "2A2A2A"
+                  }),
+                  new TextRun({
+                    text: ` - ${project.category} (${project.year})`,
+                    size: 12,
+                    font: "Arial",
+                    color: "666666"
+                  })
+                ]
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: project.description,
+                    size: 12,
+                    font: "Arial",
+                    color: "2A2A2A"
+                  })
+                ]
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: "Tech: ",
+                    bold: true,
+                    size: 11,
+                    font: "Arial"
+                  }),
+                  new TextRun({
+                    text: project.technologies.join(', '),
+                    size: 11,
+                    font: "Arial",
+                    color: "475569"
+                  })
+                ]
+              }),
+              new Paragraph({ text: "" })
+            ]),
+            new Paragraph({ text: "" })
+          ] : []),
 
           // Volunteer Work
           new Paragraph({

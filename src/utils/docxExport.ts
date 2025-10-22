@@ -253,7 +253,7 @@ const extractDataFromPage = () => {
       const periodElement = card.querySelector('.text-slate-400.text-sm');
       const industryElement = card.querySelector('.text-slate-500.text-xs');
       const highlightElements = card.querySelectorAll('.flex.items-start.space-x-2 p');
-      
+
       return {
         title: extractTextFromElement(titleElement),
         company: extractTextFromElement(companyElement),
@@ -263,6 +263,16 @@ const extractDataFromPage = () => {
       };
     });
   }
+
+  // Extract AI projects
+  const aiProjectElements = document.querySelectorAll('[data-ai-project]');
+  const aiProjects = Array.from(aiProjectElements).map(el => ({
+    name: el.getAttribute('data-project-name') || '',
+    category: el.getAttribute('data-category') || '',
+    year: el.getAttribute('data-year') || '',
+    description: el.getAttribute('data-description') || '',
+    technologies: (el.getAttribute('data-technologies') || '').split(', ').filter(t => t)
+  }));
   
   return {
     name,
@@ -283,6 +293,7 @@ const extractDataFromPage = () => {
     availability,
     specialization,
     experiences,
+    aiProjects,
     languages
   };
 };
@@ -786,6 +797,101 @@ export const generateDOCX = () => {
 
           // Experience section in single column (compact format)
           ...compactExperienceContent,
+
+          // AI & Personal Projects Section
+          ...(data.aiProjects && data.aiProjects.length > 0 ? [
+            new Paragraph({
+              children: [new PageBreak()]
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "AI & PERSONAL PROJECTS PORTFOLIO",
+                  bold: true,
+                  size: 28,
+                  font: "Calibri"
+                })
+              ]
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "_____________________________________________",
+                  size: 24,
+                  font: "Calibri"
+                })
+              ]
+            }),
+            new Paragraph({ text: "" }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "Independent projects demonstrating expertise in AI/ML engineering and full-stack development",
+                  size: 18,
+                  font: "Calibri",
+                  italics: true,
+                  color: "666666"
+                })
+              ]
+            }),
+            new Paragraph({ text: "" }),
+            ...data.aiProjects.flatMap((project: any) => [
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: project.name,
+                    bold: true,
+                    size: 22,
+                    font: "Calibri"
+                  })
+                ]
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: `${project.category}`,
+                    size: 18,
+                    font: "Calibri",
+                    color: "2563EB",
+                    bold: true
+                  }),
+                  new TextRun({
+                    text: ` • ${project.year}`,
+                    size: 16,
+                    font: "Calibri",
+                    color: "666666",
+                    italics: true
+                  })
+                ]
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: project.description,
+                    size: 16,
+                    font: "Calibri"
+                  })
+                ]
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: "Technologies: ",
+                    bold: true,
+                    size: 14,
+                    font: "Calibri"
+                  }),
+                  new TextRun({
+                    text: project.technologies.join(', '),
+                    size: 14,
+                    font: "Calibri",
+                    color: "475569"
+                  })
+                ]
+              }),
+              new Paragraph({ text: "" })
+            ])
+          ] : []),
 
           // Additional sections on separate pages
           new Paragraph({
