@@ -1,3 +1,8 @@
+/**
+ * DEPRECATED: This component has been integrated into UnifiedHeader.tsx
+ * @deprecated Content now part of UnifiedHeader's expandable section
+ * Kept for rollback capability only
+ */
 
 export const About = () => {
   const highlights = [

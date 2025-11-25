@@ -1,6 +1,5 @@
 
-import { Hero } from "../components/Hero";
-import { About } from "../components/About";
+import { UnifiedHeader } from "../components/UnifiedHeader";
 import { Experience } from "../components/Experience";
 import { AIProjects } from "../components/AIProjects";
 import { CybersecurityDomains } from "../components/CybersecurityDomains";
@@ -16,9 +15,8 @@ const Index = () => {
     <div className="min-h-screen bg-slate-950 text-white">
       <Navigation />
       <ExportMenu />
-       
-      <Hero />
-      <About />
+
+      <UnifiedHeader mode="full" />
       <div className="pdf-page-break">
         <Experience />
       </div>

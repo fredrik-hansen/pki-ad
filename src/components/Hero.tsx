@@ -1,48 +1,63 @@
+/**
+ * DEPRECATED: This component has been replaced by UnifiedHeader.tsx
+ * @deprecated Use UnifiedHeader component instead
+ * Kept for rollback capability only
+ */
 
-import { Mail, User } from "lucide-react";
+import { Mail, MapPin, User } from "lucide-react";
+import { gradients, typography, spacing, transitions } from "../constants/theme";
 
 export const Hero = () => {
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-blue-950/20 to-slate-950"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)]"></div>
-      
-      <div className="relative z-10 text-center max-w-4xl mx-auto px-4" data-section="hero">
-        <div className="mb-8 animate-fade-in">
-          <div className="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-2xl shadow-blue-500/20">
-            <User size={64} className="text-white" />
+    <section id="home" className="relative overflow-hidden mt-16">
+      {/* Subtle gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800"></div>
+
+      <header className={`relative z-10 ${spacing.headerPaddingY.mobile} ${spacing.headerPaddingY.desktop} ${spacing.headerPaddingX} border-b border-slate-700/50`}>
+        <div className={`${spacing.containerMaxWidth} mx-auto`}>
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-6">
+            {/* Left side: Avatar + Name + Title */}
+            <div className="flex items-center gap-4">
+              <div className={`hidden md:flex w-16 h-16 rounded-full ${gradients.avatarSubtle} items-center justify-center flex-shrink-0`}>
+                <User size={32} className="text-white" />
+              </div>
+              <div>
+                <h1 className={`${typography.hero.name.mobile} ${typography.hero.name.desktop} font-bold mb-1 ${gradients.textPrimary}`} data-name="Fredrik Hansen">
+                  Fredrik Hansen
+                </h1>
+                <p className={`${typography.hero.title.mobile} ${typography.hero.title.desktop} text-primary font-medium`} data-title="Senior IT & Information Security Expert">
+                  Senior IT & Information Security Expert
+                </p>
+              </div>
+            </div>
+
+            {/* Right side: Contact Info */}
+            <div className="text-left md:text-right text-sm space-y-1.5">
+              <p className="text-slate-300 flex items-center gap-2 md:justify-end">
+                <MapPin size={14} className="text-primary" />
+                Stockholm, Sweden
+              </p>
+              <a
+                href="mailto:fredrik@pki.ad"
+                className={`text-primary hover:text-blue-300 ${transitions.colors} flex items-center gap-2 md:justify-end`}
+              >
+                <Mail size={14} />
+                fredrik@pki.ad
+              </a>
+            </div>
+          </div>
+
+          {/* Tagline Summary */}
+          <div className="mt-6 pt-6 border-t border-slate-700/30">
+            <p className="text-sm md:text-base text-slate-300 leading-relaxed" data-summary="27+ years cybersecurity expertise">
+              <span className="text-primary font-semibold">27+ years cybersecurity expertise</span> •
+              Security architecture & engineering •
+              AI security specialist •
+              Board-level strategic advisor
+            </p>
           </div>
         </div>
-        
-        <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-blue-200 to-cyan-300 bg-clip-text text-transparent animate-fade-in" data-name="Fredrik Hansen">
-          Fredrik Hansen
-        </h1>
-        
-        <p className="text-xl md:text-2xl text-blue-400 mb-4 animate-fade-in" data-title="Senior IT & Information Security Expert">
-          Senior IT & Information Security Expert
-        </p>
-        
-        <p className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-in" data-summary="27+ years of cybersecurity expertise • Security architecture & engineering • AI security specialist • Board-level strategic advisor">
-          • Security architecture & engineering • 
-          AI security specialist • Board-level strategic advisor
-        </p>
-        
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in">
-          <a
-            href="#contact"
-            className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 transition-all duration-200 shadow-lg hover:shadow-xl hover:shadow-blue-500/25"
-          >
-            <Mail className="mr-2" size={20} />
-            Get In Touch
-          </a>
-          <a
-            href="#about"
-            className="inline-flex items-center px-8 py-3 border border-slate-600 text-base font-medium rounded-lg text-slate-300 hover:text-white hover:border-blue-500 transition-all duration-200"
-          >
-            Learn More
-          </a>
-        </div>
-      </div>
+      </header>
     </section>
   );
 };
