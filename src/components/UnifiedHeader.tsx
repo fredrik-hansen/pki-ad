@@ -163,7 +163,7 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
             </a>
           </div>
         </div>
-        {renderSwitchers()}
+        {/* {renderSwitchers()} */}
       </div>
     </div>
   );
@@ -199,14 +199,14 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
               <Mail size={14} />
               <span>{email}</span>
             </a>
-            <div className="md:hidden mt-2">
+            {/* <div className="md:hidden mt-2">
               {renderSwitchers()}
-            </div>
+            </div> */}
           </div>
 
-          <div className="hidden md:block absolute top-6 right-6">
+          {/* <div className="hidden md:block absolute top-6 right-6">
             {renderSwitchers()}
-          </div>
+          </div> */}
         </div>
 
         <div className="mt-4 pt-4 border-t border-slate-700/30">
@@ -258,9 +258,9 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
           </div>
         </div>
 
-        <div className="absolute top-6 right-6">
+        {/* <div className="absolute top-6 right-6">
           {renderSwitchers()}
-        </div>
+        </div> */}
       </div>
     </div>
   );

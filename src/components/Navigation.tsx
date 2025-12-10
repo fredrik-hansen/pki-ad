@@ -34,7 +34,7 @@ export const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0">
             <span className={`text-xl font-bold ${gradients.textBrand}`}>
-              Fredrik Hansen
+              FH
             </span>
           </div>
 
