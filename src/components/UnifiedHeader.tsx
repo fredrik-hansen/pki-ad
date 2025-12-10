@@ -93,6 +93,16 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
     { name: "Catalan", level: "Beginner" },
   ];
 
+  // Navigation items
+  const navItems = [
+    { href: "#home", label: "Home" },
+    { href: "#about", label: "About" },
+    { href: "#experience", label: "Experience" },
+    { href: "#competencies", label: "Skills" },
+    { href: "#volunteer", label: "Volunteer" },
+    { href: "#contact", label: "Contact" },
+  ];
+
   // Render switchers (mode + layout)
   const renderSwitchers = () => (
     <div className="flex items-center gap-2">
@@ -187,21 +197,27 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
             </div>
           </div>
 
-          <div className="flex flex-col md:items-end gap-1.5 text-sm">
-            <div className="flex md:justify-end items-center gap-2 text-slate-300">
-              <MapPin size={14} className="text-primary" />
-              <span>{location_text}</span>
-            </div>
+          <div className="flex items-center md:justify-end gap-6">
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className={`text-slate-300 hover:text-blue-400 text-sm font-medium ${transitions.colors}`}
+              >
+                {item.label}
+              </a>
+            ))}
             <a
-              href={`mailto:${email}`}
-              className={`flex md:justify-end items-center gap-2 text-primary hover:text-blue-300 ${transitions.colors}`}
+              href={location.pathname === '/full' ? '/' : '/full'}
+              className={`text-slate-300 hover:text-blue-400 text-sm font-medium ${transitions.colors} flex items-center gap-1`}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(location.pathname === '/full' ? '/' : '/full');
+              }}
             >
-              <Mail size={14} />
-              <span>{email}</span>
+              {location.pathname === '/full' ? <FileText size={16} /> : <Layout size={16} />}
+              {location.pathname === '/full' ? 'Compact CV' : 'Full Portfolio'}
             </a>
-            {/* <div className="md:hidden mt-2">
-              {renderSwitchers()}
-            </div> */}
           </div>
 
           {/* <div className="hidden md:block absolute top-6 right-6">
@@ -358,7 +374,7 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
 
   // Main render with layout selection
   return (
-    <section className="relative mt-16">
+    <section className="relative">
       {layoutStyle === 'single-line' && renderSingleLine()}
       {layoutStyle === 'two-lines' && renderTwoLines()}
       {layoutStyle === 'stacked' && renderStacked()}
