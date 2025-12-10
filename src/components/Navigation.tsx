@@ -31,15 +31,9 @@ export const Navigation = () => {
       scrolled ? `${effects.navBlur} ${borders.bottom} ${borders.divider}` : "bg-transparent"
     }`}>
       <div className={`${spacing.containerMaxWidth} mx-auto px-4 sm:px-6 lg:px-8`}>
-        <div className="flex justify-between items-center h-16">
-          <div className="flex-shrink-0">
-            <span className={`text-xl font-bold ${gradients.textBrand}`}>
-              FH
-            </span>
-          </div>
-
+        <div className="flex justify-end items-center h-16">
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
+            <div className="flex items-baseline space-x-8">
               {navItems.map((item) => (
                 <a
                   key={item.href}
