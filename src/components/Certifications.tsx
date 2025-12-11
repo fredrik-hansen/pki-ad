@@ -1,44 +1,19 @@
 
 import React from 'react';
 import { Award, Shield, Users, Globe, Monitor } from 'lucide-react';
+import { SiFreebsd, SiOpenbsd, SiApple, SiDebian, SiUbuntu } from 'react-icons/si';
+import { FaWindows } from 'react-icons/fa';
+import { IconType } from 'react-icons';
 
 export const Certifications = () => {
-  const operatingSystems = [
-    {
-      name: "FreeBSD",
-      level: "Expert",
-      experience: "Decades of experience"
-    },
-    {
-      name: "OpenBSD", 
-      level: "Expert",
-      experience: "Decades of experience"
-    },
-    {
-      name: "macOS",
-      level: "Expert", 
-      experience: "Decades of experience"
-    },
-    {
-      name: "Debian",
-      level: "Expert",
-      experience: "Decades of experience"
-    },
-    {
-      name: "Ubuntu",
-      level: "Expert",
-      experience: "Decades of experience"
-    },
-    {
-      name: "Windows Client",
-      level: "Expert",
-      experience: "Decades of experience"
-    },
-    {
-      name: "Windows Server",
-      level: "Advanced",
-      experience: "Decades of experience"
-    }
+  const operatingSystems: { name: string; icon: IconType }[] = [
+    { name: "FreeBSD", icon: SiFreebsd },
+    { name: "OpenBSD", icon: SiOpenbsd },
+    { name: "macOS", icon: SiApple },
+    { name: "Debian", icon: SiDebian },
+    { name: "Ubuntu", icon: SiUbuntu },
+    { name: "Windows Client", icon: FaWindows },
+    { name: "Windows Server", icon: FaWindows }
   ];
 
   const certificates = [
@@ -132,38 +107,24 @@ export const Certifications = () => {
             <h3 className="text-2xl font-semibold text-white">Operating Systems Experience</h3>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {operatingSystems.map((os, index) => (
-              <div key={index} className="group relative" data-os-item data-name={os.name} data-level={os.level} data-experience={os.experience}>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-indigo-500/20 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                
-                <div className="relative h-full p-6 bg-slate-800/80 backdrop-blur-sm rounded-lg border border-slate-700/50 hover:border-slate-600 transition-all duration-300">
-                  <div className="flex items-start space-x-4">
-                    <div className="flex-shrink-0">
-                      <Monitor className="w-8 h-8 text-purple-400" />
-                    </div>
-                    
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-lg font-semibold text-white mb-2 leading-tight">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {operatingSystems.map((os, index) => {
+              const OSIcon = os.icon;
+              return (
+                <div key={index} className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-indigo-500/20 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                  <div className="relative h-full p-4 bg-slate-800/80 backdrop-blur-sm rounded-lg border border-slate-700/50 hover:border-slate-600 transition-all duration-300">
+                    <div className="flex flex-col items-center text-center space-y-2">
+                      <OSIcon className="w-8 h-8 text-purple-400" />
+                      <h4 className="text-sm font-semibold text-white leading-tight">
                         {os.name}
                       </h4>
-                      <div className="flex flex-wrap gap-2 mb-3">
-                        <span className={`px-2 py-1 text-xs rounded-full border ${
-                          os.level === 'Expert' 
-                            ? 'bg-purple-600/20 text-purple-300 border-purple-500/50'
-                            : 'bg-indigo-600/20 text-indigo-300 border-indigo-500/50'
-                        }`}>
-                          {os.level}
-                        </span>
-                      </div>
-                      <p className="text-slate-400 text-sm">{os.experience}</p>
                     </div>
                   </div>
-                  
-                  <div className="mt-4 h-1 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 opacity-60"></div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
