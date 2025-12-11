@@ -147,15 +147,15 @@ export const CybersecurityDomains = () => {
           <div className="flex justify-center space-x-8 text-sm">
             <div className="flex items-center space-x-2">
               <div className="w-3 h-3 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500"></div>
-              <span className="text-blue-300">Expert Level</span>
+              <span className="text-blue-300"></span>
             </div>
             <div className="flex items-center space-x-2">
               <div className="w-3 h-3 rounded-full bg-gradient-to-r from-green-500 to-teal-500"></div>
-              <span className="text-green-300">Advanced Level</span>
+              <span className="text-green-300"></span>
             </div>
             <div className="flex items-center space-x-2">
               <div className="w-3 h-3 rounded-full bg-gradient-to-r from-yellow-500 to-orange-500"></div>
-              <span className="text-yellow-300">Intermediate Level</span>
+              <span className="text-yellow-300"></span>
             </div>
           </div>
         </div>
