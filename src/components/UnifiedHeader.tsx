@@ -1,18 +1,27 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
-  User, MapPin, Mail, ChevronDown, ChevronUp,
-  Layout, FileText, Layers
-} from 'lucide-react';
-import { Button } from './ui/button';
+  User,
+  MapPin,
+  Mail,
+  ChevronDown,
+  ChevronUp,
+  Layout,
+  FileText,
+  Layers,
+} from "lucide-react";
+import { Button } from "./ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import { cvData } from "../data/cvData";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from './ui/tooltip';
-import { cvData } from '../data/cvData';
-import { gradients, typography, spacing, transitions, borders, effects } from '../constants/theme';
-import type { UnifiedHeaderProps, LayoutStyle } from '../types/header';
+  gradients,
+  typography,
+  spacing,
+  transitions,
+  borders,
+  effects,
+} from "../constants/theme";
+import type { UnifiedHeaderProps, LayoutStyle } from "../types/header";
 
 export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
   const navigate = useNavigate();
@@ -20,11 +29,13 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
 
   // Layout style state with localStorage persistence
   const [layoutStyle, setLayoutStyle] = useState<LayoutStyle>(() => {
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('header-layout-style') as LayoutStyle | null;
-      return stored || 'two-lines';
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem(
+        "header-layout-style",
+      ) as LayoutStyle | null;
+      return stored || "two-lines";
     }
-    return 'two-lines';
+    return "two-lines";
   });
 
   // About section expansion state
@@ -32,34 +43,34 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
 
   // Persist layout preference
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('header-layout-style', layoutStyle);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("header-layout-style", layoutStyle);
     }
   }, [layoutStyle]);
 
   // Cycle through layout styles
   const cycleLayout = () => {
     setLayoutStyle((current) => {
-      if (current === 'single-line') return 'two-lines';
-      if (current === 'two-lines') return 'stacked';
-      return 'single-line';
+      if (current === "single-line") return "two-lines";
+      if (current === "two-lines") return "stacked";
+      return "single-line";
     });
   };
 
   // Toggle mode (full/compact)
   const toggleMode = () => {
-    const newPath = location.pathname === '/full' ? '/' : '/full';
+    const newPath = location.pathname === "/full" ? "/" : "/full";
     navigate(newPath);
     if (onModeChange) {
-      onModeChange(location.pathname === '/full' ? 'compact' : 'full');
+      onModeChange(location.pathname === "/full" ? "compact" : "full");
     }
   };
 
   // Get layout style name for tooltip
   const getLayoutName = () => {
-    if (layoutStyle === 'single-line') return 'Single Line';
-    if (layoutStyle === 'two-lines') return 'Two Lines';
-    return 'Stacked';
+    if (layoutStyle === "single-line") return "Single Line";
+    if (layoutStyle === "two-lines") return "Two Lines";
+    return "Stacked";
   };
 
   // Data from cvData
@@ -67,7 +78,7 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
   const title = cvData.title;
   const location_text = cvData.location;
   const email = cvData.email;
-  const tagline = cvData.tagline.join(' • ');
+  const tagline = cvData.tagline.join(" • ");
 
   // About section data
   const highlights = [
@@ -80,8 +91,14 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
   ];
 
   const industries = [
-    "Financial Services", "Banking", "Military Intelligence and Security Service", "Law Enforcement",
-    "Retail", "Energy", "Government", "Technology"
+    "Financial Services",
+    "Banking",
+    "Military Intelligence and Security Service",
+    "Law Enforcement",
+    "Retail",
+    "Energy",
+    "Government",
+    "Technology",
   ];
 
   const languages = [
@@ -94,14 +111,7 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
   ];
 
   // Navigation items
-  const navItems = [
-    { href: "#home", label: "Home" },
-    { href: "#about", label: "About" },
-    { href: "#experience", label: "Experience" },
-    { href: "#competencies", label: "Skills" },
-    { href: "#volunteer", label: "Volunteer" },
-    { href: "#contact", label: "Contact" },
-  ];
+  const navItems = [{ href: "#home", label: "Home" }];
 
   // Render switchers (mode + layout)
   const renderSwitchers = () => (
@@ -113,13 +123,13 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
             size="icon"
             onClick={toggleMode}
             className={`h-10 w-10 border border-slate-700/30 hover:border-primary/50 ${transitions.all}`}
-            aria-label={`Switch to ${mode === 'full' ? 'compact' : 'full'} mode`}
+            aria-label={`Switch to ${mode === "full" ? "compact" : "full"} mode`}
           >
-            {mode === 'full' ? <FileText size={20} /> : <Layout size={20} />}
+            {mode === "full" ? <FileText size={20} /> : <Layout size={20} />}
           </Button>
         </TooltipTrigger>
         <TooltipContent>
-          <p>Switch to {mode === 'full' ? 'Compact' : 'Full Portfolio'}</p>
+          <p>Switch to {mode === "full" ? "Compact" : "Fulla Portfolio"}</p>
         </TooltipContent>
       </Tooltip>
 
@@ -144,14 +154,21 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
 
   // Layout 1: Single Line Compact
   const renderSingleLine = () => (
-    <div className={`h-[60px] ${spacing.headerPaddingX} py-3 ${borders.bottom} border-slate-700/50 ${gradients.headerBg}`}>
+    <div
+      className={`h-[60px] ${spacing.headerPaddingX} py-3 ${borders.bottom} border-slate-700/50 ${gradients.headerBg}`}
+    >
       <div className="flex items-center justify-between gap-3 h-full">
         <div className="flex items-center gap-3">
-          <div className={`w-10 h-10 rounded-full ${gradients.avatarSubtle} flex items-center justify-center flex-shrink-0`}>
+          <div
+            className={`w-10 h-10 rounded-full ${gradients.avatarSubtle} flex items-center justify-center flex-shrink-0`}
+          >
             <User size={20} className="text-white" />
           </div>
           <div className="flex items-center gap-2 text-sm">
-            <span className={`text-2xl font-bold ${gradients.textPrimary}`} data-name={name}>
+            <span
+              className={`text-2xl font-bold ${gradients.textPrimary}`}
+              data-name={name}
+            >
               {name}
             </span>
             <span className="text-slate-600">|</span>
@@ -180,18 +197,28 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
 
   // Layout 2: Two Lines Minimal (Default)
   const renderTwoLines = () => (
-    <div className={`${spacing.headerPaddingY.mobile} ${spacing.headerPaddingY.desktop} ${spacing.headerPaddingX} ${borders.bottom} border-slate-700/50 ${gradients.headerBg}`}>
+    <div
+      className={`${spacing.headerPaddingY.mobile} ${spacing.headerPaddingY.desktop} ${spacing.headerPaddingX} ${borders.bottom} border-slate-700/50 ${gradients.headerBg}`}
+    >
       <div className={`${spacing.containerMaxWidth} mx-auto`}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           <div className="flex items-center gap-4">
-            <div className={`w-14 h-14 rounded-full ${gradients.avatarSubtle} flex items-center justify-center flex-shrink-0`}>
+            <div
+              className={`w-14 h-14 rounded-full ${gradients.avatarSubtle} flex items-center justify-center flex-shrink-0`}
+            >
               <User size={28} className="text-white" />
             </div>
             <div>
-              <h1 className={`${typography.compact.name.mobile} ${typography.compact.name.desktop} font-bold mb-1 ${gradients.textPrimary}`} data-name={name}>
+              <h1
+                className={`${typography.compact.name.mobile} ${typography.compact.name.desktop} font-bold mb-1 ${gradients.textPrimary}`}
+                data-name={name}
+              >
                 {name}
               </h1>
-              <p className={`${typography.compact.title.mobile} ${typography.compact.title.desktop} text-primary font-medium`} data-title={title}>
+              <p
+                className={`${typography.compact.title.mobile} ${typography.compact.title.desktop} text-primary font-medium`}
+                data-title={title}
+              >
                 {title}
               </p>
             </div>
@@ -208,15 +235,19 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
               </a>
             ))}
             <a
-              href={location.pathname === '/full' ? '/' : '/full'}
+              href={location.pathname === "/full" ? "/" : "/full"}
               className={`text-slate-300 hover:text-blue-400 text-sm font-medium ${transitions.colors} flex items-center gap-1`}
               onClick={(e) => {
                 e.preventDefault();
-                navigate(location.pathname === '/full' ? '/' : '/full');
+                navigate(location.pathname === "/full" ? "/" : "/full");
               }}
             >
-              {location.pathname === '/full' ? <FileText size={16} /> : <Layout size={16} />}
-              {location.pathname === '/full' ? 'Compact CV' : 'Full Portfolio'}
+              {location.pathname === "/full" ? (
+                <FileText size={16} />
+              ) : (
+                <Layout size={16} />
+              )}
+              {location.pathname === "/full" ? "Compact CV" : "Full Portfolio"}
             </a>
           </div>
 
@@ -226,8 +257,14 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
         </div>
 
         <div className="mt-4 pt-4 border-t border-slate-700/30">
-          <p className="text-xs md:text-sm text-slate-300 leading-relaxed" data-summary={tagline}>
-            <span className="text-primary font-semibold">27+ years cybersecurity expertise</span> • {tagline}
+          <p
+            className="text-xs md:text-sm text-slate-300 leading-relaxed"
+            data-summary={tagline}
+          >
+            <span className="text-primary font-semibold">
+              27+ years cybersecurity expertise
+            </span>{" "}
+            • {tagline}
           </p>
         </div>
       </div>
@@ -236,18 +273,28 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
 
   // Layout 3: Clean Stacked
   const renderStacked = () => (
-    <div className={`py-10 md:py-12 ${spacing.headerPaddingX} ${borders.bottom} border-slate-700/50 ${gradients.headerBg} relative`}>
+    <div
+      className={`py-10 md:py-12 ${spacing.headerPaddingX} ${borders.bottom} border-slate-700/50 ${gradients.headerBg} relative`}
+    >
       <div className={`${spacing.containerMaxWidth} mx-auto`}>
         <div className="flex flex-col items-center text-center gap-6">
-          <div className={`w-20 h-20 rounded-full ${gradients.avatar} flex items-center justify-center`}>
+          <div
+            className={`w-20 h-20 rounded-full ${gradients.avatar} flex items-center justify-center`}
+          >
             <User size={40} className="text-white" />
           </div>
 
           <div>
-            <h1 className={`text-4xl md:text-5xl font-bold mb-2 ${gradients.textHero}`} data-name={name}>
+            <h1
+              className={`text-4xl md:text-5xl font-bold mb-2 ${gradients.textHero}`}
+              data-name={name}
+            >
               {name}
             </h1>
-            <p className={`text-lg md:text-xl text-primary font-medium`} data-title={title}>
+            <p
+              className={`text-lg md:text-xl text-primary font-medium`}
+              data-title={title}
+            >
               {title}
             </p>
           </div>
@@ -268,8 +315,14 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
           </div>
 
           <div className="pt-6 mt-6 border-t border-slate-700/30 max-w-4xl">
-            <p className="text-base md:text-lg text-slate-300 leading-relaxed" data-summary={tagline}>
-              <span className="text-primary font-semibold">27+ years cybersecurity expertise</span> • {tagline}
+            <p
+              className="text-base md:text-lg text-slate-300 leading-relaxed"
+              data-summary={tagline}
+            >
+              <span className="text-primary font-semibold">
+                27+ years cybersecurity expertise
+              </span>{" "}
+              • {tagline}
             </p>
           </div>
         </div>
@@ -291,18 +344,23 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
         aria-label="Toggle professional highlights"
       >
         <span className="text-sm md:text-base text-slate-300 font-medium">
-          {isAboutExpanded ? '▲' : '▼'} Professional Highlights
+          {isAboutExpanded ? "▲" : "▼"} Professional Highlights
         </span>
         {isAboutExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
       </button>
 
       {isAboutExpanded && (
-        <div className="bg-slate-900/30 py-6 px-6 border-t border-slate-700/30 animate-in slide-in-from-top duration-200" data-section="about">
+        <div
+          className="bg-slate-900/30 py-6 px-6 border-t border-slate-700/30 animate-in slide-in-from-top duration-200"
+          data-section="about"
+        >
           <div className={`${spacing.containerMaxWidth} mx-auto`}>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Highlights Section */}
               <div>
-                <h3 className="text-xl font-semibold text-white mb-4">Key Highlights</h3>
+                <h3 className="text-xl font-semibold text-white mb-4">
+                  Key Highlights
+                </h3>
                 <div className="space-y-3" data-highlights>
                   {highlights.map((highlight, index) => (
                     <div
@@ -321,7 +379,9 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
               <div className="space-y-6">
                 {/* Industries */}
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-4">Industry Experience</h3>
+                  <h3 className="text-xl font-semibold text-white mb-4">
+                    Industry Experience
+                  </h3>
                   <div className="grid grid-cols-2 gap-2" data-industries>
                     {industries.map((industry, index) => (
                       <div
@@ -329,7 +389,9 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
                         className="px-3 py-2 bg-gradient-to-r from-blue-600/20 to-cyan-600/20 rounded-lg border border-blue-500/30 text-center"
                         data-industry={industry}
                       >
-                        <span className="text-slate-300 text-xs font-medium">{industry}</span>
+                        <span className="text-slate-300 text-xs font-medium">
+                          {industry}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -337,7 +399,9 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
 
                 {/* Languages */}
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-4">Languages</h3>
+                  <h3 className="text-xl font-semibold text-white mb-4">
+                    Languages
+                  </h3>
                   <div className="space-y-2" data-languages>
                     {languages.map((lang, index) => (
                       <div
@@ -346,8 +410,12 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
                         data-language={lang.name}
                         data-level={lang.level}
                       >
-                        <span className="text-slate-300 font-medium text-sm">{lang.name}</span>
-                        <span className="text-blue-400 text-sm">{lang.level}</span>
+                        <span className="text-slate-300 font-medium text-sm">
+                          {lang.name}
+                        </span>
+                        <span className="text-blue-400 text-sm">
+                          {lang.level}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -361,7 +429,9 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
                     data-nationality="Swedish National"
                   >
                     <div className="w-3 h-3 rounded-full bg-green-400"></div>
-                    <span className="text-slate-300 text-sm">Based in Europe (CET) • Swedish National</span>
+                    <span className="text-slate-300 text-sm">
+                      Based in Europe (CET) • Swedish National
+                    </span>
                   </div>
                 </div>
               </div>
@@ -375,9 +445,9 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
   // Main render with layout selection
   return (
     <section className="relative">
-      {layoutStyle === 'single-line' && renderSingleLine()}
-      {layoutStyle === 'two-lines' && renderTwoLines()}
-      {layoutStyle === 'stacked' && renderStacked()}
+      {layoutStyle === "single-line" && renderSingleLine()}
+      {layoutStyle === "two-lines" && renderTwoLines()}
+      {layoutStyle === "stacked" && renderStacked()}
       {renderAboutSection()}
     </section>
   );
