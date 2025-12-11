@@ -5,7 +5,7 @@ export const CybersecurityDomains = () => {
   const domains = [
     {
       category: "Security Architecture & Engineering",
-      level: "expert",
+      level: "",
       domains: [
         "Security Architecture", "Security Engineering", "Cryptography", 
         "Key and Secret Management", "PKI", "Network Design", 
@@ -14,7 +14,7 @@ export const CybersecurityDomains = () => {
     },
     {
       category: "Governance, Risk & Compliance",
-      level: "expert", 
+      level: "", 
       domains: [
         "Risk Assessment", "Enterprise Risk Management", "ISO 27001/27002/27005/27019",
         "NIST Cybersecurity Framework", "PCI DSS", "GDPR", "DORA",
@@ -23,7 +23,7 @@ export const CybersecurityDomains = () => {
     },
     {
       category: "Application Security",
-      level: "expert",
+      level: "",
       domains: [
         "SAST", "DAST", "Source Code Scan", "API Security", 
         "S-SDLC", "Vulnerability Scan", "Penetration Test",
@@ -32,7 +32,7 @@ export const CybersecurityDomains = () => {
     },
     {
       category: "Security Operations",
-      level: "expert",
+      level: "",
       domains: [
         "SIEM", "SOC", "Incident Response", "Detection", 
         "Threat Hunting", "Security Operation Centers", "Forensics",
@@ -41,7 +41,7 @@ export const CybersecurityDomains = () => {
     },
     {
       category: "Identity & Access Management",
-      level: "expert",
+      level: "",
       domains: [
         "Identity Management", "Access Control", "Privileged Access Management",
         "MFA & SSO", "Identity & Access Management", "Federated Identity"
@@ -49,7 +49,7 @@ export const CybersecurityDomains = () => {
     },
     {
       category: "Cloud & Infrastructure Security",
-      level: "expert",
+      level: "",
       domains: [
         "Cloud Security", "CSPM", "Infrastructure Security", 
         "Network Security", "Endpoint Security", "Data Protection",
@@ -58,7 +58,7 @@ export const CybersecurityDomains = () => {
     },
     {
       category: "Frameworks & Standards",
-      level: "expert",
+      level: "",
       domains: [
         "CIS Top 20 Controls", "OWASP Top 10", "MITRE ATT&CK Framework",
         "Security Frameworks", "Industry Standards", "Baseline Configuration"
@@ -66,7 +66,7 @@ export const CybersecurityDomains = () => {
     },
     {
       category: "Threat Intelligence & Assessment",
-      level: "advanced",
+      level: "",
       domains: [
         "Threat Intelligence", "Risk Monitoring Services", "Cyber Intelligence",
         "Threat Assessment", "Intelligence Analysis", "Risk Appetite"
@@ -74,7 +74,7 @@ export const CybersecurityDomains = () => {
     },
     {
       category: "Training & Education",
-      level: "advanced",
+      level: "",
       domains: [
         "Security Training", "User Education", "Awareness Programs",
         "Cybersecurity Education", "Training Development", "Skill Building"
@@ -82,7 +82,7 @@ export const CybersecurityDomains = () => {
     },
     {
       category: "Internet Security Standards",
-      level: "expert",
+      level: "",
       domains: [
         "DNSSEC", "RPKI", "Internet Governance", "BGP Security",
         "Multi-stakeholder Coordination", "Policy Development"
@@ -90,7 +90,7 @@ export const CybersecurityDomains = () => {
     },
     {
       category: "AI & Machine Learning Security",
-      level: "advanced",
+      level: "",
       domains: [
         "AI Security", "Data Model Security", "Adversarial Attacks",
         "Data Privacy", "Model Security", "AI Risk Assessment"
@@ -98,7 +98,7 @@ export const CybersecurityDomains = () => {
     },
     {
       category: "Physical & IoT Security",
-      level: "intermediate",
+      level: "",
       domains: [
         "Physical Security", "IoT Security", "SCADA Security",
         "Industrial Control Systems", "Critical Infrastructure"
