@@ -982,6 +982,7 @@ cleanup:runner:
   script:
     - echo "Cleaning up Docker resources on runner..."
     - docker image prune -f --filter "dangling=true"
+    - docker image prune -a -f --filter "until=168h"
     - docker container prune -f
     - docker volume prune -f --all
     - docker builder prune -f --filter "until=24h"
