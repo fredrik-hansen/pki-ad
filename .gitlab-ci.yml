@@ -17,6 +17,7 @@ stages:
   - monitoring
   - backup_testing
   - multi_environment
+  - cleanup
   - deploy
   - release
   - dependency_updates
@@ -240,6 +241,8 @@ build_sonarqube_scanner:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - docker build -f Dockerfile.sonarqube-scanner -t $CI_REGISTRY_IMAGE/sonarqube-scanner:$CI_COMMIT_SHA .
     - docker push $CI_REGISTRY_IMAGE/sonarqube-scanner:$CI_COMMIT_SHA
+  after_script:
+    - docker image prune -f --filter "dangling=true"
   only:
     - branches
     - merge_requests
@@ -256,6 +259,8 @@ build_backend:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - docker build -t $DOCKER_BACKEND_IMAGE:$CI_COMMIT_SHA ./backend
     - docker push $DOCKER_BACKEND_IMAGE:$CI_COMMIT_SHA
+  after_script:
+    - docker image prune -f --filter "dangling=true"
   only:
     - branches
     - merge_requests
@@ -272,6 +277,8 @@ build_frontend:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - docker build -t $DOCKER_FRONTEND_IMAGE:$CI_COMMIT_SHA .
     - docker push $DOCKER_FRONTEND_IMAGE:$CI_COMMIT_SHA
+  after_script:
+    - docker image prune -f --filter "dangling=true"
   only:
     - branches
     - merge_requests
@@ -963,3 +970,26 @@ lint_dockerfiles:
 ##############################
 # 12. Automated Release      #
 ##############################
+
+##############################
+# Docker Cleanup             #
+##############################
+cleanup:runner:
+  stage: cleanup
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo "Cleaning up Docker resources on runner..."
+    - docker image prune -f --filter "dangling=true"
+    - docker container prune -f
+    - docker volume prune -f --all
+    - docker builder prune -f --filter "until=24h"
+    - echo "Cleanup complete. Current disk usage:"
+    - docker system df
+    - docker volume ls
+  when: always
+  allow_failure: true
+  only:
+    - branches
+    - merge_requests
