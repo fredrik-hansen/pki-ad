@@ -50,10 +50,6 @@ export const Hero = () => {
           {/* Tagline Summary */}
           <div className="mt-6 pt-6 border-t border-slate-700/30">
             <p className="text-sm md:text-base text-slate-300 leading-relaxed" data-summary="27+ years cybersecurity expertise">
-              <span className="text-primary font-semibold">27+ years cybersecurity expertise</span> •
-              Security architecture & engineering •
-              AI security specialist •
-              Board-level strategic advisor
             </p>
           </div>
         </div>
