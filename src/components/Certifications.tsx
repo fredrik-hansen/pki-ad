@@ -4,88 +4,29 @@ import { Award, Shield, Users, Globe, Monitor } from 'lucide-react';
 import { SiFreebsd, SiOpenbsd, SiApple, SiDebian, SiUbuntu } from 'react-icons/si';
 import { FaWindows } from 'react-icons/fa';
 import { IconType } from 'react-icons';
+import { operatingSystems, certificates, recognition } from '../data/profileData';
+
+// Icon mapping for operating systems
+const osIconMap: Record<string, IconType> = {
+  "FreeBSD": SiFreebsd,
+  "OpenBSD": SiOpenbsd,
+  "macOS": SiApple,
+  "Debian": SiDebian,
+  "Ubuntu": SiUbuntu,
+  "Windows Client": FaWindows,
+  "Windows Server": FaWindows
+};
+
+// Icon mapping for certificates
+const certIconMap: Record<string, typeof Shield | typeof Globe> = {
+  "IT Service Management": Shield,
+  "Project Management": Shield,
+  "Weapons Systems": Shield,
+  "Nuclear Security": Shield,
+  "International Relations": Globe
+};
 
 export const Certifications = () => {
-  const operatingSystems: { name: string; icon: IconType }[] = [
-    { name: "FreeBSD", icon: SiFreebsd },
-    { name: "OpenBSD", icon: SiOpenbsd },
-    { name: "macOS", icon: SiApple },
-    { name: "Debian", icon: SiDebian },
-    { name: "Ubuntu", icon: SiUbuntu },
-    { name: "Windows Client", icon: FaWindows },
-    { name: "Windows Server", icon: FaWindows }
-  ];
-
-  const certificates = [
-    {
-      title: "ITIL Foundation",
-      issuer: "Change Management Framework",
-      type: "ITIL Foundation Course",
-      level: "Level-Introductory",
-      date: "October 2010",
-      image: "/images/1e973b5f-757d-4ee5-8ace-8aa30b8f51ce.png",
-      icon: Shield,
-      category: "IT Service Management"
-    },    {
-      title: "PEJL",
-      issuer: "PEJL AB",
-      type: "Completed specialized leadership and project management certification",
-      level: " ",
-      date: "October 2010",
-      image: "/images/1e973b5f-757d-4ee5-8ace-8aa30b8f51ce.png",
-      icon: Shield,
-      category: "Project Management"
-    },    {
-      title: "Cluster Munitions",
-      issuer: "United Nations Office for Disarmament Affairs",
-      type: "Online Short Course",
-      level: "Level-Introductory",
-      date: "October 2023",
-      image: "/images/1e973b5f-757d-4ee5-8ace-8aa30b8f51ce.png",
-      icon: Shield,
-      category: "Weapons Systems"
-    },
-    {
-      title: "Lethal Autonomous Weapon Systems",
-      issuer: "United Nations Office for Disarmament Affairs", 
-      type: "Online Short Course",
-      level: "Level-Introductory",
-      date: "October 2023",
-      image: "/images/1062d581-372a-4f92-b112-5aec3ae9e5fc.png",
-      icon: Shield,
-      category: "Weapons Systems"
-    },
-    {
-      title: "Nuclear Security",
-      issuer: "United Nations Office for Disarmament Affairs",
-      type: "Online Short Course", 
-      level: "Level-Introductory",
-      date: "October 2023",
-      image: "/images/d345539c-6195-4d9d-8f86-b7f5ea233e83.png",
-      icon: Shield,
-      category: "Nuclear Security"
-    },
-    {
-      title: "Introduction to Disarmament",
-      issuer: "United Nations Office for Disarmament Affairs",
-      type: "Online Short Course",
-      level: "Level-Introductory", 
-      date: "October 2023",
-      image: "/images/79fbd4b7-89b3-4864-aa05-a0999f2e63a0.png",
-      icon: Globe,
-      category: "International Relations"
-    }
-  ];
-
-  const recognition = {
-    title: "UN Internet Governance Forum 2021",
-    issuer: "Republic of Poland - Chancellery of the Prime Minister",
-    signatory: "Krzysztof Szubert",
-    position: "High Representative for European Digital Policy",
-    description: "Acknowledgment for active involvement in the 16th UN Internet Governance Forum meeting in Katowice, Poland",
-    date: "December 15th, 2021",
-    image: "/images/cdaa755b-7933-47de-a383-3e2daa2347e0.png"
-  };
 
   return (
     <section id="certifications" className="py-20 bg-slate-900">
@@ -109,9 +50,16 @@ export const Certifications = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {operatingSystems.map((os, index) => {
-              const OSIcon = os.icon;
+              const OSIcon = osIconMap[os.name] || Monitor;
               return (
-                <div key={index} className="group relative">
+                <div
+                  key={index}
+                  className="group relative"
+                  data-os-item
+                  data-name={os.name}
+                  data-level={os.level}
+                  data-experience={os.experience}
+                >
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-indigo-500/20 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
                   <div className="relative h-full p-4 bg-slate-800/80 backdrop-blur-sm rounded-lg border border-slate-700/50 hover:border-slate-600 transition-all duration-300">
@@ -120,6 +68,7 @@ export const Certifications = () => {
                       <h4 className="text-sm font-semibold text-white leading-tight">
                         {os.name}
                       </h4>
+                      <span className="text-xs text-slate-400">{os.level}</span>
                     </div>
                   </div>
                 </div>
@@ -136,40 +85,43 @@ export const Certifications = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {certificates.map((cert, index) => (
-              <div key={index} className="group relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                
-                <div className="relative h-full p-6 bg-slate-800/80 backdrop-blur-sm rounded-lg border border-slate-700/50 hover:border-slate-600 transition-all duration-300">
-                  <div className="flex items-start space-x-4">
-                    <div className="flex-shrink-0">
-                      <cert.icon className="w-8 h-8 text-blue-400" />
-                    </div>
-                    
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-lg font-semibold text-white mb-2 leading-tight">
-                        {cert.title}
-                      </h4>
-                      <p className="text-slate-300 text-sm mb-2">{cert.issuer}</p>
-                      <div className="flex flex-wrap gap-2 mb-3">
-                        <span className="px-2 py-1 text-xs bg-blue-600/20 text-blue-300 rounded-full border border-blue-500/50">
-                          {cert.type}
-                        </span>
-                        <span className="px-2 py-1 text-xs bg-cyan-600/20 text-cyan-300 rounded-full border border-cyan-500/50">
-                          {cert.level}
-                        </span>
-                        <span className="px-2 py-1 text-xs bg-slate-600/20 text-slate-300 rounded-full border border-slate-500/50">
-                          {cert.category}
-                        </span>
+            {certificates.map((cert, index) => {
+              const CertIcon = certIconMap[cert.category] || Shield;
+              return (
+                <div key={index} className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                  <div className="relative h-full p-6 bg-slate-800/80 backdrop-blur-sm rounded-lg border border-slate-700/50 hover:border-slate-600 transition-all duration-300">
+                    <div className="flex items-start space-x-4">
+                      <div className="flex-shrink-0">
+                        <CertIcon className="w-8 h-8 text-blue-400" />
                       </div>
-                      <p className="text-slate-400 text-sm">{cert.date}</p>
+
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-lg font-semibold text-white mb-2 leading-tight">
+                          {cert.title}
+                        </h4>
+                        <p className="text-slate-300 text-sm mb-2">{cert.issuer}</p>
+                        <div className="flex flex-wrap gap-2 mb-3">
+                          <span className="px-2 py-1 text-xs bg-blue-600/20 text-blue-300 rounded-full border border-blue-500/50">
+                            {cert.type}
+                          </span>
+                          <span className="px-2 py-1 text-xs bg-cyan-600/20 text-cyan-300 rounded-full border border-cyan-500/50">
+                            {cert.level}
+                          </span>
+                          <span className="px-2 py-1 text-xs bg-slate-600/20 text-slate-300 rounded-full border border-slate-500/50">
+                            {cert.category}
+                          </span>
+                        </div>
+                        <p className="text-slate-400 text-sm">{cert.date}</p>
+                      </div>
                     </div>
+
+                    <div className="mt-4 h-1 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 opacity-60"></div>
                   </div>
-                  
-                  <div className="mt-4 h-1 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 opacity-60"></div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 

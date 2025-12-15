@@ -13,6 +13,7 @@ import {
 import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { cvData } from "../data/cvData";
+import { highlights, industries, languages } from "../data/profileData";
 import {
   gradients,
   typography,
@@ -79,36 +80,6 @@ export const UnifiedHeader = ({ mode, onModeChange }: UnifiedHeaderProps) => {
   const location_text = cvData.location;
   const email = cvData.email;
   const tagline = cvData.tagline.join(" • ");
-
-  // About section data
-  const highlights = [
-    "27+ years of expertise in IT and Information Security",
-    "7-year track record in machine learning engineering",
-    "Working roles: CSO, Lead Security Engineer, Security Architect",
-    "Comprehensive operational experience across cybersecurity domains",
-    "Pragmatic, solution-oriented approach with hands-on technical skills",
-    "Board-level discussions and technical team collaboration",
-  ];
-
-  const industries = [
-    "Financial Services",
-    "Banking",
-    "Military Intelligence and Security Service",
-    "Law Enforcement",
-    "Retail",
-    "Energy",
-    "Government",
-    "Technology",
-  ];
-
-  const languages = [
-    { name: "Swedish", level: "Native" },
-    { name: "Danish", level: "Conversational" },
-    { name: "Norwegian", level: "Conversational" },
-    { name: "English", level: "Fluent" },
-    { name: "Spanish", level: "Beginner" },
-    { name: "Catalan", level: "Beginner" },
-  ];
 
   // Navigation items
   const navItems = [{ href: "#home", label: "Home" }];

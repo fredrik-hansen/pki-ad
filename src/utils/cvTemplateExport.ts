@@ -1,5 +1,14 @@
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, PageBreak, Table, TableRow, TableCell, WidthType, BorderStyle } from 'docx';
 import { speakingEngagements } from '../data/speakingEngagements';
+import {
+  languages,
+  highlights,
+  industries,
+  operatingSystems,
+  cybersecurityDomains,
+  certificates,
+  recognition
+} from '../data/profileData';
 
 const extractTextFromElement = (element: Element | null): string => {
   if (!element) return '';
@@ -7,226 +16,23 @@ const extractTextFromElement = (element: Element | null): string => {
 };
 
 const extractDataFromPage = () => {
-  // Extract personal information
-  const heroSection = document.querySelector('[data-section="hero"]');
+  // Extract personal information from DOM
   const name = extractTextFromElement(document.querySelector('[data-name]'));
   const title = extractTextFromElement(document.querySelector('[data-title]'));
   const summary = extractTextFromElement(document.querySelector('[data-summary]'));
-  
+
   // Extract contact information
   const email = document.querySelector('[data-email]')?.getAttribute('data-email') || '';
   const location = document.querySelector('[data-location]')?.getAttribute('data-location') || '';
-  
-  // Extract highlights from About section
-  const highlightElements = document.querySelectorAll('[data-highlight]');
-  const highlights = Array.from(highlightElements).map(el => 
-    el.getAttribute('data-highlight') || extractTextFromElement(el)
-  );
-  
-  // Extract industries - make more compact
-  const industryElements = document.querySelectorAll('[data-industry]');
-  const industries = Array.from(industryElements).map(el => 
-    el.getAttribute('data-industry') || extractTextFromElement(el)
-  );
-  
-  // Extract languages
-  const languageElements = document.querySelectorAll('[data-language]');
-  const languages = Array.from(languageElements).map(el => ({
-    name: el.getAttribute('data-language') || '',
-    level: el.getAttribute('data-level') || ''
-  }));
-  
-  // Extract professional roles
+
+  // Extract professional roles from DOM
   const roleElements = document.querySelectorAll('[data-role]');
   const professionalRoles = Array.from(roleElements).map(el => ({
     role: extractTextFromElement(el.querySelector('h4')),
     description: extractTextFromElement(el.querySelector('p'))
   }));
-  
-  // Extract operating systems data
-  const osElements = document.querySelectorAll('[data-os-item]');
-  const operatingSystems = Array.from(osElements).map(el => ({
-    name: el.getAttribute('data-name') || '',
-    level: el.getAttribute('data-level') || '',
-    experience: el.getAttribute('data-experience') || ''
-  }));
-  
-  // Extract ALL cybersecurity domains information with integrated technical competencies
-  const allCybersecurityDomains = [
-    {
-      category: "Security Architecture & Engineering",
-      level: "expert",
-      domains: [
-        "Security Architecture", "Security Engineering", "Cryptography", 
-        "Key and Secret Management", "PKI", "Network Design", 
-        "Secure System Build", "Container Security", "SAST/DAST",
-        "Security SDLC", "CSPM", "Shift Left Security", "Infrastructure as Code"
-      ]
-    },
-    {
-      category: "Governance, Risk & Compliance",
-      level: "expert", 
-      domains: [
-        "Risk Assessment", "Enterprise Risk Management", "ISO 27001/27002/27005/27019",
-        "NIST Cybersecurity Framework", "PCI DSS", "GDPR", "DORA", "SOC 2",
-        "Compliance & Enforcement", "Policy Development", "Audit Management",
-        "Risk Management", "Compliance Programs", "Security Governance",
-        "Incident Response", "Business Continuity", "CIS Controls", "SBOM"
-      ]
-    },
-    {
-      category: "Application Security",
-      level: "expert",
-      domains: [
-        "SAST", "DAST", "Source Code Scan", "API Security", 
-        "S-SDLC", "Vulnerability Scan", "Penetration Test",
-        "Security QA", "Shift Left Security", "Vulnerability Assessment"
-      ]
-    },
-    {
-      category: "Security Operations",
-      level: "expert",
-      domains: [
-        "SIEM", "SOC", "Incident Response", "Detection", 
-        "Threat Hunting", "Security Operation Centers", "Forensics",
-        "Breach Notification", "Investigation", "Containment",
-        "Security Monitoring", "Penetration Testing"
-      ]
-    },
-    {
-      category: "Identity & Access Management",
-      level: "expert",
-      domains: [
-        "Identity Management", "Access Control", "Privileged Access Management",
-        "MFA & SSO", "Identity & Access Management", "Federated Identity",
-        "Zero Trust"
-      ]
-    },
-    {
-      category: "Cloud & Infrastructure Security",
-      level: "expert",
-      domains: [
-        "Cloud Security", "CSPM", "Infrastructure Security", 
-        "Network Security", "Endpoint Security", "Data Protection",
-        "Certificate Management", "Patch Management", "AWS/Azure/GCP",
-        "Kubernetes Security", "Network Segmentation"
-      ]
-    },
-    {
-      category: "Frameworks & Standards",
-      level: "expert",
-      domains: [
-        "CIS Top 20 Controls", "OWASP Top 10", "MITRE ATT&CK Framework",
-        "Security Frameworks", "Industry Standards", "Baseline Configuration",
-        "ISO 27001/27002/27005/27019", "NIST Cybersecurity Framework"
-      ]
-    },
-    {
-      category: "Threat Intelligence & Assessment",
-      level: "advanced",
-      domains: [
-        "Threat Intelligence", "Risk Monitoring Services", "Cyber Intelligence",
-        "Threat Assessment", "Intelligence Analysis", "Risk Appetite"
-      ]
-    },
-    {
-      category: "Training & Education",
-      level: "advanced",
-      domains: [
-        "Security Training", "User Education", "Awareness Programs",
-        "Cybersecurity Education", "Training Development", "Skill Building"
-      ]
-    },
-    {
-      category: "Internet Security Standards",
-      level: "expert",
-      domains: [
-        "DNSSEC", "RPKI", "Internet Governance", "BGP Security",
-        "Multi-stakeholder Coordination", "Policy Development",
-        "Cybersecurity Policy"
-      ]
-    },
-    {
-      category: "AI & Machine Learning Security",
-      level: "advanced",
-      domains: [
-        "AI Security", "Data Model Security", "Adversarial Attacks",
-        "Data Privacy", "Model Security", "AI Risk Assessment",
-        "Data Poisoning & Quality", "Model Repurposing"
-      ]
-    },
-    {
-      category: "Physical & IoT Security",
-      level: "intermediate",
-      domains: [
-        "Physical Security", "IoT Security", "SCADA Security",
-        "Industrial Control Systems", "Critical Infrastructure"
-      ]
-    }
-  ];
-  
-  // Extract ALL certifications and recognition data
-  const allCertifications = [
-    {
-      title: "ITIL Foundation",
-      issuer: "Change Management Framework",
-      type: "ITIL Foundation Course",
-      level: "Level-Introductory",
-      date: "October 2010",
-      category: "IT Service Management"
-    },
-    {
-      title: "PEJL",
-      issuer: "PEJL AB",
-      type: "Completed specialized leadership and project management certification",
-      level: " ",
-      date: "October 2010",
-      category: "Project Management"
-    },
-    {
-      title: "Cluster Munitions",
-      issuer: "United Nations Office for Disarmament Affairs",
-      type: "Online Short Course",
-      level: "Level-Introductory",
-      date: "October 2023",
-      category: "Weapons Systems"
-    },
-    {
-      title: "Lethal Autonomous Weapon Systems",
-      issuer: "United Nations Office for Disarmament Affairs", 
-      type: "Online Short Course",
-      level: "Level-Introductory",
-      date: "October 2023",
-      category: "Weapons Systems"
-    },
-    {
-      title: "Nuclear Security",
-      issuer: "United Nations Office for Disarmament Affairs",
-      type: "Online Short Course", 
-      level: "Level-Introductory",
-      date: "October 2023",
-      category: "Nuclear Security"
-    },
-    {
-      title: "Introduction to Disarmament",
-      issuer: "United Nations Office for Disarmament Affairs",
-      type: "Online Short Course",
-      level: "Level-Introductory", 
-      date: "October 2023",
-      category: "International Relations"
-    }
-  ];
 
-  const recognition = {
-    title: "UN Internet Governance Forum 2021",
-    issuer: "Republic of Poland - Chancellery of the Prime Minister",
-    signatory: "Krzysztof Szubert",
-    position: "High Representative for European Digital Policy",
-    description: "Acknowledgment for active involvement in the 16th UN Internet Governance Forum meeting in Katowice, Poland",
-    date: "December 15th, 2021"
-  };
-  
-  // Extract volunteer work
+  // Extract volunteer work from DOM
   const volunteerElements = document.querySelectorAll('[data-volunteer-role]');
   const volunteerWork = Array.from(volunteerElements).map(el => ({
     title: el.getAttribute('data-title') || '',
@@ -235,12 +41,12 @@ const extractDataFromPage = () => {
     description: el.getAttribute('data-description') || '',
     impact: el.getAttribute('data-impact') || ''
   }));
-  
+
   // Extract current role information
   const currentRole = extractTextFromElement(document.querySelector('[data-current-role]'));
   const availability = extractTextFromElement(document.querySelector('[data-availability]'));
   const specialization = extractTextFromElement(document.querySelector('[data-specialization]'));
-  
+
   // Extract professional experience from the Experience section
   const experienceSection = document.querySelector('#experience');
   let experiences: any[] = [];
@@ -263,7 +69,7 @@ const extractDataFromPage = () => {
     });
   }
 
-  // Extract AI projects
+  // Extract AI projects from DOM
   const aiProjectElements = document.querySelectorAll('[data-ai-project]');
   const aiProjects = Array.from(aiProjectElements).map(el => ({
     name: el.getAttribute('data-project-name') || '',
@@ -279,12 +85,15 @@ const extractDataFromPage = () => {
     summary,
     email,
     location,
+    // Use imported data directly - single source of truth
     highlights,
     industries,
-    cybersecurityDomains: allCybersecurityDomains,
+    languages,
     operatingSystems,
-    certifications: allCertifications,
+    cybersecurityDomains,
+    certifications: certificates,
     recognition,
+    // DOM-extracted data
     volunteerWork,
     speakingEngagements,
     professionalRoles,

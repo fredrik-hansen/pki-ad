@@ -4,29 +4,9 @@
  * Kept for rollback capability only
  */
 
+import { highlights, industries, languages } from '../data/profileData';
+
 export const About = () => {
-  const highlights = [
-    "27+ years of expertise in IT and Information Security",
-    "7-year track record in machine learning engineering",
-    "Working roles: CSO, Lead Security Engineer, Security Architect",
-    "Comprehensive operational experience across cybersecurity domains",
-    "Pragmatic, solution-oriented approach with hands-on technical skills",
-    "Board-level discussions and technical team collaboration",
-  ];
-
-  const industries = [
-    "Financial Services", "Banking", "Military Intelligence and Security Service", "Law Enforcement", 
-    "Retail", "Energy", "Government", "Technology"
-  ];
-
-  const languages = [
-    { name: "Swedish", level: "Native" },
-    { name: "Danish", level: "Conversational" },
-    { name: "Norwegian", level: "Conversational" },
-    { name: "English", level: "Fluent" },
-    { name: "Spanish", level: "Beginner" },
-    { name: "Catalan", level: "Beginner" },
-  ];
 
   return (
     <section id="about" className="py-20 bg-slate-900/50" data-section="about">
