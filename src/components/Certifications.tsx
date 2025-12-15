@@ -4,7 +4,7 @@ import { Award, Shield, Users, Globe, Monitor } from 'lucide-react';
 import { SiFreebsd, SiOpenbsd, SiApple, SiDebian, SiUbuntu } from 'react-icons/si';
 import { FaWindows } from 'react-icons/fa';
 import { IconType } from 'react-icons';
-import { operatingSystems, certificates, recognition } from '../data/profileData';
+import { operatingSystems, certificates, recognition, languages } from '../data/profileData';
 
 // Icon mapping for operating systems
 const osIconMap: Record<string, IconType> = {
@@ -68,12 +68,41 @@ export const Certifications = () => {
                       <h4 className="text-sm font-semibold text-white leading-tight">
                         {os.name}
                       </h4>
-                      <span className="text-xs text-slate-400">{os.level}</span>
                     </div>
                   </div>
                 </div>
               );
             })}
+          </div>
+        </div>
+
+        {/* Languages Section */}
+        <div className="mb-16">
+          <div className="flex items-center mb-8">
+            <Globe className="w-6 h-6 text-cyan-400 mr-3" />
+            <h3 className="text-2xl font-semibold text-white">Languages</h3>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {languages.map((lang, index) => (
+              <div
+                key={index}
+                className="group relative"
+                data-language={lang.name}
+                data-level={lang.level}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                <div className="relative h-full p-4 bg-slate-800/80 backdrop-blur-sm rounded-lg border border-slate-700/50 hover:border-slate-600 transition-all duration-300">
+                  <div className="flex flex-col items-center text-center space-y-1">
+                    <h4 className="text-sm font-semibold text-white leading-tight">
+                      {lang.name}
+                    </h4>
+                    <span className="text-xs text-cyan-400">{lang.level}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
