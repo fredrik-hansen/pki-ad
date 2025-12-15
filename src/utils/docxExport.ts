@@ -1,6 +1,7 @@
 
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, PageBreak, Table, TableRow, TableCell, WidthType } from 'docx';
 import { speakingEngagements } from '../data/speakingEngagements';
+import { projectTechnologies } from '../data/aiProjects';
 import {
   languages,
   highlights,
@@ -700,6 +701,48 @@ export const generateDOCX = () => {
               new Paragraph({ text: "" })
             ])
           ] : []),
+
+          // Key Technologies Section
+          new Paragraph({ text: "" }),
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: "KEY TECHNOLOGIES",
+                bold: true,
+                size: 24,
+                font: "Calibri"
+              })
+            ]
+          }),
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: "_____________________________________________",
+                size: 20,
+                font: "Calibri"
+              })
+            ]
+          }),
+          new Paragraph({ text: "" }),
+          ...Object.entries(projectTechnologies).flatMap(([category, techs]) => [
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `${category}: `,
+                  bold: true,
+                  size: 16,
+                  font: "Calibri"
+                }),
+                new TextRun({
+                  text: techs.join(', '),
+                  size: 16,
+                  font: "Calibri",
+                  color: "475569"
+                })
+              ]
+            }),
+            new Paragraph({ text: "" })
+          ]),
 
           // Additional sections on separate pages
           new Paragraph({

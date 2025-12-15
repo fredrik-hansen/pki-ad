@@ -1,5 +1,6 @@
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, PageBreak, Table, TableRow, TableCell, WidthType, BorderStyle } from 'docx';
 import { speakingEngagements } from '../data/speakingEngagements';
+import { projectTechnologies } from '../data/aiProjects';
 import {
   languages,
   highlights,
@@ -389,7 +390,40 @@ const generateExecutiveTemplate = (data: any) => {
               }),
               new Paragraph({ text: "" })
             ])
-          ] : [])
+          ] : []),
+
+          // Key Technologies Section
+          new Paragraph({ text: "" }),
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: "KEY TECHNOLOGIES",
+                bold: true,
+                size: 20,
+                font: "Arial",
+                color: "2C5AA0"
+              })
+            ]
+          }),
+          new Paragraph({ text: "" }),
+          ...Object.entries(projectTechnologies).flatMap(([category, techs]) => [
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `${category}: `,
+                  bold: true,
+                  size: 14,
+                  font: "Arial"
+                }),
+                new TextRun({
+                  text: techs.join(', '),
+                  size: 14,
+                  font: "Arial",
+                  color: "475569"
+                })
+              ]
+            })
+          ])
         ]
       },
 
