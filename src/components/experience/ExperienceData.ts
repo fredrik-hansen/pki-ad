@@ -38,7 +38,7 @@ export const experiences = [
     ]
   },
   {
-    title: "Subject Matter Expert, Cybersecurity Researcher",
+    title: "AI Policy Strategist",
     company: "UN Internet Governance Forum Policy Network on AI",
     period: "2023 - 2023",
     industry: "Global Multistakeholder Platform (UN)",

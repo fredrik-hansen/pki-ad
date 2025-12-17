@@ -344,7 +344,7 @@ export const cvData: CVData = {
       description: "Led the creation of a Swedish adaptation of the NIST Cybersecurity Framework, enhancing cyber resilience across organizations with diverse security expertise."
     },
     {
-      title: "Contributing Researcher",
+      title: "AI Policy Strategist",
       organization: "UN Internet Governance Forum - Policy Network on AI",
       period: "2023",
       description: "Spearheaded collaborative ideation focusing on leveraging AI technology, responding to UN Secretary-General's mandate for strategic recommendations."
