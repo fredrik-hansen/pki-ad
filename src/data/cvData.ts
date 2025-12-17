@@ -38,7 +38,7 @@ export const cvData: CVData = {
       ]
     },
     {
-      title: "Subject Matter Expert, Cybersecurity Researcher",
+      title: "Subject Matter Expert, Cybersecurity Expert",
       company: "Internet Standards, Security and Safety Coalition (IS3C)",
       period: "2023 - Present",
       category: "Global Multistakeholder Platform",
@@ -50,7 +50,7 @@ export const cvData: CVData = {
       ]
     },
     {
-      title: "Subject Matter Expert, Cybersecurity Researcher",
+      title: "Subject Matter Expert, Cybersecurity Expert",
       company: "UN Internet Governance Forum Policy Network on AI",
       period: "2023",
       category: "Global Multistakeholder Platform (UN)",
@@ -98,7 +98,7 @@ export const cvData: CVData = {
       ]
     },
     {
-      title: "Cybersecurity Researcher",
+      title: "Cybersecurity Expert",
       company: "United Nations Internet Governance Forum Cybersecurity",
       period: "2021",
       category: "Global Multistakeholder Platform (UN)",
@@ -350,7 +350,7 @@ export const cvData: CVData = {
       description: "Spearheaded collaborative ideation focusing on leveraging AI technology, responding to UN Secretary-General's mandate for strategic recommendations."
     },
     {
-      title: "Cybersecurity Researcher & Speaker",
+      title: "Cybersecurity Expert & Speaker",
       organization: "UN Internet Governance Forum - Best Practice Cybersecurity",
       period: "2018 - 2021",
       description: "Conducted pivotal research on cyber norms effectiveness, authored comprehensive 77-page qualitative research report, and presented at UN IGF workshops."

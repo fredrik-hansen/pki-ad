@@ -26,7 +26,7 @@ export const experiences = [
     ]
   },
   {
-    title: "Subject Matter Expert, Cybersecurity Researcher",
+    title: "Subject Matter Expert, Cybersecurity Expert",
     company: "Internet Standards, Security and Safety Coalition (IS3C)",
     period: "2023 - Present",
     industry: "Global Multistakeholder Platform",
@@ -86,7 +86,7 @@ export const experiences = [
     ]
   },
   {
-    title: "Cybersecurity Researcher",
+    title: "Cybersecurity Expert",
     company: "United Nations Internet Governance Forum Cybersecurity",
     period: "2021 - 2021",
     industry: "Global Multistakeholder Platform (UN)",
@@ -342,7 +342,7 @@ export const professionalRoles = [
     dataRole: "project-security-support"
   },
   {
-    role: "Cybersecurity Researcher",
+    role: "Cybersecurity Expert",
     description: "Conducting advanced research in cybersecurity, AI security, and internet governance frameworks",
     dataRole: "cybersecurity-researcher"
   },
