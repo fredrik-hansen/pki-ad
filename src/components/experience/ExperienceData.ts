@@ -10,7 +10,7 @@ export const experiences = [
       "Drives development of cutting-edge AI-driven security tools, enhancing business process automation and efficiency",
       "Pioneering virtual security assistant project to seamlessly integrate with and optimize routine governance, risk, and compliance operations",
       "Manages full lifecycle of product development, from conceptualization to maintenance, ensuring robust information security solutions",
-      "AI & Full-Stack portfolio: 7 production applications showcased at portfolio.pki.ad"
+      "AI & Full-Stack portfolio: Several production applications showcased at projects.pki.ad"
     ]
   },
   {
