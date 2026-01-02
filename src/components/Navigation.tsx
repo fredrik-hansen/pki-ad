@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, FileText, Layout } from "lucide-react";
+import { Menu, X, FileText, Layout, Book } from "lucide-react";
 import {
   gradients,
   transitions,
@@ -73,6 +73,14 @@ export const Navigation = () => {
                 <Layout size={18} />
               )}
               {location.pathname === "/full" ? "Compact CV" : "Full Portfolio"}
+            </Link>
+            <Link
+              to="/biography"
+              className={`text-slate-300 hover:text-blue-400 block px-3 py-2 text-base font-medium ${transitions.colors} flex items-center gap-2`}
+              onClick={() => setIsOpen(false)}
+            >
+              <Book size={18} />
+              Biography
             </Link>
           </div>
         </div>
