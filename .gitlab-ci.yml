@@ -59,7 +59,7 @@ install_frontend:
   allow_failure: true
   stage: install
   script:
-    - cd frontend
+    - if [ -d frontend ]; then cd frontend; fi
     - npm i
     - npm ci
   artifacts:
@@ -90,7 +90,7 @@ lint_frontend:
   image: node:23-alpine
   stage: lint
   before_script:
-    - cd frontend
+    - if [ -d frontend ]; then cd frontend; fi
     - npm i
     - npm ci
   script:
@@ -124,7 +124,7 @@ security_frontend:
   image: node:23-alpine
   stage: security
   before_script:
-    - cd frontend
+    - if [ -d frontend ]; then cd frontend; fi
     - npm i
     - npm ci
   script:
@@ -158,7 +158,7 @@ test_frontend:
   allow_failure: true
   stage: test
   before_script:
-    - cd frontend
+    - if [ -d frontend ]; then cd frontend; fi
     - npm i
     
     - npm ci
@@ -195,7 +195,7 @@ coverage_frontend:
   allow_failure: true
   stage: coverage
   script:
-    - cd frontend
+    - if [ -d frontend ]; then cd frontend; fi
     - npm i
     - npm ci
     - npx vitest run --coverage || npx jest --coverage
@@ -216,7 +216,7 @@ e2e_frontend:
   variables:
     HOME: /root
   before_script:
-    - cd frontend
+    - if [ -d frontend ]; then cd frontend; fi
     - npm i
     - npm ci
   script:
@@ -382,7 +382,7 @@ sonarqube_frontend:
     SONAR_LOGIN: "admin"
     SONAR_PASSWORD: "admin"
   before_script:
-    - cd frontend
+    - if [ -d frontend ]; then cd frontend; fi
     - npm i
     - npm ci
     - npm install -g sonarqube-scanner
@@ -472,7 +472,7 @@ performance_frontend:
   image: node:23-alpine
   stage: performance
   before_script:
-    - cd frontend
+    - if [ -d frontend ]; then cd frontend; fi
     - npm i
     - npm ci
     - npm install -g lighthouse
@@ -562,7 +562,7 @@ accessibility_test:
   image: node:23-alpine
   stage: accessibility
   before_script:
-    - cd frontend
+    - if [ -d frontend ]; then cd frontend; fi
     - npm i
     - npm ci
     - npm install -g axe-core puppeteer
@@ -599,7 +599,7 @@ visual_regression:
   image: node:23-alpine
   stage: visual_regression
   before_script:
-    - cd frontend
+    - if [ -d frontend ]; then cd frontend; fi
     - npm i
     - npm ci
     - npm install -g backstopjs
@@ -851,7 +851,7 @@ release_frontend:
   allow_failure: true
   stage: release
   script:
-    - cd frontend
+    - if [ -d frontend ]; then cd frontend; fi
     - npx semantic-release
   only:
     - main
